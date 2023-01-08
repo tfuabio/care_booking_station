@@ -3,6 +3,10 @@ class Facility < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+  has_many :contracts, dependent: :destroy
+  has_many :booking_contacts, dependent: :destroy
+  has_many :use_plans, dependent: :destroy
+  has_many :schedules, dependent: :destroy
   validates :name, presence: true
   validates :kana_name, presence: true
   validates :address, presence: true

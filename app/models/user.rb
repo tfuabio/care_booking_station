@@ -1,5 +1,9 @@
 class User < ApplicationRecord
   belongs_to :care_manager
+  has_many :emergency_contacts, dependent: :destroy
+  has_many :use_details, dependent: :destroy
+  has_many :use_plans, dependent: :destroy
+  has_many :contracts, dependent: :destroy
   validates :last_name, presence: true
   validates :first_name, presence: true
   validates :last_name_kana, presence: true
