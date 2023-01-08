@@ -1,4 +1,4 @@
-<h2 class="row p-0 text-nowrap">新規ケアマネージャー様ユーザー登録</h2>
+<h2 class="row p-0 text-nowrap">ケアマネージャー様ユーザー登録</h2>
 
 <%= form_with model: @care_manager, url: care_manager_registration_path do |f| %>
   <%= render "care_managers/shared/error_messages", resource: resource %>
@@ -6,7 +6,7 @@
     <tr>
       <th class="col-md-2 pt-3 text-nowrap">名前</td>
       <td>(性) </td>
-      <td class="col-md-3"><%= f.text_field :last_name, autofocus: true, placeholder: "令和", class: 'form-control' %></td>
+      <td class="col-md-3"><%= f.text_field :name, autofocus: true, placeholder: "令和", class: 'form-control' %></td>
       <td>(名) </td>
       <td class="col-md-3"><%= f.text_field :first_name, placeholder: "道子", class: 'form-control' %></td>
     </tr>
