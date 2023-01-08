@@ -117,7 +117,7 @@ ActiveRecord::Schema.define(version: 2023_01_08_161500) do
   end
 
   create_table "use_details", force: :cascade do |t|
-    t.integer "schedules_id", null: false
+    t.integer "schedule_id", null: false
     t.integer "user_id", null: false
     t.integer "status", null: false
     t.datetime "created_at", precision: 6, null: false
