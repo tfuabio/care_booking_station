@@ -1,0 +1,2 @@
+class UseDetail < ApplicationRecord
+end

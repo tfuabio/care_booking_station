@@ -1,0 +1,2 @@
+class UsePlan < ApplicationRecord
+end
