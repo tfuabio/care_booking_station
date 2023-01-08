@@ -13,6 +13,5 @@ class CareManager < ApplicationRecord
   validates :address, presence: true
   validates :post_code, presence: true
   validates :phone_number, presence: true
-  validates :is_deleted, presence: true
   has_one_attached :image
 end

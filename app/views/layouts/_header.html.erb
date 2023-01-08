@@ -1,0 +1,57 @@
+<header class="shadow sticky-top bg-light py-3">
+  <nav class="navbar navbar-expand-md navbar-light py-0">
+    <a class="navbar-brand font-weight-normal" href="/"><img src="/assets/logo.png" alt="Care Booking Station"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav ml-auto">
+        <% if care_manager_signed_in? %>
+          <p class="my-auto mr-2 text-nowrap">ようこそ、<%= current_care_manager.last_name %>様</p>
+          <li class="nav-item mr-1 text-nowrap">
+            <%= link_to 'マイページ', root_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+          </li>
+          <li class="nav-item mr-1 text-nowrap">
+            <%= link_to '利用計画一覧', root_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+          </li>
+          <li class="nav-item mr-1 text-nowrap">
+            <%= link_to '担当利用者様一覧', root_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+          </li>
+          <li class="nav-item mr-1 text-nowrap">
+            <%= link_to 'ログアウト', destroy_care_manager_session_path, method: :delete, class: 'nav-link text-secondary border rounded' %>
+          </li>
+        <% elsif facility_signed_in? %>
+          <p class="my-auto mr-2 text-nowrap">ようこそ、<%= current_facility.name %>様</p>
+          <li class="nav-item mr-1 text-nowrap">
+            <%= link_to '問い合わせ一覧', root_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+          </li>
+          <li class="nav-item mr-1 text-nowrap">
+            <%= link_to '契約利用者様一覧', root_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+          </li>
+          <li class="nav-item mr-1 text-nowrap">
+            <%= link_to '予約表', root_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+          </li>
+          <li class="nav-item mr-1 text-nowrap">
+            <%= link_to 'ログアウト', destroy_facility_session_path, method: :delete, class: 'nav-link text-secondary border rounded' %>
+          </li>
+        <% else %>
+          <li class="nav-item mr-1 text-nowrap">
+            <%= link_to 'About', about_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+          </li>
+          <li class="nav-item mr-1 text-nowrap">
+            <%= link_to '新規登録', new_care_manager_registration_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+          </li>
+          <li class="nav-item mr-1 text-nowrap">
+            <%= link_to 'ログイン', new_care_manager_session_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+          </li>
+          <li class="nav-item mr-1 text-nowrap">
+            <%= link_to '新規登録', new_care_manager_registration_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+          </li>
+          <li class="nav-item mr-1 text-nowrap">
+            <%= link_to 'ログイン', new_care_manager_session_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </nav>
+</header>
