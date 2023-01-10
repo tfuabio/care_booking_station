@@ -23,4 +23,7 @@ Rails.application.routes.draw do
       patch 'withdraw'
     end
   end
+  namespace :care_manager do
+    resources :users, only: [:new, :index, :show, :edit]
+  end
 end
