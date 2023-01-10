@@ -1,0 +1,15 @@
+<div class="row justify-content-center">
+<div class="col-5">
+  <p class="text-center"><strong>本当に退会しますか？</strong></p>
+  <p class="text-center">
+    退会すると再度ログインすることができなくなります。<br>
+    退会する場合は、「退会する」をクリックしてください。
+  </p>
+</div>
+</div>
+<div class="row justify-content-center">
+<div class="d-inline-flex">
+  <div><%= link_to "退会しない", care_managers_path, class: "btn btn-primary btn-block" %></div>
+  <div><%= link_to "退会する", withdraw_care_managers_path, method: :patch, class: "btn btn-danger btn-block ml-3" %></div>
+</div>
+</div>
