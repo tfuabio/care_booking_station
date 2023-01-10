@@ -20,11 +20,9 @@ class CareManager::CareManagersController < ApplicationController
   end
 
   def withdraw
-    customer = current_customer
-    customer.update(is_deleted: true)
+    current_care_manager.update(is_deleted: true)
     reset_session
-    flash[:alert] = "退会が完了しました。"
-    redirect_to root_path
+    redirect_to root_path, notice: "退会が完了しました。"
   end
 
   private
