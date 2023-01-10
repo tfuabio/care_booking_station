@@ -6,13 +6,21 @@ Rails.application.routes.draw do
 
   # ケアマネ認証用
   devise_for :care_manager, controllers: {
-    registrations: "care_manager/registrations",
+    registrations: 'care_manager/registrations',
     sessions: 'care_manager/sessions'
   }
 
   # 施設認証用
   devise_for :facilities, controllers: {
-    registrations: "facilities/registrations",
-    sessions: "facilities/sessions"
+    registrations: 'facilities/registrations',
+    sessions: 'facilities/sessions'
   }
+
+  # ケアマネ機能用
+  scope module: :care_manager do
+    resource :care_managers, only: [:show, :edit, :update] do
+      get 'unsubscribe'
+      patch 'withdraw'
+    end
+  end
 end

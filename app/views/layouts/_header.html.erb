@@ -9,7 +9,7 @@
         <% if care_manager_signed_in? %>
           <p class="my-auto mr-2 text-nowrap">ようこそ、<%= current_care_manager.last_name %>様</p>
           <li class="nav-item mr-1 text-nowrap">
-            <%= link_to 'マイページ', root_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+            <%= link_to 'マイページ', care_managers_path, method: :get, class: 'nav-link text-secondary border rounded' %>
           </li>
           <li class="nav-item mr-1 text-nowrap">
             <%= link_to '利用計画一覧', root_path, method: :get, class: 'nav-link text-secondary border rounded' %>

@@ -1,0 +1,2 @@
+module CareManager::CareManagersHelper
+end
