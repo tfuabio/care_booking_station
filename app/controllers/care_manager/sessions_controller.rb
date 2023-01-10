@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CareManagers::SessionsController < Devise::SessionsController
+class CareManager::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
   before_action :care_manager_state, only: [:create]
 
