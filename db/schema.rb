@@ -152,10 +152,10 @@ ActiveRecord::Schema.define(version: 2023_01_08_161500) do
     t.string "address", null: false
     t.string "post_code", null: false
     t.string "phone_number", null: false
-    t.integer "current_status", null: false
+    t.integer "current_status", default: 0, null: false
     t.integer "care_level_status", null: false
-    t.integer "sex", null: false
-    t.integer "age", null: false
+    t.integer "gender", null: false
+    t.date "birthday", null: false
     t.text "life_history"
     t.text "medical_history"
     t.datetime "created_at", precision: 6, null: false

@@ -24,6 +24,6 @@ Rails.application.routes.draw do
     end
   end
   namespace :care_manager do
-    resources :users, only: [:new, :index, :show, :edit]
+    resources :users, only: [:new, :create, :index, :show, :edit]
   end
 end

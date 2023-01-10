@@ -13,7 +13,31 @@ class User < ApplicationRecord
   validates :phone_number, presence: true
   validates :current_status, presence: true
   validates :care_level_status, presence: true
-  validates :sex, presence: true
-  validates :age, presence: true
+  validates :gender, presence: true
+  validates :birthday, presence: true
   has_one_attached :image
+
+  enum current_status: {
+    home_care: 0,
+    redident_care: 1,
+    hospitalization: 2,
+    passed_away: 3
+  }
+
+  enum care_level_status: {
+    pending: 0,
+    changing: 1,
+    requiring_help_1: 2,
+    requiring_help_2: 3,
+    long_term_care_level_1: 4,
+    long_term_care_level_2: 5,
+    long_term_care_level_3: 6,
+    long_term_care_level_4: 7,
+    long_term_care_level_5: 8
+  }
+
+  enum gender: {
+    male: 0,
+    female:1
+  }
 end
