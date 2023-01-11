@@ -15,7 +15,7 @@
             <%= link_to '利用計画一覧', root_path, method: :get, class: 'nav-link text-secondary border rounded' %>
           </li>
           <li class="nav-item mr-1 text-nowrap">
-            <%= link_to '担当利用者様一覧', root_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+            <%= link_to '担当利用者様一覧', care_manager_users_path, method: :get, class: 'nav-link text-secondary border rounded' %>
           </li>
           <li class="nav-item mr-1 text-nowrap">
             <%= link_to 'ログアウト', destroy_care_manager_session_path, method: :delete, class: 'nav-link text-secondary border rounded' %>

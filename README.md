@@ -47,7 +47,7 @@
 
 - [実装機能リスト](https://docs.google.com/spreadsheets/d/1J6Uxj-A30PedugFfqIiABtHzXFzedv6D5jPgz_zLnoQ/edit?usp=sharing)
 - [WBSシート](https://docs.google.com/spreadsheets/d/1Y9kHUkS9Iz4I_2a5GB5P7F4Q2k2RhHR1o1ESg8uAGfI/edit?usp=sharing)
-- [ER図(作成中)](https://drive.google.com/file/d/1-5Mq1Rx-QLpNDq6YmvZexIg7xuPE_aFt/view?usp=sharing)
+- [ER図](https://drive.google.com/file/d/1-5Mq1Rx-QLpNDq6YmvZexIg7xuPE_aFt/view?usp=sharing)
 
 ## 使用方法
 後日記述
