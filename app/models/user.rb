@@ -15,6 +15,8 @@ class User < ApplicationRecord
   validates :care_level_status, presence: true
   validates :gender, presence: true
   validates :birthday, presence: true
+  validates :life_history, length: { maximum: 500 }
+  validates :medical_history, length: { maximum: 500 }
   has_one_attached :image
 
   enum current_status: {
