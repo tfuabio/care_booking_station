@@ -1,5 +1,5 @@
 <p>* は入力必須項目です</p>
-<%= form_with model: [current_care_manager, user] do |f| %>
+<%= form_with model: user, url: care_manager_user_path(user) do |f| %>
   <%= render "care_manager/shared/error_messages", resource: user %>
   <table class="table table-hover bg-light shadow p-0">
     <tr>

@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
+  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
   root 'homes#top'
   get '/about' => 'homes#about', as: 'about'
-
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   # ケアマネ認証用
   devise_for :care_manager, controllers: {
@@ -23,7 +23,9 @@ Rails.application.routes.draw do
       patch 'withdraw'
     end
   end
+
   namespace :care_manager do
     resources :users, only: [:new, :create, :index, :show, :edit, :update]
+    resources :use_plans, only: [:new, :create, :index, :show, :edit, :update]
   end
 end
