@@ -9,11 +9,16 @@ class CareManager::UsePlansController < ApplicationController
   def create
     @use_plan = UsePlan.new(use_plan_params)
     @use_plan.care_manager_id = current_care_manager.id
-    if @use_plan.save
-      redirect_to care_manager_use_plans_path(@use_plan), notice: "利用計画が正常に作成されました。"
-    else
-      flash[:alert] = "利用計画作成中にエラーが発生しました。"
+    if @use_plan.start_date.after?(@use_plan.end_date)
+      flash[:alert] = "終了日が開始日より前の日付になっています。"
       render :new
+    else
+      if @use_plan.save
+        redirect_to care_manager_use_plans_path(@use_plan), notice: "利用計画が正常に作成されました。"
+      else
+        flash[:alert] = "利用計画作成中にエラーが発生しました。"
+        render :new
+      end
     end
   end
 
@@ -46,8 +51,8 @@ class CareManager::UsePlansController < ApplicationController
   end
 
   def ensure_correct_care_manager
-    user = User.find(params[:id])
-    unless user.care_manager_id == current_care_manager.id
+    use_plan = UsePlan.find(params[:id])
+    unless use_plan.care_manager_id == current_care_manager.id
       redirect_to care_manager_users_path, notice: '他のケアマネージャーが作成したご利用者様情報は閲覧できません。'
     end
   end

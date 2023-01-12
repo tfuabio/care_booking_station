@@ -1,5 +1,5 @@
 class CareManager::CareManagersController < ApplicationController
-  before_action :ensure_guest_care_manager, only: [:edit, :update]
+  before_action :ensure_guest_care_manager
 
   def show
   end
@@ -35,7 +35,7 @@ class CareManager::CareManagersController < ApplicationController
 
   def ensure_guest_care_manager
     if current_care_manager.email == "guest@example.com"
-      redirect_to root_path, notice: 'ゲストユーザーはプロフィール編集画面へ遷移できません。'
+      redirect_to root_path, notice: 'ゲストユーザーはプロフィール編集を行えません。'
     end
   end
 end

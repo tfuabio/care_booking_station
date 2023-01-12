@@ -11,10 +11,7 @@
         <% if care_manager_signed_in? && current_care_manager.email == "guest@example.com" %>
           <p class="my-auto mr-2 text-nowrap">ようこそ、<%= current_care_manager.last_name %>様</p>
           <li class="nav-item mr-1 text-nowrap">
-            <%= link_to 'マイページ', care_managers_path, method: :get, class: 'nav-link text-secondary border rounded' %>
-          </li>
-          <li class="nav-item mr-1 text-nowrap">
-            <%= link_to '利用計画一覧', root_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+            <%= link_to '利用計画一覧', care_manager_use_plans_path, method: :get, class: 'nav-link text-secondary border rounded' %>
           </li>
           <li class="nav-item mr-1 text-nowrap">
             <%= link_to '担当利用者様一覧', care_manager_users_path, method: :get, class: 'nav-link text-secondary border rounded' %>
@@ -30,7 +27,7 @@
             <%= link_to 'マイページ', care_managers_path, method: :get, class: 'nav-link text-secondary border rounded' %>
           </li>
           <li class="nav-item mr-1 text-nowrap">
-            <%= link_to '利用計画一覧', root_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+            <%= link_to '利用計画一覧', care_manager_use_plans_path, method: :get, class: 'nav-link text-secondary border rounded' %>
           </li>
           <li class="nav-item mr-1 text-nowrap">
             <%= link_to '担当利用者様一覧', care_manager_users_path, method: :get, class: 'nav-link text-secondary border rounded' %>

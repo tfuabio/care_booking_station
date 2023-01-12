@@ -35,4 +35,9 @@ class CareManager < ApplicationRecord
       care_manager.office_name = "居宅会後支援事業所ゲスト"
     end
   end
+
+  # フルネームを取得
+  def full_name
+    self.last_name + " " + self.first_name
+  end
 end

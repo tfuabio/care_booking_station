@@ -1,2 +1,40 @@
-<h1>CareManager::UsePlans#show</h1>
-<p>Find me in app/views/care_manager/use_plans/show.html.erb</p>
+<h1>利用計画詳細</h1>
+<div class="row py-3">
+  <div class="col">
+    <%= link_to "編集する", edit_care_manager_use_plan_path, class: "btn btn-success btn-sm px-3 col-md-2 shadow" %>
+  </div>
+</div>
+<div class="row mb-4">
+  <div class="col-md-8">
+    <table class="table table-bordered table-responsive-md shadow">
+      <tr>
+        <th class="table-active text-nowrap" style="width:25%">ご利用者様</td>
+        <td style="width:75%"><%= @use_plan.user.full_name %></td>
+      </tr>
+      <tr>
+        <th class="table-active text-nowrap">入所日</td>
+        <td><%= @use_plan.start_date %></td>
+      </tr>
+      <tr>
+        <th class="table-active text-nowrap">退所日</td>
+        <td><%= @use_plan.end_date %></td>
+      </tr>
+      <tr>
+        <th class="table-active text-nowrap">状態</td>
+        <td><%= @use_plan.status %></td>
+      </tr>
+      <tr>
+        <th class="table-active text-nowrap">利用先施設</td>
+        <td><%= @use_plan.facility.name %></td>
+      </tr>
+      <tr>
+        <th class="table-active text-nowrap">作成者</td>
+        <td><%= @use_plan.care_manager.full_name %></td>
+      </tr>
+      <tr>
+        <th class="table-active text-nowrap">居宅介護支援事業所名</td>
+        <td><%= current_care_manager.office_name %></td>
+      </tr>
+    </table>
+  </div>
+</div>
