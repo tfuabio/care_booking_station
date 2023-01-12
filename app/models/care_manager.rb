@@ -16,8 +16,23 @@ class CareManager < ApplicationRecord
   validates :office_name, presence: true
   has_one_attached :image
 
-  # ユーザーが有効のときにtrues
+  # ユーザーが有効のときにtrue
   def active_for_authentication?
     super && (is_deleted == false)
+  end
+
+  # ゲストログイン
+  def self.guest
+    find_or_create_by!(email: 'guest@example.com') do |care_manager|
+      care_manager.password = SecureRandom.urlsafe_base64
+      care_manager.last_name = "ゲスト田"
+      care_manager.first_name = "ゲスト子"
+      care_manager.last_name_kana = "ゲストダ"
+      care_manager.first_name_kana = "ゲストコ"
+      care_manager.address = "ゲスト県ゲスト市ゲスト1-1"
+      care_manager.post_code = "1234567"
+      care_manager.phone_number = "08012345678"
+      care_manager.office_name = "居宅会後支援事業所ゲスト"
+    end
   end
 end
