@@ -9,6 +9,9 @@ Rails.application.routes.draw do
     registrations: 'care_manager/registrations',
     sessions: 'care_manager/sessions'
   }
+  devise_scope :care_manager do
+    post 'care_manager/guest_sign_in', to: 'care_manager/sessions#guest_sign_in'
+  end
 
   # 施設認証用
   devise_for :facilities, controllers: {

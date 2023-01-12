@@ -4,6 +4,12 @@ class CareManager::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
   before_action :care_manager_state, only: [:create]
 
+  def guest_sign_in
+    care_manager = CareManager.guest
+    sign_in care_manager
+    redirect_to root_path, notice: 'ゲストログインしました。'
+  end
+
   # GET /resource/sign_in
   # def new
   #   super

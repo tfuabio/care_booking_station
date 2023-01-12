@@ -1,4 +1,6 @@
 class CareManager::CareManagersController < ApplicationController
+  before_action :ensure_guest_care_manager, only: [:edit, :update]
+
   def show
   end
 
@@ -29,5 +31,11 @@ class CareManager::CareManagersController < ApplicationController
 
   def care_manager_params
     params.require(:care_manager).permit(:last_name, :first_name, :last_name_kana, :first_name_kana, :post_code, :address, :phone_number, :email, :office_name)
+  end
+
+  def ensure_guest_care_manager
+    if current_care_manager.email == "guest@example.com"
+      redirect_to root_path, notice: 'ゲストユーザーはプロフィール編集画面へ遷移できません。'
+    end
   end
 end
