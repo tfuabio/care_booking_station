@@ -19,11 +19,12 @@ ja:
       gender:
         male: "男性"
         female: "女性"
-    status:
-      planning: "計画中"
-      contacting: "問い合わせ中"
-      confirmed: "予約確定"
-      canceled: "中止"
+    use_plan:
+      status:
+        planning: "計画中"
+        contacting: "問い合わせ中"
+        confirmed: "予約確定"
+        canceled: "中止"
   date:
     formats:
       default: "%Y/%m/%d"

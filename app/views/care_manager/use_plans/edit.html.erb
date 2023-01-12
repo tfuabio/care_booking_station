@@ -1,2 +1,5 @@
-<h1>CareManager::UsePlans#edit</h1>
-<p>Find me in app/views/care_manager/use_plans/edit.html.erb</p>
+<h2 class="row p-0 text-nowrap">利用計画編集</h2>
+<p>* は入力必須項目です</p>
+<%= form_with model: @use_plan, url: care_manager_use_plan_path(@use_plan) do |f| %>
+  <%= render 'form', { use_plan: @use_plan, submit_text: '編集内容を保存', f: f } %>
+<% end %>

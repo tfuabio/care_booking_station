@@ -12,7 +12,7 @@
           <th class="table-active">ご利用者様</th>
           <th class="table-active">利用期間</th>
           <th class="table-active">状態</th>
-          <th></th>
+          <th class="table-active"></th>
         </tr>
       </thead>
       <tbody>
@@ -25,7 +25,7 @@
             </td>
             <td><%= use_plan.start_date %> 〜 <%= use_plan.end_date %></td>
             <td><%= use_plan.status_i18n %></td>
-            <td><%= link_to "編集", edit_care_manager_use_plan_path(use_plan), class: "btn btn-success btn-sm px-3 text-nowrap shadow" %></td>
+            <td><%= link_to "編集", edit_care_manager_use_plan_path(use_plan.id), class: "btn btn-success btn-sm px-3 text-nowrap shadow" %></td>
           </tr>
         <% end %>
       </tbody>
