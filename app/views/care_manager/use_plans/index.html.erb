@@ -1,2 +1,34 @@
-<h1>CareManager::UsePlans#index</h1>
-<p>Find me in app/views/care_manager/use_plans/index.html.erb</p>
+<h1>利用計画一覧</h1>
+<div class="row py-3">
+  <div class="col">
+    <%= link_to "新規利用計画登録", new_care_manager_use_plan_path, class: "btn btn-success btn-sm px-3 text-nowrap shadow" %>
+  </div>
+</div>
+<div class="row mb-4">
+  <div class="col-md-8">
+    <table class="table table-bordered table-responsive-md shadow">
+      <thead>
+        <tr>
+          <th class="table-active">ご利用者様</th>
+          <th class="table-active">利用期間</th>
+          <th class="table-active">状態</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @use_plans.each do |use_plan| %>
+          <tr>
+            <td>
+              <%= link_to care_manager_user_path(use_plan.user) do %>
+                <%= use_plan.user.full_name %> 様
+              <% end %>
+            </td>
+            <td><%= use_plan.start_date %> 〜 <%= use_plan.end_date %></td>
+            <td><%= use_plan.status_i18n %></td>
+            <td><%= link_to "編集", edit_care_manager_use_plan_path(use_plan), class: "btn btn-success btn-sm px-3 text-nowrap shadow" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

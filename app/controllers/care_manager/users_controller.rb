@@ -12,19 +12,17 @@ class CareManager::UsersController < ApplicationController
     if @user.save
       redirect_to care_manager_user_path(@user), notice: "利用者情報が正常に作成されました。"
     else
-      flash[:notice] = "エラーが発生しました。"
+      flash[:alert] = "利用者情報作成中にエラーが発生しました。"
       render :new
     end
   end
 
-
   def index
-    @users = User.where(care_manager_id: current_care_manager.id)
+    @users = current_care_manager.users
   end
 
   def show
     @user = User.find(params[:id])
-
   end
 
   def edit
@@ -36,6 +34,7 @@ class CareManager::UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to care_manager_user_path(@user), notice: '利用者情報が正常に更新されました。'
     else
+      flash[:alert] = "利用者情報更新中にエラーが発生しました。"
       render :edit
     end
   end
