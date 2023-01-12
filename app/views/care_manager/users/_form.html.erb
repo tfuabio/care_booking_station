@@ -1,73 +1,71 @@
-<p>* は入力必須項目です</p>
-<%= form_with model: user, url: care_manager_user_path(user) do |f| %>
-  <%= render "care_manager/shared/error_messages", resource: user %>
-  <table class="table table-hover bg-light shadow p-0">
-    <tr>
-      <th class="col-md-2 pt-3 text-nowrap text-center">名前 *</td>
-      <td class="col-md-1 pt-3 text-nowrap text-right">(性) </td>
-      <td class="col-md-3"><%= f.text_field :last_name, autofocus: true, placeholder: "令和", required: true, class: 'form-control' %></td>
-      <td class="col-md-1 pt-3 text-nowrap text-right">(名) </td>
-      <td class="col-md-3"><%= f.text_field :first_name, placeholder: "道子", required: true, class: 'form-control' %></td>
-    </tr>
-    <tr>
-      <th class="pt-3 text-nowrap text-center">フリガナ *</td>
-      <td class="col-md-1 pt-3 text-nowrap text-right">(セイ) </td>
-      <td class="col-md-3"><%= f.text_field :last_name_kana, placeholder: "レイワ", required: true, class: 'form-control' %></td>
-      <td class="col-md-1 pt-3 text-nowrap text-right">(メイ) </td>
-      <td class="col-md-3"><%= f.text_field :first_name_kana, placeholder: "ミチコ", required: true, class: 'form-control' %></td>
-    </tr>
-    <tr>
-      <th class="col-md-2 pt-3 text-nowrap text-center">郵便番号(ハイフンなし) *</td>
-      <td></td>
-      <td><%= f.text_field :post_code, placeholder: "1234567", required: true, class: 'form-control' %></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th class="pt-3 text-nowrap text-center">住所 *</td>
-      <td></td>
-      <td colspan="3"><%= f.text_field :address, placeholder: "東京都渋谷区代々木神園町0-0", required: true, class: 'form-control' %></td>
-    </tr>
-    <tr>
-      <th class="pt-3 text-nowrap text-center">電話番号(ハイフンなし) *</td>
-      <td></td>
-      <td><%= f.text_field :phone_number, placeholder: "08012345678", required: true, class: 'form-control' %></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th class="pt-3 text-nowrap text-center">現在の状態 *</td>
-      <td></td>
-      <td colspan="3"><%= f.select :current_status, User.current_statuses.keys.map { |k| [t("enums.user.current_status.#{k}"), k] }, { prompt: "選択してください" }, required: true, class: 'custom-select' %></td>
-    </tr>
-    <tr>
-      <th class="pt-3 text-nowrap text-center">要介護度 *</td>
-      <td></td>
-      <td><%= f.select :care_level_status, User.care_level_statuses.keys.map { |k| [t("enums.user.care_level_status.#{k}"), k] }, { prompt: "選択してください" }, required: true, class: 'custom-select' %></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th class="pt-3 text-nowrap text-center">性別 *</td>
-      <td></td>
-      <td><%= f.select :gender, User.genders.keys.map { |k| [t("enums.user.gender.#{k}"), k] }, { prompt: "選択してください" }, required: true, class: 'custom-select' %></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th class="pt-3 text-nowrap text-center">生年月日 *</td>
-      <td></td>
-      <td colspan="3"><%= f.date_select :birthday, use_month_numbers: true, start_year: (Time.now.year - 115), end_year: (Time.now.year - 40), prompt: "--", required: true, class: 'custom-select' %></td>
-    </tr>
-    <tr>
-      <th class="pt-3 text-nowrap text-center">生活歴<br>(500文字以内)</td>
-      <td></td>
-      <td colspan="3"><%= f.text_area :life_history, placeholder: "○○小学校を卒業後、洋裁学校に通った。成人してからは文房具製造工場に勤め、結婚後は家業の農家を手伝っていた。夫は幼なじみで恋愛結婚であった。几帳面で面倒見の良い性格で、夫が亡くなってからも畑仕事に精を出しては近所に配ったりしていた。また、孫が顔を見せに行くと大変喜んでいた。現在は年金と長男からの仕送りで生活している。", class: 'form-control',  rows: "10" %></td>
-    </tr>
-    <tr>
-      <th class="pt-3 text-nowrap text-center">病歴<br>(500文字以内)</td>
-      <td></td>
-      <td colspan="3"><%= f.text_area :medical_history, placeholder: "【既往歴】
+<%= render "care_manager/shared/error_messages", resource: user %>
+<table class="table table-hover bg-light shadow p-0">
+  <tr>
+    <th class="col-md-2 pt-3 text-nowrap text-center">名前 *</td>
+    <td class="col-md-1 pt-3 text-nowrap text-right">(性) </td>
+    <td class="col-md-3"><%= f.text_field :last_name, autofocus: true, placeholder: "令和", required: true, class: 'form-control' %></td>
+    <td class="col-md-1 pt-3 text-nowrap text-right">(名) </td>
+    <td class="col-md-3"><%= f.text_field :first_name, placeholder: "道子", required: true, class: 'form-control' %></td>
+  </tr>
+  <tr>
+    <th class="pt-3 text-nowrap text-center">フリガナ *</td>
+    <td class="col-md-1 pt-3 text-nowrap text-right">(セイ) </td>
+    <td class="col-md-3"><%= f.text_field :last_name_kana, placeholder: "レイワ", required: true, class: 'form-control' %></td>
+    <td class="col-md-1 pt-3 text-nowrap text-right">(メイ) </td>
+    <td class="col-md-3"><%= f.text_field :first_name_kana, placeholder: "ミチコ", required: true, class: 'form-control' %></td>
+  </tr>
+  <tr>
+    <th class="col-md-2 pt-3 text-nowrap text-center">郵便番号(ハイフンなし) *</td>
+    <td></td>
+    <td><%= f.text_field :post_code, placeholder: "1234567", required: true, class: 'form-control' %></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <th class="pt-3 text-nowrap text-center">住所 *</td>
+    <td></td>
+    <td colspan="3"><%= f.text_field :address, placeholder: "東京都渋谷区代々木神園町0-0", required: true, class: 'form-control' %></td>
+  </tr>
+  <tr>
+    <th class="pt-3 text-nowrap text-center">電話番号(ハイフンなし) *</td>
+    <td></td>
+    <td><%= f.text_field :phone_number, placeholder: "08012345678", required: true, class: 'form-control' %></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <th class="pt-3 text-nowrap text-center">現在の状態 *</td>
+    <td></td>
+    <td colspan="3"><%= f.select :current_status, User.current_statuses.keys.map { |k| [t("enums.user.current_status.#{k}"), k] }, { prompt: "選択してください" }, required: true, class: 'custom-select' %></td>
+  </tr>
+  <tr>
+    <th class="pt-3 text-nowrap text-center">要介護度 *</td>
+    <td></td>
+    <td><%= f.select :care_level_status, User.care_level_statuses.keys.map { |k| [t("enums.user.care_level_status.#{k}"), k] }, { prompt: "選択してください" }, required: true, class: 'custom-select' %></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <th class="pt-3 text-nowrap text-center">性別 *</td>
+    <td></td>
+    <td><%= f.select :gender, User.genders.keys.map { |k| [t("enums.user.gender.#{k}"), k] }, { prompt: "選択してください" }, required: true, class: 'custom-select' %></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <th class="pt-3 text-nowrap text-center">生年月日 *</td>
+    <td></td>
+    <td colspan="3"><%= f.date_select :birthday, use_month_numbers: true, start_year: (Time.now.year - 115), end_year: (Time.now.year - 40), prompt: "--", required: true, class: 'custom-select' %></td>
+  </tr>
+  <tr>
+    <th class="pt-3 text-nowrap text-center">生活歴<br>(500文字以内)</td>
+    <td></td>
+    <td colspan="3"><%= f.text_area :life_history, placeholder: "○○小学校を卒業後、洋裁学校に通った。成人してからは文房具製造工場に勤め、結婚後は家業の農家を手伝っていた。夫は幼なじみで恋愛結婚であった。几帳面で面倒見の良い性格で、夫が亡くなってからも畑仕事に精を出しては近所に配ったりしていた。また、孫が顔を見せに行くと大変喜んでいた。現在は年金と長男からの仕送りで生活している。", class: 'form-control',  rows: "10" %></td>
+  </tr>
+  <tr>
+    <th class="pt-3 text-nowrap text-center">病歴<br>(500文字以内)</td>
+    <td></td>
+    <td colspan="3"><%= f.text_area :medical_history, placeholder: "【既往歴】
 なし
 【現病歴】
 ① 高血圧：平成 6 年（55 歳）頃診断。通院、内服治療を受けていた。② 糖尿病（II 型）：平成 6 年（55 歳）頃診断。通院、内服治療を受けていた。
@@ -77,15 +75,14 @@
 →④については、△△病院（脳神経内科 XXX 医師）に継続して通院する（連絡先：XXX-XXXX-XXXX）
 ≪主治医≫
 嘱託医 ○○医師 （高血圧、糖尿病、変形性膝関節症の診察）", class: 'form-control',  rows: "10" %></td>
-    </tr>
-    <tr>
-      <th></th>
-      <td></td>
-      <td colspan="3" class="pt-3 text-nowrap">
-        <div class="actions">
-          <%= f.submit submit_text, class: 'btn btn-success' %>
-        </div>
-      </td>
-    </tr>
-  </table>
-<% end %>
+  </tr>
+  <tr>
+    <th></th>
+    <td></td>
+    <td colspan="3" class="pt-3 text-nowrap">
+      <div class="actions">
+        <%= f.submit submit_text, class: 'btn btn-success' %>
+      </div>
+    </td>
+  </tr>
+</table>
