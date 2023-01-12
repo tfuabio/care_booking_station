@@ -15,4 +15,9 @@ class CareManager < ApplicationRecord
   validates :phone_number, presence: true
   validates :office_name, presence: true
   has_one_attached :image
+
+  # ユーザーが有効のときにtrues
+  def active_for_authentication?
+    super && (is_deleted == false)
+  end
 end

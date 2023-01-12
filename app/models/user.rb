@@ -42,4 +42,9 @@ class User < ApplicationRecord
     male: 0,
     female:1
   }
+
+  # フルネームを取得
+  def full_name
+    self.last_name + " " + self.first_name
+  end
 end

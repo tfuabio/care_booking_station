@@ -19,8 +19,8 @@
         <% @users.each do |user| %>
           <tr>
             <td>
-              <%= link_to care_manager_user_path(user), class: "card-body" do %>
-                <%= user.last_name %> <%= user.first_name %> 様
+              <%= link_to care_manager_user_path(user) do %>
+                <%= user.full_name %> 様
               <% end %>
             </td>
             <td><%= user.current_status_i18n %></td>
