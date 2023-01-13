@@ -1,7 +1,7 @@
 <h2 class="row p-0 text-nowrap">施設様ユーザー登録</h2>
 
 <%= form_with model: @facility, url: facility_registration_path do |f| %>
-  <%= render "facilities/shared/error_messages", resource: resource %>
+  <%= render "facility/shared/error_messages", resource: resource %>
   <table class="table table-borderless table-hover bg-light shadow p-0">
     <tr>
       <th class="col-md-2 pt-3 text-nowrap">施設名</td>

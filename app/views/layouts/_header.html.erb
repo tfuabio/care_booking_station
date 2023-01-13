@@ -7,25 +7,15 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav ml-auto">
 
-        <!-- ケアマネ側ゲストログイン時 -->
-        <% if care_manager_signed_in? && current_care_manager.email == "guest@example.com" %>
-          <p class="my-auto mr-2 text-nowrap">ようこそ、<%= current_care_manager.last_name %>様</p>
-          <li class="nav-item mr-1 text-nowrap">
-            <%= link_to '利用計画一覧', care_manager_use_plans_path, method: :get, class: 'nav-link text-secondary border rounded' %>
-          </li>
-          <li class="nav-item mr-1 text-nowrap">
-            <%= link_to '担当利用者様一覧', care_manager_users_path, method: :get, class: 'nav-link text-secondary border rounded' %>
-          </li>
-          <li class="nav-item mr-1 text-nowrap">
-            <%= link_to 'ログアウト', destroy_care_manager_session_path, method: :delete, class: 'nav-link text-secondary border rounded' %>
-          </li>
-
         <!-- ケアマネ側ログイン時 -->
-        <% elsif care_manager_signed_in? %>
+        <% if care_manager_signed_in? %>
           <p class="my-auto mr-2 text-nowrap">ようこそ、<%= current_care_manager.last_name %>様</p>
-          <li class="nav-item mr-1 text-nowrap">
-            <%= link_to 'マイページ', care_managers_path, method: :get, class: 'nav-link text-secondary border rounded' %>
-          </li>
+          <% if current_care_manager.email != "guest@example.com" %>
+            <!--ゲストログイン時は非表示-->
+            <li class="nav-item mr-1 text-nowrap">
+              <%= link_to 'マイページ', care_managers_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+            </li>
+          <% end %>
           <li class="nav-item mr-1 text-nowrap">
             <%= link_to '利用計画一覧', care_manager_use_plans_path, method: :get, class: 'nav-link text-secondary border rounded' %>
           </li>
@@ -39,6 +29,12 @@
         <!-- 施設側ログイン時 -->
         <% elsif facility_signed_in? %>
           <p class="my-auto mr-2 text-nowrap">ようこそ、<%= current_facility.name %>様</p>
+          <% if current_facility.email != "guest@example.com" %>
+            <!--ゲストログイン時は非表示-->
+            <li class="nav-item mr-1 text-nowrap">
+              <%= link_to 'マイページ', facilities_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+            </li>
+          <% end %>
           <li class="nav-item mr-1 text-nowrap">
             <%= link_to '問い合わせ一覧', root_path, method: :get, class: 'nav-link text-secondary border rounded' %>
           </li>
@@ -58,10 +54,10 @@
             <%= link_to 'About', about_path, method: :get, class: 'nav-link text-secondary border rounded' %>
           </li>
           <li class="nav-item mr-1 text-nowrap">
-            <%= link_to '新規登録', new_care_manager_registration_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+            <%= link_to '新規登録(CM)', new_care_manager_registration_path, method: :get, class: 'nav-link text-secondary border rounded' %>
           </li>
           <li class="nav-item mr-1 text-nowrap">
-            <%= link_to 'ログイン', new_care_manager_session_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+            <%= link_to 'ログイン(CM)', new_care_manager_session_path, method: :get, class: 'nav-link text-secondary border rounded' %>
           </li>
           <li class="nav-item mr-1 text-nowrap">
             <%= link_to '新規登録', new_facility_registration_path, method: :get, class: 'nav-link text-secondary border rounded' %>
