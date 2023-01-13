@@ -9,7 +9,9 @@
     <table class="table table-bordered table-responsive-md shadow">
       <tr>
         <th class="table-active text-nowrap" style="width:25%">ご利用者様</td>
-        <td style="width:75%"><%= @use_plan.user.full_name %></td>
+        <td style="width:75%">
+          <%= link_to @use_plan.user.full_name, care_manager_user_path(@use_plan.user) %>
+        </td>
       </tr>
       <tr>
         <th class="table-active text-nowrap">入所日</td>
