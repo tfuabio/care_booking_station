@@ -16,4 +16,30 @@ class BookingContact < ApplicationRecord
       false
     end
   end
+
+  # 新規利用者の問い合わせかチェックする
+  def new_user?
+    user = self.use_plan.user
+    facility = self.facility
+    if facility.contracts.exists?(user_id: user.id)
+      false
+    else
+      true
+    end
+  end
+
+  # 返答後の利用計画状態確認用
+  def reply_status
+    use_plan = self.use_plan
+    status = use_plan.status
+    if status == "contacting"
+      "予約確定待ち"
+    elsif status == "confirmed"
+      if use_plan.facility_id == current_facility.id
+        "予約を承りました"
+      else
+        "他施設に予約確定"
+      end
+    end
+  end
 end
