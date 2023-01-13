@@ -3,6 +3,7 @@ class UsePlan < ApplicationRecord
   belongs_to :care_manager
   belongs_to :facility, optional: true  # 計画作成時
   has_many :use_plan_comments, dependent: :destroy
+  has_many :booking_contacts, dependent: :destroy
   validates :start_date, presence: true
   validates :end_date, presence: true
 

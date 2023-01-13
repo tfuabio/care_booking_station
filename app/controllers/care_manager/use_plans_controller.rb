@@ -24,8 +24,9 @@ class CareManager::UsePlansController < ApplicationController
 
   def show
     @use_plan = UsePlan.find(params[:id])
-    @booking_contacts = BookingContact.new
+    @booking_contact = BookingContact.new
     @facilities = Facility.all
+    @booking_contacts = @use_plan.booking_contacts
   end
 
   def edit

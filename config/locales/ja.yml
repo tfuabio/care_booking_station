@@ -25,6 +25,11 @@ ja:
         contacting: "問い合わせ中"
         confirmed: "予約確定"
         canceled: "中止"
+    booking_contact:
+      status:
+        awaiting_reply: "返答待ち"
+        bookable: "予約可能"
+        not_bookable: "予約不可"
   date:
     formats:
       default: "%Y/%m/%d"
