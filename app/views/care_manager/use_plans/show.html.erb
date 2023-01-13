@@ -1,7 +1,7 @@
 <h1>利用計画詳細</h1>
 <div class="row py-3">
   <div class="col">
-    <%= link_to "編集する", edit_care_manager_use_plan_path, class: "btn btn-success btn-sm px-3 col-md-2 shadow" %>
+    <%= link_to "編集する", edit_care_manager_use_plan_path(@use_plan), class: "btn btn-success btn-sm px-3 col-md-2 shadow" %>
   </div>
 </div>
 <div class="row mb-4">
@@ -9,7 +9,9 @@
     <table class="table table-bordered table-responsive-md shadow">
       <tr>
         <th class="table-active text-nowrap" style="width:25%">ご利用者様</td>
-        <td style="width:75%"><%= @use_plan.user.full_name %></td>
+        <td style="width:75%">
+          <%= link_to @use_plan.user.full_name, care_manager_user_path(@use_plan.user) %>
+        </td>
       </tr>
       <tr>
         <th class="table-active text-nowrap">入所日</td>
@@ -21,11 +23,17 @@
       </tr>
       <tr>
         <th class="table-active text-nowrap">状態</td>
-        <td><%= @use_plan.status %></td>
+        <td><%= @use_plan.status_i18n %></td>
       </tr>
       <tr>
         <th class="table-active text-nowrap">利用先施設</td>
-        <td><%= @use_plan.facility.name %></td>
+        <td>
+          <% if @use_plan.facility_id.nil? %>
+            未定
+          <% else %>
+            <%= @use_plan.facility.name %>
+          <% end %>
+        </td>
       </tr>
       <tr>
         <th class="table-active text-nowrap">作成者</td>
@@ -38,3 +46,32 @@
     </table>
   </div>
 </div>
+
+<h1>問い合わせ先選択</h1>
+<%= form_with model: [@use_plan, @booking_contact], url: care_manager_use_plan_booking_contacts_path(@use_plan.id) do |f| %>
+  <%= render "care_manager/shared/error_messages", resource: @booking_contact %>
+  <%= f.select :facility_id, Facility.all.map { |x| [ x.name, x.id ] }, { prompt: "選択してください" }, required: true, class: 'custom-select col-md-4' %>
+  <div class="actions">
+    <%= f.submit "登録", class: 'btn btn-success' %>
+  </div>
+<% end %>
+
+<h2>問い合わせ状況</h2>
+<table class="table table-bordered table-responsive-md shadow">
+  <thead>
+    <tr>
+      <th class="table-active">問い合わせ日時</th>
+      <th class="table-active">送信済み施設</th>
+      <th class="table-active">状態</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @booking_contacts.each do |booking_contact| %>
+      <tr>
+        <td><%= booking_contact.created_at.strftime('%Y/%m/%d %H:%M:%S') %></td>
+        <td><%= booking_contact.facility.name %></td>
+        <td><%= booking_contact.status_i18n %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
