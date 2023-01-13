@@ -1,0 +1,26 @@
+<h1>問い合わせ一覧</h1>
+<table class="table table-bordered table-responsive-md shadow">
+  <thead>
+    <tr>
+      <th class="table-active">問い合わせ日時</th>
+      <th class="table-active">ご利用者様</th>
+      <th class="table-active">期間</th>
+      <th class="table-active">問い合わせ元ケアマネージャー</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @booking_contacts.each do |booking_contact| %>
+      <tr>
+        <td><%= link_to booking_contact.created_at.strftime('%Y/%m/%d %H:%M:%S'), facility_booking_contact_path(booking_contact) %></td>
+        <td>
+          <%= booking_contact.use_plan.user.full_name %> 様
+          <% if booking_contact.new_user? %>
+            (新規)
+          <% end %>
+        </td>
+        <td><%= booking_contact.use_plan.start_date %> 〜 <%= booking_contact.use_plan.end_date %></td>
+        <td><%= booking_contact.use_plan.care_manager.full_name %> (<%= booking_contact.use_plan.care_manager.office_name %>)</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

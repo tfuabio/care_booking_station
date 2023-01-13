@@ -42,10 +42,19 @@ Rails.application.routes.draw do
     end
   end
 
+  # ケアマネージャー機能
   namespace :care_manager do
     resources :users, only: [:new, :create, :index, :show, :edit, :update]
     resources :use_plans, only: [:new, :create, :index, :show, :edit, :update] do
       resources :booking_contacts, only: [:new, :create, :index, :show, :edit, :update]
+    end
+  end
+
+  # 施設機能
+  namespace :facility do
+    resources :users, only: [:index, :show, :update]
+    resources :booking_contacts, only: [:index, :show] do
+     patch 'reply' => "booking_contacts#reply"
     end
   end
 end
