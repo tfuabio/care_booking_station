@@ -10,6 +10,7 @@ class CareManager::BookingContactsController < ApplicationController
     else
       if booking_contact.save
         flash.now[:notice] = "#{booking_contact.facility.name}へ問い合わせを送信しました。"
+        @use_plan.update(status: "contacting")
       else
         flash.now[:alert] = "問い合わせに失敗しました。"
       end

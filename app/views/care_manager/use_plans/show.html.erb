@@ -45,7 +45,7 @@
   </div>
 </div>
 
-<h1>問い合わせ先</h1>
+<h1>問い合わせ先選択</h1>
 <%= form_with model: [@use_plan, @booking_contact], url: care_manager_use_plan_booking_contacts_path(@use_plan.id) do |f| %>
   <%= render "care_manager/shared/error_messages", resource: @booking_contact %>
   <%= f.select :facility_id, Facility.all.map { |x| [ x.name, x.id ] }, { prompt: "選択してください" }, required: true, class: 'custom-select col-md-4' %>
