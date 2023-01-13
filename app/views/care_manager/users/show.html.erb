@@ -48,11 +48,11 @@
       </tr>
       <tr>
         <th class="table-active">生活歴</td>
-        <td><%= @user.life_history %></td>
+        <td><%= safe_join(@user.life_history.split("\n"),tag(:br)) %></td>
       </tr>
       <tr>
         <th class="table-active">病歴</td>
-        <td><%= @user.medical_history %></td>
+        <td><%= safe_join(@user.medical_history.split("\n"),tag(:br)) %></td>
       </tr>
     </table>
   </div>

@@ -8,22 +8,24 @@ class CareManager::UsePlansController < ApplicationController
 
   def create
     @use_plan = UsePlan.new(use_plan_params)
-    @use_plan.care_manager_id = current_care_manager.id
-    if @use_plan.start_date.after?(@use_plan.end_date)
-      flash[:alert] = "終了日が開始日より前の日付になっています。"
-      render :new
-    else
+    if @use_plan.correct_date?  # 日付が正しいか判定します
+      @use_plan.care_manager_id = current_care_manager.id
       if @use_plan.save
         redirect_to care_manager_use_plans_path(@use_plan), notice: "利用計画が正常に作成されました。"
       else
         flash[:alert] = "利用計画作成中にエラーが発生しました。"
         render :new
       end
+    else
+      flash[:alert] = "入力された日付に問題があります。"
+      render :new
     end
   end
 
   def show
     @use_plan = UsePlan.find(params[:id])
+    @booking_contacts = BookingContact.new
+    @facilities = Facility.all
   end
 
   def edit
@@ -36,10 +38,15 @@ class CareManager::UsePlansController < ApplicationController
 
   def update
     @use_plan = UsePlan.find(params[:id])
-    if @use_plan.update(use_plan_params)
-      redirect_to care_manager_use_plans_path(@use_plan), notice: '利用計画が正常に更新されました。'
+    if UsePlan.new(use_plan_params).correct_date?
+      if @use_plan.update(use_plan_params)
+        redirect_to care_manager_use_plans_path(@use_plan), notice: '利用計画が正常に更新されました。'
+      else
+        flash[:alert] = "利用計画更新中にエラーが発生しました。"
+        render :edit
+      end
     else
-      flash[:alert] = "利用計画更新中にエラーが発生しました。"
+      flash[:alert] = "入力された日付に問題があります。"
       render :edit
     end
   end
