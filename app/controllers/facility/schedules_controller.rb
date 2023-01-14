@@ -4,7 +4,7 @@ class Facility::SchedulesController < ApplicationController
     @today = Date.today
 
     # 今月のスケジュールをすべて取得
-    @schedules = current_facility.schedules.select { |d| d.month == @today.month }
+    @schedules = current_facility.schedules.select { |schedule| schedule.date.month == @today.month }
 
     # 今月利用がある利用者をすべて取得
     @users = User.all
@@ -20,7 +20,7 @@ class Facility::SchedulesController < ApplicationController
       date = schedule.date
       use_details = schedule.use_details
       use_details.each do |use_detail|
-        @hash[use_detail.user_id][date] = use_detail.status
+        @hash[use_detail.user_id][date] = use_detail.status_i18n
       end
     end
   end
