@@ -30,7 +30,7 @@ class Facility::FacilitiesController < ApplicationController
   private
 
   def facility_params
-    params.require(:facility).permit(:name,:kana_name, :post_code, :address, :phone_number, :email, :password)
+    params.require(:facility).permit(:name,:kana_name, :post_code, :address, :phone_number, :capacity, :email, :password, :password_confirmation)
   end
 
   # def ensure_guest_facility

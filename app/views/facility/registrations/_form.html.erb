@@ -44,14 +44,14 @@
         <% if @minimum_password_length %>
           <em>(<%= @minimum_password_length %> characters minimum)</em>
         <% end %><br />
-        <%= f.password_field :password, placeholder: "新しいパスワード", required: true, class: 'form-control' %>
+        <%= f.password_field :password, placeholder: "新しいパスワード", class: 'form-control' %>
       </td>
       <td></td>
       <td></td>
     </tr>
     <tr>
       <th class="pt-3 text-nowrap">パスワード(確認用) *</td>
-      <td><%= f.password_field :password_confirmation, placeholder: "確認のためもう一度ご入力ください", required: true, class: 'form-control' %></td>
+      <td><%= f.password_field :password_confirmation, placeholder: "確認のためもう一度ご入力ください", class: 'form-control' %></td>
       <td></td>
       <td></td>
     </tr>

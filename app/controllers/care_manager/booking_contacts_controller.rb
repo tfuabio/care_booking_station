@@ -6,21 +6,20 @@ class CareManager::BookingContactsController < ApplicationController
     booking_contact = @use_plan.booking_contacts.new(booking_contact_params)
     facility = booking_contact.facility
     if booking_contact.contacted?  # 問い合わせ済みか確認
-      flash.now[:alert] = "問い合わせ済みのため#{facility.name}への問い合わせ送信を中止しました。"
-    elsif booking_contact.no_beds?  # 空きがあるか確認
-      flash.now[:alert] = "満床の日程があるため#{facility.name}へ問い合わせを送信できませんでした。"
+      flash[:alert] = "問い合わせ済みのため#{facility.name}への問い合わせ送信を中止しました。"
     else
-      if booking_contact.save
-        flash.now[:notice] = "#{facility.name}へ問い合わせを送信しました。"
-        @use_plan.update(status: "contacting")
+      if booking_contact.no_beds?  # 空きがあるか確認
+        flash[:alert] = "満床の日程があるため#{facility.name}へ問い合わせを送信できませんでした。"
       else
-        flash.now[:alert] = "問い合わせに失敗しました。"
+        if booking_contact.save
+          flash[:notice] = "#{facility.name}へ問い合わせを送信しました。"
+          @use_plan.update(status: "contacting")
+        else
+          flash[:alert] = "問い合わせに失敗しました。"
+        end
       end
     end
-    @booking_contact = BookingContact.new
-    @facilities = Facility.all
-    @booking_contacts = @use_plan.booking_contacts
-    render 'care_manager/use_plans/show'
+    redirect_to care_manager_use_plan_path(@use_plan)
   end
 
   # 予約確定処理
@@ -30,7 +29,7 @@ class CareManager::BookingContactsController < ApplicationController
 
     # 施設の空きがあるか確認
     if booking_contact.no_beds?
-      flash.now[:alert] = "満床の日程があるため予約確定できませんでした。"
+      flash[:alert] = "満床の日程があるため予約確定できませんでした。"
       redirect_to care_manager_use_plan_path(@use_plan)
     end
 
@@ -39,20 +38,17 @@ class CareManager::BookingContactsController < ApplicationController
 
     # 利用計画に利用先施設を設定し、ステータスを予約完了にする
     if @use_plan.update(facility_id: facility.id, status: "confirmed")
-      flash.now[:notice] = "利用先施設を「#{facility.name}」に確定しました。"
+      flash[:notice] = "利用先施設を「#{facility.name}」に確定しました。"
       # 利用計画の問い合わせをすべて問い合わせ終了にする
       if @use_plan.booking_contacts.update_all(status: "closing")
-        flash.now[:notice] += "問い合わせを締め切りました。"
+        flash[:notice] += "問い合わせを締め切りました。"
       else
-        flash.now[:alert] = "問い合わせの締め切りに失敗しました"
+        flash[:alert] = "問い合わせの締め切りに失敗しました"
       end
     else
-      flash.now[:alert] = "利用先の確定に失敗しました。"
+      flash[:alert] = "利用先の確定に失敗しました。"
     end
-    @booking_contact = BookingContact.new
-    @facilities = Facility.all
-    @booking_contacts = @use_plan.booking_contacts
-    render 'care_manager/use_plans/show'
+    redirect_to care_manager_use_plan_path(@use_plan)
   end
 
   private
