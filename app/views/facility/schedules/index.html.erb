@@ -1,0 +1,23 @@
+<h1><%= current_facility.name %>の利用スケジュール <%= "#{@today.year}年#{@today.month}月" %></h1>
+<table class="table table-bordered table-responsive-md shadow">
+  <thead>
+    <tr>
+      <th class="table-active"></th>
+      <% @days.each do |day| %>
+        <th class="table-active text-center"><%= day.day %><br><%= @week[day.wday] %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <th class="text-nowrap"><%= user.full_name %> 様</th>
+        <% @days.each do |day| %>
+          <td>
+            <%= @hash[user.id][day] %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
