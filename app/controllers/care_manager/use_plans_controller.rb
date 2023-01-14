@@ -61,7 +61,7 @@ class CareManager::UsePlansController < ApplicationController
   def ensure_correct_care_manager
     use_plan = UsePlan.find(params[:id])
     unless use_plan.care_manager_id == current_care_manager.id
-      redirect_to care_manager_users_path, notice: '他のケアマネージャーが作成したご利用者様情報は閲覧できません。'
+      redirect_to care_manager_use_plan_path(use_plan), alert: '他のケアマネージャーが作成したご利用者様情報は閲覧・編集できません。'
     end
   end
 end

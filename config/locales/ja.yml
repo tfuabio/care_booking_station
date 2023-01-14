@@ -30,6 +30,7 @@ ja:
         awaiting_reply: "返答待ち"
         bookable: "予約可能"
         not_bookable: "予約不可"
+        closing: "問い合わせ終了"
   date:
     formats:
       default: "%Y/%m/%d"
