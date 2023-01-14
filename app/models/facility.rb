@@ -12,5 +12,6 @@ class Facility < ApplicationRecord
   validates :address, presence: true
   validates :post_code, presence: true
   validates :phone_number, presence: true
+  validates :capacity, presence: true
   has_one_attached :image
 end

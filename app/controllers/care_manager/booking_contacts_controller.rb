@@ -4,8 +4,10 @@ class CareManager::BookingContactsController < ApplicationController
 
   def create
     booking_contact = @use_plan.booking_contacts.new(booking_contact_params)
-    if booking_contact.contacted?
+    if booking_contact.contacted?  # 問い合わせ済みか確認
       flash.now[:alert] = "#{booking_contact.facility.name}への問い合わせはすでに送信済みのため送信を中止しました。"
+    elsif 
+      # 満床の日があった場合
     else
       if booking_contact.save
         flash.now[:notice] = "#{booking_contact.facility.name}へ問い合わせを送信しました。"

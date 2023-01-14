@@ -43,4 +43,20 @@ class BookingContact < ApplicationRecord
       end
     end
   end
+
+  # 満床かどうかを判定するメソッド
+  def no_beds?
+    use_plan = self.use_plan
+    from = use_plan.start_date
+    to = use_plan.end_date
+
+    # 問い合わせ先の施設スケジュールを利用期間内のみ取得
+    schedules = self.facility.schedules.select { |schedule| schedule.date.after?(from) && schedule.date.defore?(to) }
+
+    # 定員に達している日程があればtrue、なければfalse
+    schedules.each do |schedule|
+      return true if schedule.use_details.count == use_plan.facility.capacity
+    end
+    return false
+  end
 end

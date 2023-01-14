@@ -60,6 +60,7 @@ Facility.create!(
       address: "埼玉県令和市令和123",
       post_code: "7654321",
       phone_number: "0123456789",
+      capacity: 20,
       is_deleted: false
     },
     {
@@ -70,6 +71,7 @@ Facility.create!(
       address: "埼玉県平成市平成123",
       post_code: "8765432",
       phone_number: "1234567890",
+      capacity: 25,
       is_deleted: false
     }
   ]

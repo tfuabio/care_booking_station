@@ -42,7 +42,7 @@ class Facility::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :kana_name, :address, :post_code, :phone_number])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :kana_name, :address, :post_code, :phone_number, :capacity])
   end
 
   # If you have extra params to permit, append them to the sanitizer.
