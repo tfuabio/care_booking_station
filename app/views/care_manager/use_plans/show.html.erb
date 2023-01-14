@@ -52,11 +52,11 @@
   <%= render "care_manager/shared/error_messages", resource: @booking_contact %>
   <%= f.select :facility_id, Facility.all.map { |x| [ x.name, x.id ] }, { prompt: "選択してください" }, required: true, class: 'custom-select col-md-4' %>
   <div class="actions">
-    <%= f.submit "登録", class: 'btn btn-success' %>
+    <%= f.submit "問い合わせ送信", class: 'btn btn-success' %>
   </div>
 <% end %>
 
-<h2>問い合わせ状況</h2>
+<h2>問い合わせ履歴</h2>
 <table class="table table-bordered table-responsive-md shadow">
   <thead>
     <tr>
@@ -70,7 +70,12 @@
       <tr>
         <td><%= booking_contact.created_at.strftime('%Y/%m/%d %H:%M:%S') %></td>
         <td><%= booking_contact.facility.name %></td>
-        <td><%= booking_contact.status_i18n %></td>
+        <td>
+          <%= booking_contact.status_i18n %>
+          <% if booking_contact.status == "bookable" %>
+            <%= link_to "確定する", care_manager_use_plan_booking_contact_determine_path(@use_plan, booking_contact), method: :patch, class: 'btn btn-success', data: { confirm: "予約確定でお返事してよろしいですか？(送信先施設：#{booking_contact.facility.name})" } %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

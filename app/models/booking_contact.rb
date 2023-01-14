@@ -5,7 +5,8 @@ class BookingContact < ApplicationRecord
   enum status: {
     awaiting_reply: 0,
     bookable: 1,
-    not_bookable: 2
+    not_bookable: 2,
+    closing: 3
   }
 
   # 問い合わせ済みの施設かチェックする
