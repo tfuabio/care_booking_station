@@ -59,4 +59,24 @@ class BookingContact < ApplicationRecord
     end
     return false
   end
+
+  # 問い合わせの利用計画の内容を施設スケジュールに反映するメソッド
+  def add_schdule
+    use_plan = self.use_plan
+    from = use_plan.start_date
+    to = use_plan.end_date
+    (from..to).each do |date|
+      schedule = self.facility.schedules.new
+      schedule.update(date: date)
+      use_detail = schedule.use_details.new
+      if date == from
+        status = "in"
+      elsif date == to
+        status = "out"
+      else
+        status = "all_day"
+      end
+      use_detail.update(user_id: @use_plan.user_id, status: status)
+    end
+  end
 end
