@@ -1,51 +1,51 @@
 <h2 class="row p-0 text-nowrap">施設様ユーザー情報編集</h2>
-
+<p>* は入力必須項目です</p>
 <%= form_with model: @facility, url: facilities_path do |f| %>
   <%= render "facility/shared/error_messages", resource: @facility %>
   <table class="table table-borderless table-hover bg-light shadow p-0">
     <tr>
-      <th class="col-md-2 pt-3 text-nowrap">名称</td>
+      <th class="col-md-2 pt-3 text-nowrap">名称 *</td>
       <td class="col-md-3"><%= f.text_field :name, autofocus: true, placeholder: "ケアセンター令和", class: 'form-control' %></td>
       <td></td>
       <td></td>
     </tr>
     <tr>
-      <th class="pt-3 text-nowrap">フリガナ</td>
+      <th class="pt-3 text-nowrap">フリガナ *</td>
       <td><%= f.text_field :kana_name, placeholder: "ケアセンターレイワ", class: 'form-control' %></td>
       <td></td>
       <td></td>
     </tr>
     <tr>
-      <th class="pt-3 text-nowrap">メールアドレス</td>
+      <th class="pt-3 text-nowrap">メールアドレス *</td>
       <td><%= f.email_field :email, placeholder: "sample@example.com", class: 'form-control' %></td>
       <td></td>
       <td></td>
     </tr>
     <tr>
-      <th class="pt-3 text-nowrap">郵便番号(ハイフンなし)</td>
+      <th class="pt-3 text-nowrap">郵便番号(ハイフンなし) *</td>
       <td><%= f.text_field :post_code, placeholder: "1234567", class: 'form-control' %></td>
       <td></td>
       <td></td>
     </tr>
     <tr>
-      <th class="pt-3 text-nowrap">住所</td>
+      <th class="pt-3 text-nowrap">住所 *</td>
       <td colspan="3"><%= f.text_field :address, placeholder: "埼玉県令和市令和123", class: 'form-control' %></td>
     </tr>
     <tr>
-      <th class="pt-3 text-nowrap">電話番号(ハイフンなし)</td>
+      <th class="pt-3 text-nowrap">電話番号(ハイフンなし) *</td>
       <td><%= f.text_field :phone_number, placeholder: "1234567890", class: 'form-control' %></td>
       <td></td>
       <td></td>
     </tr>
     <tr>
-      <th class="pt-3 text-nowrap">パスワード(６文字以上)</td>
-      <td><%= f.password_field :password, placeholder: "新しいパスワード", class: 'form-control' %></td>
+      <th class="pt-3 text-nowrap">電話番号(ハイフンなし) *</td>
+      <td><%= f.text_field :phone_number, placeholder: "1234567890", class: 'form-control' %></td>
       <td></td>
       <td></td>
     </tr>
     <tr>
-      <th class="pt-3 text-nowrap">パスワード(確認用)</td>
-      <td><%= f.password_field :password_confirmation, placeholder: "確認のためもう一度ご入力ください", class: 'form-control' %></td>
+      <th class="pt-3 text-nowrap">定員（居室数） *</td>
+      <td><%= f.number_field :capacity, min: 1, max: 150, required: true, placeholder: "--", class: 'form-control col-3' %></td>
       <td></td>
       <td></td>
     </tr>

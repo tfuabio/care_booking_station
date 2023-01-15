@@ -16,13 +16,28 @@ class UsePlan < ApplicationRecord
 
   # 入力された日付が正しいか判定するためのメソッド
   def correct_date?
-    if self.start_date.before?(Date.today) || self.start_date.after?(self.end_date) || self.start_date == self.end_date
+    from = self.start_date
+    to = self.end_date
+    if from.before?(Date.today) || from.after?(to) || from == to
       # 入所日が今日より前のとき
       # 入所日が退所日より後のとき
       # 入所日と退所日が同一のとき
       false
     else
-      true
+     true
     end
+  end
+
+  # 入力された日付が同利用者の利用計画と重複していないか判定するためのメソッド
+  def duplicate?
+    from = self.start_date  # 入所日
+    to = self.end_date  # 退所日
+    # すでに登録されている利用計画を取得
+    use_plans = self.care_manager.use_plans.where(user_id: self.user_id)
+    use_plans.each do |use_plan|
+      # 「退所日より後の期間である場合」または「入所日より前の期間である場合」以外は「重複」とみなす
+      return true unless use_plan.start_date.after?(to) || use_plan.end_date.before?(from)
+    end
+    false
   end
 end

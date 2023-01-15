@@ -37,6 +37,7 @@ class DeviseCreateFacilities < ActiveRecord::Migration[6.1]
       t.string :address, null: false
       t.string :post_code, null: false
       t.string :phone_number, null: false
+      t.integer :capacity, null: false
       t.boolean :is_deleted, null: false, default: false
       t.timestamps null: false
     end

@@ -32,18 +32,21 @@ class Facility::SessionsController < Devise::SessionsController
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
 
-  # 退会しているかを判断するメソッド
+  # ログインできるか判断するメソッド
   def facility_state
     ## 入力されたemailからアカウントを1件取得
     @facility = Facility.find_by(email: params[:facility][:email])
-    ## アカウントを取得できなかった場合、このメソッドを終了する
-    return if !@facility
-    ## 取得したアカウントのパスワードと入力されたパスワードが一致してるかを判別
-    if @facility.valid_password?(params[:facility][:password]) && (@facility.is_deleted == false)
-      root_path
+    if !@facility
+      # アカウントを取得できなかった場合
+      redirect_to new_facility_session_path, alert: "#{@facility.email}は登録されていないためログインできませんでした。"
     else
-      flash[:alert] = "退会済みのアカウントのためログインできませんでした。"
-      redirect_to new_facility_registration_path
+      # 退会しているかを判断
+      if @facility.is_deleted == false
+        return if @facility.valid_password?(params[:facility][:password])  # 入力されたパスワードが一致している場合このメソッドを終了
+        redirect_to new_facility_session_path, alert: "パスワードが一致していないためログインできませんでした。"
+      else
+        redirect_to new_facility_registration_path, alert: "退会済みのアカウントのためログインできませんでした。"
+      end
     end
   end
 

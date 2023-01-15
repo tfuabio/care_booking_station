@@ -1,67 +1,6 @@
 <h2 class="row p-0 text-nowrap">施設様ユーザー登録</h2>
 
-<%= form_with model: @facility, url: facility_registration_path do |f| %>
-  <%= render "facility/shared/error_messages", resource: resource %>
-  <table class="table table-borderless table-hover bg-light shadow p-0">
-    <tr>
-      <th class="col-md-2 pt-3 text-nowrap">施設名</td>
-      <td class="col-md-3" colspan="3"><%= f.text_field :name, autofocus: true, placeholder: "ケアセンター令和", class: 'form-control' %></td>
-    </tr>
-    <tr>
-      <th class="col-md-2 pt-3 text-nowrap">施設名(カナ)</td>
-      <td class="col-md-3" colspan="3"><%= f.text_field :kana_name, placeholder: "ケアセンターレイワ", class: 'form-control' %></td>
-    </tr>
-    <tr>
-      <th class="pt-3 text-nowrap">メールアドレス</td>
-      <td><%= f.email_field :email, placeholder: "sample@example.com", class: 'form-control' %></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th class="pt-3 text-nowrap">郵便番号(ハイフンなし)</td>
-      <td><%= f.text_field :post_code, placeholder: "1234567", class: 'form-control' %></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th class="pt-3 text-nowrap">住所</td>
-      <td colspan="3"><%= f.text_field :address, placeholder: "東京都渋谷区代々木神園町0-0", class: 'form-control' %></td>
-    </tr>
-    <tr>
-      <th class="pt-3 text-nowrap">電話番号(ハイフンなし)</td>
-      <td><%= f.text_field :phone_number, placeholder: "08012345678", class: 'form-control' %></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th class="pt-3 text-nowrap">パスワード(６文字以上)</td>
-      <td>
-        <% if @minimum_password_length %>
-          <em>(<%= @minimum_password_length %> characters minimum)</em>
-        <% end %><br />
-        <%= f.password_field :password, placeholder: "新しいパスワード", class: 'form-control' %>
-      </td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th class="pt-3 text-nowrap">パスワード(確認用)</td>
-      <td><%= f.password_field :password_confirmation, placeholder: "確認のためもう一度ご入力ください", class: 'form-control' %></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th></th>
-      <td class="pt-3 text-nowrap">
-        <div class="actions">
-          <%= f.submit "新規登録", class: 'btn btn-success' %>
-        </div>
-      </td>
-      <td></td>
-      <td></td>
-    </tr>
-  </table>
-<% end %>
+<%= render 'form', { facility: @facility, submit_text: '新規登録', path: facility_registration_path } %>
 
 <h2 class="row p-0 mt-5 text-nowrap">既に登録済みの方</h2>
 <%= link_to facility_session_path do %>こちら<% end %>からログインしてください。
