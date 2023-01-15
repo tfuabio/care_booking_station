@@ -1,11 +1,14 @@
 <h1>利用計画詳細</h1>
-<div class="row py-3">
+<div class="row my-3">
   <div class="col">
-    <%= link_to "編集する", edit_care_manager_use_plan_path(@use_plan), class: "btn btn-success btn-sm px-3 col-md-2 shadow" %>
+    <%= link_to "編集する", edit_care_manager_use_plan_path(@use_plan), class: "btn btn-success shadow text-nowrap" %>
+  </div>
+  <div class="col">
+    <%= link_to "問い合わせ先を選択する", select_care_manager_use_plan_path(@use_plan), class: "btn btn-success shadow text-nowrap" %>
   </div>
 </div>
 <div class="row mb-4">
-  <div class="col-md-8">
+  <div class="col">
     <table class="table table-bordered table-responsive-md shadow">
       <tr>
         <th class="table-active text-nowrap" style="width:25%">ご利用者様</td>
@@ -52,7 +55,7 @@
   <%= render "care_manager/shared/error_messages", resource: @booking_contact %>
   <%= f.select :facility_id, Facility.all.map { |x| [ x.name, x.id ] }, { prompt: "選択してください" }, required: true, class: 'custom-select col-md-4' %>
   <div class="actions">
-    <%= f.submit "問い合わせ送信", class: 'btn btn-success' %>
+    <%= f.submit "問い合わせ送信", class: 'btn btn-success text-nowrap' %>
   </div>
 <% end %>
 

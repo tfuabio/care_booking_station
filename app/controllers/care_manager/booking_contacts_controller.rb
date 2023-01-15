@@ -2,6 +2,7 @@ class CareManager::BookingContactsController < ApplicationController
   before_action :authenticate_care_manager!
   before_action :ensure_correct_care_manager, only: [:create, :determine]
 
+  # 問い合わせ作成処理
   def create
     booking_contact = @use_plan.booking_contacts.new(booking_contact_params)
     facility = booking_contact.facility
@@ -22,7 +23,7 @@ class CareManager::BookingContactsController < ApplicationController
     redirect_to care_manager_use_plan_path(@use_plan)
   end
 
-  # 予約確定処理
+  # 問い合わせに対する予約確定処理
   def determine
     booking_contact = BookingContact.find(params[:booking_contact_id])
     facility = booking_contact.facility
