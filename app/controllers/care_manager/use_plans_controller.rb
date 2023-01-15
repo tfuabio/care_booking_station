@@ -1,6 +1,6 @@
 class CareManager::UsePlansController < ApplicationController
   before_action :authenticate_care_manager!
-  before_action :ensure_correct_care_manager, only: [:show, :edit, :update]
+  before_action :ensure_correct_care_manager, only: [:show, :edit, :update, :select]
 
   def new
     @use_plan = UsePlan.new
@@ -28,14 +28,12 @@ class CareManager::UsePlansController < ApplicationController
   end
 
   def show
-    @use_plan = UsePlan.find(params[:id])
     @booking_contact = BookingContact.new
     @facilities = Facility.all
     @booking_contacts = @use_plan.booking_contacts
   end
 
   def edit
-    @use_plan = UsePlan.find(params[:id])
   end
 
   def index
@@ -43,7 +41,6 @@ class CareManager::UsePlansController < ApplicationController
   end
 
   def update
-    @use_plan = UsePlan.find(params[:id])
     if UsePlan.new(use_plan_params).correct_date?
       if @use_plan.update(use_plan_params)
         redirect_to care_manager_use_plans_path(@use_plan), notice: '利用計画が正常に更新されました。'
@@ -57,6 +54,42 @@ class CareManager::UsePlansController < ApplicationController
     end
   end
 
+  # 問い合わせ先選択画面表示
+  def select
+    # 契約済み施設を取得
+    # @facilities = @use_plan.user.contracts.map { |x| x.facility }
+    @facilities = Facility.all
+    @booking_contact = BookingContact.new
+
+    # 施設検索機能
+    w = params[:word]
+    if w != nil
+      s = params[:search]
+      @range = params[:range] # 検索結果に表示
+
+      # 検索方法によって分岐
+      if s ==  "partial_match"
+        @word = "「#{w}」を含む"
+        w = "%#{w}%"
+      elsif s == "forward_match"
+        @word = "「#{w}」から始まる"
+        w = "#{w}%"
+      elsif s == "backward_match"
+        @word = "「#{w}」で終わる"
+        w = "%#{w}"
+      else
+        @word = "「#{w}」に完全一致"
+      end
+
+      # 検索対象によって分岐
+      if @range == "Name"
+        @facilities = Facility.where("name LIKE?", w)
+      else
+        @facilities = Facility.where("address LIKE?", w)
+      end
+    end
+  end
+
   private
 
   def use_plan_params
@@ -64,9 +97,9 @@ class CareManager::UsePlansController < ApplicationController
   end
 
   def ensure_correct_care_manager
-    use_plan = UsePlan.find(params[:id])
-    unless use_plan.care_manager_id == current_care_manager.id
-      redirect_to care_manager_use_plan_path(use_plan), alert: '他のケアマネージャーが作成したご利用者様情報は閲覧・編集できません。'
+    @use_plan = UsePlan.find(params[:id])
+    unless @use_plan.care_manager_id == current_care_manager.id
+      redirect_to care_manager_use_plan_path(@use_plan), alert: '他のケアマネージャーが作成したご利用者様情報は閲覧・編集できません。'
     end
   end
 end
