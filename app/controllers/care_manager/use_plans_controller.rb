@@ -11,7 +11,7 @@ class CareManager::UsePlansController < ApplicationController
     if @use_plan.correct_date?  # 日付が正しいか判定
       @use_plan.care_manager_id = current_care_manager.id
       if @use_plan.duplicate?  # 日付が登録済みの計画と重複していないか判定
-        flash[:alert] = "入力された日付に問題がすでに登録されている計画と重複しています。"
+        flash[:alert] = "入力された日付がすでに登録されている計画と重複しています。"
         render :new
       else
         if @use_plan.save
