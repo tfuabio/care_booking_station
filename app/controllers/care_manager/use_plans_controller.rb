@@ -8,13 +8,18 @@ class CareManager::UsePlansController < ApplicationController
 
   def create
     @use_plan = UsePlan.new(use_plan_params)
-    if @use_plan.correct_date?  # 日付が正しいか判定します
+    if @use_plan.correct_date?  # 日付が正しいか判定
       @use_plan.care_manager_id = current_care_manager.id
-      if @use_plan.save
-        redirect_to care_manager_use_plans_path(@use_plan), notice: "利用計画が正常に作成されました。"
-      else
-        flash[:alert] = "利用計画作成中にエラーが発生しました。"
+      if @use_plan.duplicate?  # 日付が登録済みの計画と重複していないか判定
+        flash[:alert] = "入力された日付に問題がすでに登録されている計画と重複しています。"
         render :new
+      else
+        if @use_plan.save
+          redirect_to care_manager_use_plans_path(@use_plan), notice: "利用計画が正常に作成されました。"
+        else
+          flash[:alert] = "利用計画作成中にエラーが発生しました。"
+          render :new
+        end
       end
     else
       flash[:alert] = "入力された日付に問題があります。"
