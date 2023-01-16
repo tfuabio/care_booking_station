@@ -10,12 +10,12 @@
       <tr>
         <th class="table-active" style="width:25%">契約状態</td>
         <td style="width:75%">
-          <% if @is_contracted %>
-            契約済
-            <%= link_to "未契約に変更", contract_change_facility_user_path(@user), method: :patch, data: { confirm: "未契約に変更してよろしいですか？(対象のご利用者様：#{@user.full_name})" }, class: 'btn btn-success' %>
-          <% else %>
+          <% if @is_new_user %>
             未契約
             <%= link_to "契約済に変更", contract_change_facility_user_path(@user), method: :patch, data: { confirm: "契約済に変更してよろしいですか？(対象のご利用者様：#{@user.full_name})" }, class: 'btn btn-success' %>
+          <% else %>
+            契約済
+            <%= link_to "未契約に変更", contract_change_facility_user_path(@user), method: :patch, data: { confirm: "未契約に変更してよろしいですか？(対象のご利用者様：#{@user.full_name})" }, class: 'btn btn-success' %>
           <% end %>
         </td>
       </tr>

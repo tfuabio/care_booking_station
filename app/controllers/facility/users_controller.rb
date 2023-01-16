@@ -3,11 +3,11 @@ class Facility::UsersController < ApplicationController
   before_action :ensure_correct_facility, only: [:show, :contract_change]
 
   def index
-    @users = facility.contracts
+    @users = current_facility.users
   end
 
   def show
-    @is_contracted = current_facility.new_user?(@user)
+    @is_new_user = current_facility.new_user?(@user)
   end
 
   # 利用者の契約状態を切り替えるアクション
@@ -21,7 +21,7 @@ class Facility::UsersController < ApplicationController
       flash[:notice] = "#{@user.full_name} 様を契約状態を契約済にしました。"
     end
     @is_contracted = contract.is_contracted
-    render :show
+    redirect_to request.referer
   end
 
   private

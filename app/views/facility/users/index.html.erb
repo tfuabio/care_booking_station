@@ -1,4 +1,4 @@
-<h1>契約利用者一覧</h1>
+<h1>施設利用者一覧</h1>
 <div class="row mb-4">
   <div class="col-md-8">
     <table class="table table-bordered table-responsive-md shadow">
@@ -7,20 +7,28 @@
           <th class="table-active">氏名</th>
           <th class="table-active">現在の状態</th>
           <th class="table-active">要介護度</th>
-          <th class="table-active"></th>
+          <th class="table-active">契約状態</th>
         </tr>
       </thead>
       <tbody>
         <% @users.each do |user| %>
           <tr>
             <td>
-              <%= link_to care_manager_user_path(user) do %>
+              <%= link_to facility_user_path(user) do %>
                 <%= user.full_name %> 様
               <% end %>
             </td>
             <td><%= user.current_status_i18n %></td>
             <td><%= user.care_level_status_i18n %></td>
-            <td><%= link_to "編集", edit_care_manager_user_path(user), class: "btn btn-success btn-sm px-3 text-nowrap shadow" %></td>
+            <td>
+              <% if current_facility.new_user?(user) %>
+                未契約
+                <%= link_to "契約済に変更", contract_change_facility_user_path(user), method: :patch, data: { confirm: "契約済に変更してよろしいですか？(対象のご利用者様：#{user.full_name})" }, class: 'btn btn-success' %>
+              <% else %>
+                契約済
+                <%= link_to "未契約に変更", contract_change_facility_user_path(user), method: :patch, data: { confirm: "未契約に変更してよろしいですか？(対象のご利用者様：#{user.full_name})" }, class: 'btn btn-success' %>
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>
