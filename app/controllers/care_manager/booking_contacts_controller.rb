@@ -35,9 +35,12 @@ class CareManager::BookingContactsController < ApplicationController
     end
 
     # 施設スケジュールに反映
-    booking_contact.add_schdule
+    unless booking_contact.save_schdule
+      flash[:alert] = "予約確定に失敗しました。"
+      redirect_to care_manager_use_plan_path(@use_plan)
+    end
 
-    # 利用計画に利用先施設を設定し、ステータスを予約完了にする
+    # 利用計画に利用先施設を設定し、ステータスを予約確定にする
     if @use_plan.update(facility_id: facility.id, status: "confirmed")
       flash[:notice] = "利用先施設を「#{facility.name}」に確定しました。"
 
@@ -49,12 +52,17 @@ class CareManager::BookingContactsController < ApplicationController
       end
 
       # 施設と利用者間の契約がない場合
-      unless @use_plan.user.contracts.exists?(facility_id: facility.id)
+      if booking_contact.new_user?
         contract = @use_plan.user.contracts.new
-        contract.update(facility_id: facility.id)
+        contract.facility_id = facility.id
+        if contract.save
+          flash[:notice] += "#{facility.name}へ#{@use_plan.user.full_name}様の利用者情報の閲覧許可を付与しました。"
+        else
+          flash[:alert] += "予約確定に失敗しました。"
+        end
       end
     else
-      flash[:alert] = "利用先の確定に失敗しました。"
+      flash[:alert] = "予約確定に失敗しました。"
     end
     redirect_to care_manager_use_plan_path(@use_plan)
   end

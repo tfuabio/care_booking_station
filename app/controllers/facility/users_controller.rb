@@ -3,6 +3,7 @@ class Facility::UsersController < ApplicationController
   before_action :ensure_correct_facility, only: [:show, :contract_change]
 
   def index
+    @users = facility.contracts
   end
 
   def show
