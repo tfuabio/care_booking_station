@@ -10,9 +10,11 @@
 
         <!-- ケアマネ側ログイン時 -->
         <% if care_manager_signed_in? %>
-          <p class="my-auto mr-2 text-nowrap">ようこそ、<%= current_care_manager.last_name %>様</p>
-          <% if current_care_manager.email != "guest@example.com" %>
+          <% if current_care_manager.email == "guest@example.com" %>
+            <p class="my-auto mr-2 text-nowrap">ゲストログイン中</p>
+          <% else %>
             <!--ゲストログイン時は非表示-->
+            <p class="my-auto mr-2 text-nowrap">ようこそ、<%= current_care_manager.last_name %>様</p>
             <li class="nav-item mr-1 text-nowrap">
               <%= link_to 'マイページ', care_managers_path, method: :get, class: 'btn05 bordercircle1' %>
             </li>
