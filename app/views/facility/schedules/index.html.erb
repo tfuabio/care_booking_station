@@ -1,4 +1,4 @@
-<h1><%= current_facility.name %>の利用スケジュール <%= "#{@today.year}年#{@today.month}月" %></h1>
+<h1><%= current_facility.name %>の利用予約表 <%= "#{@today.year}年#{@today.month}月" %></h1>
 <table class="table table-bordered table-responsive-md shadow">
   <thead>
     <tr>
@@ -11,7 +11,7 @@
   <tbody>
     <% @users.each do |user| %>
       <tr>
-        <th class="text-nowrap"><%= user.full_name %> 様</th>
+        <th class="text-nowrap"><%= link_to "#{user.full_name} 様", facility_user_path(user) %></th>
         <% @days.each do |day| %>
           <td>
             <%= @hash[user.id][day] %>

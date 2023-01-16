@@ -55,7 +55,7 @@ Rails.application.routes.draw do
 
   # 施設機能
   namespace :facility do
-    resources :users, only: [:index, :show, :update]
+    resources :users, only: [:index, :show]
     resources :booking_contacts, only: [:index, :show] do
      patch 'reply' => "booking_contacts#reply"
     end

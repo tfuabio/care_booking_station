@@ -13,7 +13,7 @@ import "bootstrap";
 import "../stylesheets/application"
 import '@fortawesome/fontawesome-free/js/all'
 import '../stylesheets/7-1-26.css'
-// import "4-1-4.js"
+import '../stylesheets/4-1-4.css'
 
 Rails.start()
 Turbolinks.start()

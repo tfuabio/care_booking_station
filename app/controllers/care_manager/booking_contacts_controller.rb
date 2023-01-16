@@ -40,12 +40,15 @@ class CareManager::BookingContactsController < ApplicationController
     # 利用計画に利用先施設を設定し、ステータスを予約完了にする
     if @use_plan.update(facility_id: facility.id, status: "confirmed")
       flash[:notice] = "利用先施設を「#{facility.name}」に確定しました。"
+      
       # 利用計画の問い合わせをすべて問い合わせ終了にする
       if @use_plan.booking_contacts.update_all(status: "closing")
         flash[:notice] += "問い合わせを締め切りました。"
       else
         flash[:alert] = "問い合わせの締め切りに失敗しました"
       end
+      
+      # 施設と利用者間の契約
     else
       flash[:alert] = "利用先の確定に失敗しました。"
     end

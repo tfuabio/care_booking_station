@@ -8,25 +8,16 @@
 
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <link rel="stylesheet" type="text/css" href="../stylesheets/7-1-26.css">
-    <link rel="stylesheet" type="text/css" href="../stylesheets/4-1-4.css">
   </head>
 
   <body>
-    <div id="splash">
-      <div id="splash_text"></div>
-    </div>
-    <div id="container">
       <%= render 'layouts/header' %>
       <main>
-        <div class="container my-5 mx-6-md pb-5">
-          <p id="notice"><%= notice %></p>
-          <p id="alert"><%= alert %></p>
-          <%= yield %>
-        </div>
+        <p id="notice"><%= notice %></p>
+        <p id="alert"><%= alert %></p>
+        <%= yield %>
       </main>
       <%= render 'layouts/footer' %>
-    </div>
     <!--<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>-->
     <script src="https://rawgit.com/kimmobrunfeldt/progressbar.js/master/dist/progressbar.min.js"></script>
     <!--IE11用-->
