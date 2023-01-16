@@ -8,6 +8,18 @@
   <div class="col-md-8">
     <table class="table table-bordered table-responsive-md shadow">
       <tr>
+        <th class="table-active" style="width:25%">契約状態</td>
+        <td style="width:75%">
+          <% if @is_contracted %>
+            契約済
+            <%= link_to "未契約に変更", contract_change_facility_user_path(@user), method: :patch, data: { confirm: "未契約に変更してよろしいですか？(対象のご利用者様：#{@user.full_name})" }, class: 'btn btn-success' %>
+          <% else %>
+            未契約
+            <%= link_to "契約済に変更", contract_change_facility_user_path(@user), method: :patch, data: { confirm: "契約済に変更してよろしいですか？(対象のご利用者様：#{@user.full_name})" }, class: 'btn btn-success' %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
         <th class="table-active" style="width:25%">氏名</td>
         <td style="width:75%"><%= @user.last_name %> <%= @user.first_name %></td>
       </tr>

@@ -42,4 +42,10 @@ class Facility < ApplicationRecord
       facility.capacity = "20"
     end
   end
+
+  # 契約済みかどうかチェックする
+  def new_user?(user)
+    contract = Contract.find_by(facility_id: self.id, user_id: user.id)
+    return contract.is_contracted
+  end
 end

@@ -9,9 +9,9 @@
     </tr>
   </thead>
   <tbody>
-    <% @users.each do |user| %>
+    <% @hash.keys.each do |user| %>
       <tr>
-        <th class="text-nowrap"><%= link_to "#{user.full_name} 様", facility_user_path(user) %></th>
+        <th class="text-nowrap"><%= link_to "#{user.full_name} 様", facility_user_path(user) %><%= "(新規)" if current_facility.new_user?(user) %></th>
         <% @days.each do |day| %>
           <td>
             <%= @hash[user.id][day] %>
