@@ -1,6 +1,7 @@
 <header class="shadow sticky-top bg-light py-3">
   <nav class="navbar navbar-expand-md navbar-light py-0">
-    <a class="navbar-brand font-weight-normal" href="/"><img src="/assets/logo.png" alt="Care Booking Station"></a>
+    <!--<a class="navbar-brand font-weight-normal" href="/"><img src="/assets/logo.png" alt="Care Booking Station"></a>-->
+    <a class="logo" href="/">Care Booking Station</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -13,17 +14,17 @@
           <% if current_care_manager.email != "guest@example.com" %>
             <!--ゲストログイン時は非表示-->
             <li class="nav-item mr-1 text-nowrap">
-              <%= link_to 'マイページ', care_managers_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+              <%= link_to 'マイページ', care_managers_path, method: :get, class: 'btn05 bordercircle1' %>
             </li>
           <% end %>
           <li class="nav-item mr-1 text-nowrap">
-            <%= link_to '利用計画一覧', care_manager_use_plans_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+            <%= link_to '利用計画一覧', care_manager_use_plans_path, method: :get, class: 'btn05 bordercircle1' %>
           </li>
           <li class="nav-item mr-1 text-nowrap">
-            <%= link_to '担当利用者様一覧', care_manager_users_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+            <%= link_to '担当利用者様一覧', care_manager_users_path, method: :get, class: 'btn05 bordercircle1' %>
           </li>
           <li class="nav-item mr-1 text-nowrap">
-            <%= link_to 'ログアウト', destroy_care_manager_session_path, method: :delete, class: 'nav-link text-secondary border rounded' %>
+            <%= link_to 'ログアウト', destroy_care_manager_session_path, method: :delete, class: 'btn05 bordercircle1' %>
           </li>
 
         <!-- 施設側ログイン時 -->
@@ -32,38 +33,38 @@
           <% if current_facility.email != "guest@example.com" %>
             <!--ゲストログイン時は非表示-->
             <li class="nav-item mr-1 text-nowrap">
-              <%= link_to 'マイページ', facilities_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+              <%= link_to 'マイページ', facilities_path, method: :get, class: 'btn05 bordercircle1' %>
             </li>
           <% end %>
           <li class="nav-item mr-1 text-nowrap">
-            <%= link_to '問い合わせ一覧', facility_booking_contacts_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+            <%= link_to '問い合わせ一覧', facility_booking_contacts_path, method: :get, class: 'btn05 bordercircle1' %>
           </li>
           <li class="nav-item mr-1 text-nowrap">
-            <%= link_to '契約利用者様一覧', facility_users_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+            <%= link_to '契約利用者様一覧', facility_users_path, method: :get, class: 'btn05 bordercircle1' %>
           </li>
           <li class="nav-item mr-1 text-nowrap">
-            <%= link_to '予約表', facility_schedules_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+            <%= link_to '予約表', facility_schedules_path, method: :get, class: 'btn05 bordercircle1' %>
           </li>
           <li class="nav-item mr-1 text-nowrap">
-            <%= link_to 'ログアウト', destroy_facility_session_path, method: :delete, class: 'nav-link text-secondary border rounded' %>
+            <%= link_to 'ログアウト', destroy_facility_session_path, method: :delete, class: 'btn05 bordercircle1' %>
           </li>
 
         <!-- 未ログイン時 -->
         <% else %>
           <li class="nav-item mr-1 text-nowrap">
-            <%= link_to 'About', about_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+            <%= link_to 'About', about_path, method: :get, class: 'btn05 bordercircle1' %>
           </li>
           <li class="nav-item mr-1 text-nowrap">
-            <%= link_to '新規登録(CM)', new_care_manager_registration_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+            <%= link_to '新規登録(CM)', new_care_manager_registration_path, method: :get, class: 'btn05 bordercircle1' %>
           </li>
           <li class="nav-item mr-1 text-nowrap">
-            <%= link_to 'ログイン(CM)', new_care_manager_session_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+            <%= link_to 'ログイン(CM)', new_care_manager_session_path, method: :get, class: 'btn05 bordercircle1' %>
           </li>
           <li class="nav-item mr-1 text-nowrap">
-            <%= link_to '新規登録', new_facility_registration_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+            <%= link_to '新規登録', new_facility_registration_path, method: :get, class: 'btn05 bordercircle1' %>
           </li>
           <li class="nav-item mr-1 text-nowrap">
-            <%= link_to 'ログイン', new_facility_session_path, method: :get, class: 'nav-link text-secondary border rounded' %>
+            <%= link_to 'ログイン', new_facility_session_path, method: :get, class: 'btn05 bordercircle1' %>
           </li>
         <% end %>
       </ul>
