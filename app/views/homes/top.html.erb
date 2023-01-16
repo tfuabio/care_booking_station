@@ -1,6 +1,7 @@
-<h1>Homes#top</h1>
-<p>Find me in app/views/homes/top.html.erb</p>
+<h1>ややこしい介護施設の利用予約。</h1>
+<h1><strong>Came Booking Station</strong>で簡単に。</h1>
 
-<div class="row">
-  <%= link_to 'ゲストログイン（閲覧用）', care_manager_guest_sign_in_path, class: "btn btn-secondary btn-sm btn-block mb-3 sign_in", method: :post %>
+<div class="row mt-5">
+  <%= link_to '施設様ゲストログイン（閲覧用）', facility_guest_sign_in_path, class: "btn btn-secondary btn-sm btn-block mb-3 sign_in", method: :post %>
+  <%= link_to 'ケアマネージャー様ゲストログイン（閲覧用）', care_manager_guest_sign_in_path, class: "btn btn-secondary btn-sm btn-block mb-3 sign_in", method: :post %>
 </div>

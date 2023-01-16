@@ -34,11 +34,13 @@ class Facility::SessionsController < Devise::SessionsController
 
   # ログインできるか判断するメソッド
   def facility_state
+    # 入力されたemail
+    email = params[:facility][:email]
     ## 入力されたemailからアカウントを1件取得
-    @facility = Facility.find_by(email: params[:facility][:email])
+    @facility = Facility.find_by(email: email)
     if !@facility
       # アカウントを取得できなかった場合
-      redirect_to new_facility_session_path, alert: "#{@facility.email}は登録されていないためログインできませんでした。"
+      redirect_to new_facility_session_path, alert: "#{email}は登録されていないためログインできませんでした。"
     else
       # 退会しているかを判断
       if @facility.is_deleted == false
@@ -51,6 +53,7 @@ class Facility::SessionsController < Devise::SessionsController
   end
 
   def after_sign_in_path_for(resource)
+    flash[:notice] = "#{@facility.name}でログインしました。"
     root_path
   end
 

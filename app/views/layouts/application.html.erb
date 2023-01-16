@@ -8,17 +8,30 @@
 
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/7-1-26.css">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/4-1-4.css">
   </head>
 
   <body>
-    <%= render 'layouts/header' %>
-    <main>
-      <div class="container my-5 mx-6-md pb-5">
-        <p id="notice"><%= notice %></p>
-        <p id="alert"><%= alert %></p>
-        <%= yield %>
-      </div>
-    </main>
-    <%= render 'layouts/footer' %>
+    <div id="splash">
+      <div id="splash_text"></div>
+    </div>
+    <div id="container">
+      <%= render 'layouts/header' %>
+      <main>
+        <div class="container my-5 mx-6-md pb-5">
+          <p id="notice"><%= notice %></p>
+          <p id="alert"><%= alert %></p>
+          <%= yield %>
+        </div>
+      </main>
+      <%= render 'layouts/footer' %>
+    </div>
+    <!--<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>-->
+    <script src="https://rawgit.com/kimmobrunfeldt/progressbar.js/master/dist/progressbar.min.js"></script>
+    <!--IE11用-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script><!--不必要なら削除-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.min.js"></script><!--不必要なら削除-->
+    <%= javascript_pack_tag "4-1-4" %>
   </body>
 </html>
