@@ -29,4 +29,17 @@ class Facility < ApplicationRecord
     end
     false
   end
+
+  # ゲストログイン
+  def self.guest
+    find_or_create_by!(email: 'guest@example.com') do |facility|
+      facility.password = SecureRandom.urlsafe_base64
+      facility.name = "guest"
+      facility.kana_name = "ゲスト"
+      facility.address = "ゲスト県ゲスト市ゲスト1-1"
+      facility.post_code = "1234567"
+      facility.phone_number = "0123456789"
+      facility.capacity = "20"
+    end
+  end
 end
