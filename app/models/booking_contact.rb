@@ -62,7 +62,7 @@ class BookingContact < ApplicationRecord
   end
 
   # 問い合わせの利用計画の内容を施設スケジュールに反映するメソッド
-  def add_schdule
+  def save_schdule
     use_plan = self.use_plan
     from = use_plan.start_date
     to = use_plan.end_date
@@ -73,17 +73,18 @@ class BookingContact < ApplicationRecord
       schedule = self.facility.schedules.find_or_create_by(date: date)
 
       # 日付が該当するスケジュールの利用詳細を１つ作成
-      use_detail = schedule.use_details.new
+      use_detail = schedule.use_details.new(user_id: use_plan.user_id)
 
       # 利用詳細に格納するステータスを変更
       if date == from
-        status = "in"  # 入所日
+        use_detail.status = "in"  # 入所日
       elsif date == to
-        status = "out"  # 退所日
+        use_detail.status = "out"  # 退所日
       else
-        status = "all_day"  # 終日利用
+        use_detail.status = "all_day"  # 終日利用
       end
-      use_detail.update(user_id: use_plan.user_id, status: status)
+
+      use_detail.save
     end
   end
 end

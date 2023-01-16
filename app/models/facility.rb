@@ -7,6 +7,7 @@ class Facility < ApplicationRecord
   has_many :booking_contacts, dependent: :destroy
   has_many :use_plans, dependent: :destroy
   has_many :schedules, dependent: :destroy
+  has_many :users, through: :contracts
   validates :name, presence: true
   validates :kana_name, presence: true
   validates :address, presence: true
@@ -41,5 +42,11 @@ class Facility < ApplicationRecord
       facility.phone_number = "0123456789"
       facility.capacity = "20"
     end
+  end
+
+  # 未契約かどうかチェックする
+  def new_user?(user)
+    contract = Contract.find_by(facility_id: self.id, user_id: user.id)
+    return contract.is_contracted ? false : true
   end
 end

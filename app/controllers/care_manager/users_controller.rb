@@ -48,7 +48,7 @@ class CareManager::UsersController < ApplicationController
   def ensure_correct_care_manager
     user = User.find(params[:id])
     unless user.care_manager_id == current_care_manager.id
-      redirect_to care_manager_users_path, notice: '他のケアマネージャーが作成したご利用者様情報は閲覧できません。'
+      redirect_to care_manager_users_path, alert: '他のケアマネージャーが作成したご利用者様情報は閲覧できません。'
     end
   end
 end
