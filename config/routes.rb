@@ -45,7 +45,7 @@ Rails.application.routes.draw do
   # ケアマネージャー機能
   namespace :care_manager do
     resources :users, only: [:new, :create, :index, :show, :edit, :update]
-    resources :use_plans, only: [:new, :create, :index, :show, :edit, :update] do
+    resources :use_plans, only: [:create, :index, :show, :edit, :update] do
       resources :booking_contacts, only: [:create] do
         patch 'determine'
       end

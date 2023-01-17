@@ -2,28 +2,30 @@ class CareManager::UsePlansController < ApplicationController
   before_action :authenticate_care_manager!
   before_action :ensure_correct_care_manager, only: [:show, :edit, :update, :select]
 
-  def new
+  def index
     @use_plan = UsePlan.new
+    @use_plans = current_care_manager.use_plans
   end
 
   def create
     @use_plan = UsePlan.new(use_plan_params)
+    @use_plans = current_care_manager.use_plans
     if @use_plan.correct_date?  # 日付が正しいか判定
       @use_plan.care_manager_id = current_care_manager.id
       if @use_plan.duplicate?  # 日付が登録済みの計画と重複していないか判定
         flash.now[:alert] = "入力された日付がすでに登録されている計画と重複しています。"
-        render :new
+        render :index
       else
         if @use_plan.save
           redirect_to care_manager_use_plans_path(@use_plan), notice: "利用計画が正常に作成されました。"
         else
           flash.now[:alert] = "利用計画作成中にエラーが発生しました。"
-          render :new
+          render :index
         end
       end
     else
       flash.now[:alert] = "入力された日付に問題があります。"
-      render :new
+      render :index
     end
   end
 
@@ -34,11 +36,6 @@ class CareManager::UsePlansController < ApplicationController
   end
 
   def edit
-  end
-
-  def index
-    @use_plan = UsePlan.new
-    @use_plans = current_care_manager.use_plans
   end
 
   def update
