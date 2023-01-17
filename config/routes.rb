@@ -49,7 +49,6 @@ Rails.application.routes.draw do
       resources :booking_contacts, only: [:create] do
         patch 'determine'
       end
-      get 'select', on: :member  # URLパラメータを「:id」として受け取るオプション
     end
   end
 

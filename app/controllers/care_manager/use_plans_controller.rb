@@ -31,33 +31,9 @@ class CareManager::UsePlansController < ApplicationController
 
   def show
     @booking_contact = BookingContact.new
-    @facilities = Facility.all
     @booking_contacts = @use_plan.booking_contacts
-  end
-
-  def edit
-  end
-
-  def update
-    if UsePlan.new(use_plan_params).correct_date?
-      if @use_plan.update(use_plan_params)
-        redirect_to care_manager_use_plans_path(@use_plan), notice: '利用計画が正常に更新されました。'
-      else
-        flash.now[:alert] = "利用計画更新中にエラーが発生しました。"
-        render :edit
-      end
-    else
-      flash.now[:alert] = "入力された日付に問題があります。"
-      render :edit
-    end
-  end
-
-  # 問い合わせ先選択画面表示
-  def select
     # 契約済み施設を取得
-    # @facilities = @use_plan.user.contracts.map { |x| x.facility }
-    @facilities = Facility.all
-    @booking_contact = BookingContact.new
+    @facilities = @use_plan.user.facilities
 
     # 施設検索機能
     w = params[:word]
@@ -82,9 +58,28 @@ class CareManager::UsePlansController < ApplicationController
       # 検索対象によって分岐
       if @range == "Name"
         @facilities = Facility.where("name LIKE?", w)
+        @range = "施設名"
       else
         @facilities = Facility.where("address LIKE?", w)
+        @range = "住所"
       end
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    if UsePlan.new(use_plan_params).correct_date?
+      if @use_plan.update(use_plan_params)
+        redirect_to care_manager_use_plans_path(@use_plan), notice: '利用計画が正常に更新されました。'
+      else
+        flash.now[:alert] = "利用計画更新中にエラーが発生しました。"
+        render :edit
+      end
+    else
+      flash.now[:alert] = "入力された日付に問題があります。"
+      render :edit
     end
   end
 

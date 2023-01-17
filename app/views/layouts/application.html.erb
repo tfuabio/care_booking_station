@@ -22,12 +22,11 @@
     <% else %>
       <!--トップページ以外の時-->
       <%= render 'layouts/header' %>
-      <main class="container">
+      <main class="container-fluid mb-5">
         <p id="notice"><%= notice %></p>
         <p id="alert"><%= alert %></p>
         <%= yield %>
       </main>
-      <%= render 'layouts/footer' %>
     <% end %>
   </body>
 </html>
