@@ -11,7 +11,15 @@
   </head>
 
   <body>
-    <% if care_manager_signed_in? || facility_signed_in? %>
+    <% if current_page?(root_path) %>
+      <!--トップページの時-->
+      <div id="splash">
+        <div id="splash_text"></div>
+      </div>
+      <div id="container">
+        <%= yield %>
+      </div>
+    <% else %>
       <!--トップページ以外の時-->
       <%= render 'layouts/header' %>
       <main class="container">
@@ -20,18 +28,6 @@
         <%= yield %>
       </main>
       <%= render 'layouts/footer' %>
-    <% else %>
-      <% if current_page?(root_path) %>
-        <!--トップページの時-->
-        <div id="splash">
-          <div id="splash_text"></div>
-        </div>
-        <div id="container">
-          <%= yield %>
-        </div>
-      <% else %>
-        <%= yield %>
-      <% end %>
     <% end %>
   </body>
 </html>

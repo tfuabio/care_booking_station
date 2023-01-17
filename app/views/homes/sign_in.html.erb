@@ -1,0 +1,43 @@
+<div class="container" style="height: 100vh; text-align: center;">
+  <div class="row my-5">
+    <div class="col">
+      <h1>ログイン</h1>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col border-right border-secondary">
+      <h2>施設様はこちら</h2>
+      <%= form_with model: @facility, url: facility_session_path do |f| %>
+        <div class="field my-3">
+          <%= f.label :email %><br />
+          <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+        </div>
+        <div class="field my-3">
+          <%= f.label :password %><br />
+          <%= f.password_field :password, autocomplete: "current-password" %>
+        </div>
+        <div class="actions my-3">
+          <%= f.submit "ログイン", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+      未登録の方は<%= link_to "こちら", new_facility_registration_path %>
+    </div>
+    <div class="col">
+      <h2>ケアマネージャー様はこちら</h2>
+      <%= form_with model: @care_manager, url: care_manager_session_path do |f| %>
+        <div class="field my-3">
+          <%= f.label :email %><br />
+          <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+        </div>
+        <div class="field my-3">
+          <%= f.label :password %><br />
+          <%= f.password_field :password, autocomplete: "current-password" %>
+        </div>
+        <div class="actions my-3">
+          <%= f.submit "ログイン", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+      未登録の方は<%= link_to "こちら", new_care_manager_registration_path %>
+    </div>
+  </div>
+</div>

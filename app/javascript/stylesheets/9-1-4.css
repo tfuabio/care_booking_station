@@ -1,11 +1,11 @@
 /*=== 9-1-4 矢印が動いてスクロールを促す  ====*/
 
 /*スクロールダウン全体の場所*/
-.scrolldown4{
+.scrolldown4 {
     /*描画位置※位置は適宜調整してください*/
-	position:absolute;
-	bottom:1%;
-	right:50%;
+	position: absolute;
+	bottom: 1%;
+	right: 50%;
     /*矢印の動き1秒かけて永遠にループ*/
 	animation: arrowmove 1s ease-in-out infinite;
 }
@@ -18,13 +18,13 @@
  }
 
 /*Scrollテキストの描写*/
-.scrolldown4 span{
+.scrolldown4 span {
     /*描画位置*/
 	position: absolute;
-	left:-20px;
-	bottom:10px;
+	left: -20px;
+	bottom: 10px;
     /*テキストの形状*/
-	color: #eee;
+	color: black;
 	font-size: 0.7rem;
 	letter-spacing: 0.05em;
 	/*縦書き設定*/
@@ -43,18 +43,18 @@
     /*矢印の形状*/
     width: 1px;
     height: 20px;
-    background: #eee;
+    background: black;
     transform: skewX(-31deg);
 }
 
-.scrolldown4:after{
-	content:"";
+.scrolldown4:after {
+	content: "";
     /*描画位置*/
 	position: absolute;
-	bottom:0;
-	right:0;
+	bottom: 0;
+	right: 0;
     /*矢印の形状*/
-	width:1px;
+	width: 1px;
 	height: 50px;
-	background:#eee;
+	background: black;
 }
