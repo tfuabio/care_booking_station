@@ -4,6 +4,11 @@
     <%= link_to "新規利用計画登録", new_care_manager_use_plan_path, class: "btn btn-success btn-sm px-3 text-nowrap shadow" %>
   </div>
 </div>
+<h2 class="row p-0 bg-info">新規利用計画</h2>
+<p>* は入力必須項目です</p>
+<%= form_with model: @use_plan, url: care_manager_use_plans_path do |f| %>
+  <%= render 'form', { use_plan: @use_plan, submit_text: '登録', f: f } %>
+<% end %>
 <div class="row mb-4">
   <div class="col col-md-12">
     <table class="table table-bordered table-responsive-md shadow">

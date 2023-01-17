@@ -11,18 +11,27 @@
   </head>
 
   <body>
+    <% if care_manager_signed_in? || facility_signed_in? %>
+      <!--トップページ以外の時-->
       <%= render 'layouts/header' %>
-      <main>
+      <main class="container">
         <p id="notice"><%= notice %></p>
         <p id="alert"><%= alert %></p>
         <%= yield %>
       </main>
       <%= render 'layouts/footer' %>
-    <!--<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>-->
-    <script src="https://rawgit.com/kimmobrunfeldt/progressbar.js/master/dist/progressbar.min.js"></script>
-    <!--IE11用-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script><!--不必要なら削除-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.min.js"></script><!--不必要なら削除-->
-    <%= javascript_pack_tag "4-1-4" %>
+    <% else %>
+      <% if current_page?(root_path) %>
+        <!--トップページの時-->
+        <div id="splash">
+          <div id="splash_text"></div>
+        </div>
+        <div id="container">
+          <%= yield %>
+        </div>
+      <% else %>
+        <%= yield %>
+      <% end %>
+    <% end %>
   </body>
 </html>
