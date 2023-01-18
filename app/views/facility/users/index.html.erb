@@ -26,7 +26,7 @@
                 <%= link_to "契約済に変更", contract_change_facility_user_path(user), method: :patch, data: { confirm: "契約済に変更してよろしいですか？(対象のご利用者様：#{user.full_name})" }, class: 'btn btn-success' %>
               <% else %>
                 契約済
-                <%= link_to "未契約に変更", contract_change_facility_user_path(user), method: :patch, data: { confirm: "未契約に変更してよろしいですか？(対象のご利用者様：#{user.full_name})" }, class: 'btn btn-success' %>
+                <%= link_to "未契約に変更", contract_change_facility_user_path(user), method: :patch, data: { confirm: "未契約に変更してよろしいですか？(対象のご利用者様：#{user.full_name})" }, class: 'btn btn-danger' %>
               <% end %>
             </td>
           </tr>

@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   root 'homes#top'
-  get '/about' => 'homes#about', as: 'about'
+  get '/sign_in' => 'homes#sign_in', as: 'sign_in'
 
   # ケアマネ認証用
   devise_for :care_manager, controllers: {
@@ -45,11 +45,10 @@ Rails.application.routes.draw do
   # ケアマネージャー機能
   namespace :care_manager do
     resources :users, only: [:new, :create, :index, :show, :edit, :update]
-    resources :use_plans, only: [:new, :create, :index, :show, :edit, :update] do
+    resources :use_plans, only: [:create, :index, :show, :edit, :update] do
       resources :booking_contacts, only: [:create] do
         patch 'determine'
       end
-      get 'select', on: :member  # URLパラメータを「:id」として受け取るオプション
     end
   end
 

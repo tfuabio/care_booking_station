@@ -34,24 +34,31 @@ class CareManager::SessionsController < Devise::SessionsController
 
   # 退会しているかを判断するメソッド
   def care_manager_state
+    # 入力されたemail
+    email = params[:care_manager][:email]
     ## 入力されたemailからアカウントを1件取得
-    @care_manager = CareManager.find_by(email: params[:care_manager][:email])
-    ## アカウントを取得できなかった場合、このメソッドを終了する
-    return if !@care_manager
-    ## 取得したアカウントのパスワードと入力されたパスワードが一致してるかを判別
-    if @care_manager.valid_password?(params[:care_manager][:password]) && (@care_manager.is_deleted == false)
-      root_path
+    @care_manager = CareManager.find_by(email: email)
+    if !@care_manager
+      # アカウントを取得できなかった場合
+      redirect_to sign_in_path, alert: "#{email}は登録されていないためログインできませんでした。"
     else
-      flash[:alert] = "退会済みのアカウントのためログインできませんでした。"
-      redirect_to new_care_manager_registration_path
+      # 退会しているかを判断
+      if @care_manager.is_deleted == false
+        return if @care_manager.valid_password?(params[:care_manager][:password])  # 入力されたパスワードが一致している場合このメソッドを終了
+        redirect_to sign_in_path, alert: "パスワードが一致していないためログインできませんでした。"
+      else
+        redirect_to sign_in_path, alert: "退会済みのアカウントのためログインできませんでした。"
+      end
     end
   end
 
   def after_sign_in_path_for(resource)
+    flash[:notice] = "#{@care_manager.full_name}でログインしました。"
     root_path
   end
 
   def after_sign_out_path_for(resource)
+    flash[:notice] = "ログアウトしました。"
     root_path
   end
 end
