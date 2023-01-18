@@ -2,6 +2,7 @@
 <table class="table table-bordered table-responsive-md shadow">
   <thead>
     <tr>
+      <th class="table-active">状態</th>
       <th class="table-active">問い合わせ日時</th>
       <th class="table-active">ご利用者様</th>
       <th class="table-active">期間</th>
@@ -11,9 +12,10 @@
   <tbody>
     <% @booking_contacts.each do |booking_contact| %>
       <tr>
+        <td><%= booking_contact.status_i18n %></td>
         <td><%= link_to booking_contact.created_at.strftime('%Y/%m/%d %H:%M:%S'), facility_booking_contact_path(booking_contact) %></td>
         <td>
-          <%= booking_contact.use_plan.user.full_name %> 様
+          <%= link_to "#{booking_contact.use_plan.user.full_name} 様", facility_user_path(booking_contact.use_plan.user) %>
           <% if booking_contact.new_user? %>
             (新規)
           <% end %>

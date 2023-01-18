@@ -40,14 +40,14 @@ class Facility::SessionsController < Devise::SessionsController
     @facility = Facility.find_by(email: email)
     if !@facility
       # アカウントを取得できなかった場合
-      redirect_to new_facility_session_path, alert: "#{email}は登録されていないためログインできませんでした。"
+      redirect_to sign_in_path, alert: "#{email}は登録されていないためログインできませんでした。"
     else
       # 退会しているかを判断
       if @facility.is_deleted == false
         return if @facility.valid_password?(params[:facility][:password])  # 入力されたパスワードが一致している場合このメソッドを終了
-        redirect_to new_facility_session_path, alert: "パスワードが一致していないためログインできませんでした。"
+        redirect_to sign_in_path, alert: "パスワードが一致していないためログインできませんでした。"
       else
-        redirect_to new_facility_registration_path, alert: "退会済みのアカウントのためログインできませんでした。"
+        redirect_to sign_in_path, alert: "退会済みのアカウントのためログインできませんでした。"
       end
     end
   end
@@ -58,6 +58,7 @@ class Facility::SessionsController < Devise::SessionsController
   end
 
   def after_sign_out_path_for(resource)
+    flash[:notice] = "ログアウトしました。"
     root_path
   end
 end
