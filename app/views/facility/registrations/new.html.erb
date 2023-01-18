@@ -1,0 +1,6 @@
+<h2 class="row p-0 text-nowrap">施設様ユーザー登録</h2>
+
+<%= render 'form', { facility: @facility, submit_text: '新規登録', path: facility_registration_path } %>
+
+<h2 class="row p-0 mt-5 text-nowrap">既に登録済みの方</h2>
+<%= link_to sign_in_path do %>こちら<% end %>からログインしてください。

@@ -1,0 +1,2 @@
+module CareManager::UsePlansHelper
+end

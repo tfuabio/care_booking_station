@@ -1,0 +1,37 @@
+<h1>新規利用計画</h1>
+<%= render 'form', { use_plan: @use_plan, submit_text: '登録', path: care_manager_use_plans_path } %>
+
+<h1 class="mt-5">利用計画一覧</h1>
+<table class="table table-bordered table-responsive-md shadow">
+  <thead>
+    <tr>
+      <th class="table-active text-center text-nowrap">利用者名</th>
+      <th class="table-active text-center text-nowrap">利用期間</th>
+      <th class="table-active text-center text-nowrap">利用先施設</th>
+      <th class="table-active text-center text-nowrap">状態</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @use_plans.each do |use_plan| %>
+      <tr>
+        <td class="col col-md-1 text-center text-nowrap">
+          <%= link_to care_manager_user_path(use_plan.user) do %>
+            <%= use_plan.user.full_name %> 様
+          <% end %>
+        </td>
+        <td class="col col-md-2 text-center text-nowrap">
+          <%= link_to "#{use_plan.start_date}〜#{use_plan.end_date}", care_manager_use_plan_path(use_plan) %>
+          <%= link_to "編集", edit_care_manager_use_plan_path(use_plan.id), class: "btn btn-success btn-sm px-3 text-nowrap shadow" %>
+        </td>
+        <td class="col col-md-1 text-center text-nowrap">
+          <% if use_plan.facility_id == nil %>
+            未定  <%= link_to "施設選択", care_manager_use_plan_path(use_plan.id), class: "btn btn-success btn-sm px-3 text-nowrap shadow" %>
+          <% else %>
+            <%= use_plan.facility.name %>
+          <% end %>
+        </td>
+        <td class="col col-md-1 text-center text-nowrap"><%= use_plan.status_i18n %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
