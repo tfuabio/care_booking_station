@@ -42,7 +42,7 @@ class CareManager::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:last_name, :first_name, :last_name_kana, :first_name_kana, :address, :post_code, :phone_number, :current_status, :care_level_status, :gender, :birthday, :life_history, :medical_history)
+    params.require(:user).permit(:last_name, :first_name, :last_name_kana, :first_name_kana, :address, :post_code, :phone_number, :current_status, :care_level_status, :gender, :birthday, :life_history, :medical_history, :image)
   end
 
   def ensure_correct_care_manager
