@@ -9,6 +9,7 @@
     <table class="table table-bordered table-responsive-md shadow">
       <thead>
         <tr>
+          <th class="table-active">本人画像</th>
           <th class="table-active">氏名</th>
           <th class="table-active">現在の状態</th>
           <th class="table-active">要介護度</th>
@@ -18,6 +19,7 @@
       <tbody>
         <% @users.each do |user| %>
           <tr>
+            <td><%= image_tag user.get_image(100,100) %></td>
             <td>
               <%= link_to care_manager_user_path(user) do %>
                 <%= user.full_name %> 様

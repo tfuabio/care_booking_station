@@ -77,6 +77,13 @@
 嘱託医 ○○医師 （高血圧、糖尿病、変形性膝関節症の診察）", class: 'form-control',  rows: "10" %></td>
   </tr>
   <tr>
+    <th class="pt-3 text-nowrap text-center">本人画像</th>
+    <td></td>
+    <td><%= f.file_field :image, accept: "image/*" %></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
     <th></th>
     <td></td>
     <td colspan="3" class="pt-3 text-nowrap">

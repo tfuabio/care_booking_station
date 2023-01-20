@@ -11,8 +11,12 @@
   <div class="col-md-8">
     <table class="table table-bordered table-responsive-md shadow">
       <tr>
-        <th class="table-active" style="width:25%">氏名</td>
-        <td style="width:75%"><%= @user.last_name %> <%= @user.first_name %></td>
+        <th class="table-active">本人画像</td>
+        <td><%= image_tag @user.get_image(50,50) %></td>
+      </tr>
+      <tr>
+        <th class="table-active">氏名</td>
+        <td><%= @user.last_name %> <%= @user.first_name %></td>
       </tr>
       <tr>
         <th class="table-active">カナ</td>
