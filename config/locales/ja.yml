@@ -36,6 +36,7 @@ ja:
         in: "入"
         all_day: "1"
         out: "退"
+        canceled: "キ"
   date:
     formats:
       default: "%Y/%m/%d"

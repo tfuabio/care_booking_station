@@ -46,6 +46,7 @@ Rails.application.routes.draw do
   namespace :care_manager do
     resources :users, only: [:new, :create, :index, :show, :edit, :update]
     resources :use_plans, only: [:create, :index, :show, :edit, :update] do
+      patch 'cancel' => 'use_plans#cancel', on: :member
       resources :booking_contacts, only: [:create] do
         patch 'determine'
       end
@@ -55,10 +56,10 @@ Rails.application.routes.draw do
   # 施設機能
   namespace :facility do
     resources :users, only: [:index, :show] do
-      patch 'contract_change' => "users#contract_change", on: :member
+      patch 'contract_change' => 'users#contract_change', on: :member
     end
     resources :booking_contacts, only: [:index, :show] do
-      patch 'reply' => "booking_contacts#reply"
+      patch 'reply' => 'booking_contacts#reply'
     end
     resources :schedules, only: [:index, :show, :create]
   end

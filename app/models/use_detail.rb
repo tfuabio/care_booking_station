@@ -5,7 +5,8 @@ class UseDetail < ApplicationRecord
 
   enum status: {
     in: 0,
-    all_day:1,
-    out:3
+    all_day: 1,
+    out: 3,
+    canceled: 4
   }
 end
