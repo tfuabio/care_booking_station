@@ -1,6 +1,6 @@
 class CareManager::UsePlansController < ApplicationController
   before_action :authenticate_care_manager!
-  before_action :ensure_correct_care_manager, only: [:show, :edit, :update, :select]
+  before_action :ensure_correct_care_manager, only: [:show, :edit, :update, :cancel]
 
   def index
     @use_plan = UsePlan.new
@@ -17,7 +17,7 @@ class CareManager::UsePlansController < ApplicationController
         render :index
       else
         if @use_plan.save
-          redirect_to care_manager_use_plans_path(@use_plan), notice: "利用計画が正常に作成されました。"
+          redirect_to care_manager_use_plan_path(@use_plan), notice: "利用計画が正常に作成されました。"
         else
           flash.now[:alert] = "利用計画作成中にエラーが発生しました。"
           render :index
@@ -32,8 +32,9 @@ class CareManager::UsePlansController < ApplicationController
   def show
     @booking_contact = BookingContact.new
     @booking_contacts = @use_plan.booking_contacts
+
     # 契約済み施設を取得
-    @facilities = @use_plan.user.facilities
+    @facilities = @use_plan.user.contracts.where(is_contracted: true).map { |x| x.facility }
 
     # 施設検索機能
     w = params[:word]
@@ -75,12 +76,28 @@ class CareManager::UsePlansController < ApplicationController
         redirect_to care_manager_use_plans_path(@use_plan), notice: '利用計画が正常に更新されました。'
       else
         flash.now[:alert] = "利用計画更新中にエラーが発生しました。"
-        render :edit
       end
     else
       flash.now[:alert] = "入力された日付に問題があります。"
-      render :edit
     end
+    render :edit
+  end
+
+  # 利用計画を中止にするアクション（これから）
+  def cancel
+    # 利用計画の内容を施設スケジュールにキャンセルとして反映
+    if @use_plan.save_schdule("canceled") && @use_plan.status != "canceled"
+      flash.now[:notice] = "#{@use_plan.facility.name}へ予約の中止を送信しました。"
+      if @use_plan.update(status: "canceled")
+        flash.now[:notice] += "この利用計画を中止にしました。"
+      else
+        flash.now[:alert] = "処理中にエラーが発生しました。"
+      end
+    else
+      flash.now[:alert] = "問題が発生したため処理を終了しました。"
+    end
+    @booking_contacts = @use_plan.booking_contacts
+    render :show
   end
 
   private
