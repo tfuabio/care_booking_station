@@ -1,4 +1,4 @@
-<h1>担当ご利用者様一覧</h1>
+<h1>担当利用者一覧</h1>
 <div class="row py-3">
   <div class="col">
     <%= link_to "新規ご利用者様登録", new_care_manager_user_path, class: "btn btn-success btn-sm px-3 text-nowrap shadow" %>
@@ -8,7 +8,8 @@
   <div class="col-md-8">
     <table class="table table-bordered table-responsive-md shadow">
       <thead>
-        <tr>
+        <tr class="text-center">
+          <th class="table-active">本人画像</th>
           <th class="table-active">氏名</th>
           <th class="table-active">現在の状態</th>
           <th class="table-active">要介護度</th>
@@ -18,6 +19,7 @@
       <tbody>
         <% @users.each do |user| %>
           <tr>
+            <td><%= image_tag user.get_image(50,50) %></td>
             <td>
               <%= link_to care_manager_user_path(user) do %>
                 <%= user.full_name %> 様
