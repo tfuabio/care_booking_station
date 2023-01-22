@@ -44,9 +44,9 @@ class CareManager::UsePlansController < ApplicationController
 
     # 施設検索機能
     w = params[:word]
-    if w != nil
+    unless w == nil || w.blank?
       s = params[:search]
-      @range = params[:range] # 検索結果に表示
+      range = params[:range] # 検索結果に表示
 
       # 検索方法によって分岐
       if s ==  "partial_match"
@@ -63,13 +63,15 @@ class CareManager::UsePlansController < ApplicationController
       end
 
       # 検索対象によって分岐
-      if @range == "Name"
+      if range == "Name"
         @facilities = Facility.where("name LIKE?", w)
-        @range = "施設名"
+        @word += "施設名"
       else
         @facilities = Facility.where("address LIKE?", w)
-        @range = "住所"
+        @word += "住所"
       end
+    else
+
     end
   end
 
