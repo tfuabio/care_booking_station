@@ -4,7 +4,13 @@ class CareManager::UsePlansController < ApplicationController
 
   def index
     @use_plan = UsePlan.new
-    @use_plans = current_care_manager.use_plans
+    @status = params[:status]
+    @status = 'all' if @status.nil?
+    if @status == 'all'
+      @use_plans = current_care_manager.use_plans.sort_by{ |x| x.created_at }.reverse
+    else
+      @use_plans = current_care_manager.use_plans.where(status: @status).sort_by{ |x| x.created_at }.reverse
+    end
   end
 
   def create
