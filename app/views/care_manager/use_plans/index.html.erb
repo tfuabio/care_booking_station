@@ -1,37 +1,59 @@
-<h1>新規利用計画</h1>
-<%= render 'form', { use_plan: @use_plan, submit_text: '登録', path: care_manager_use_plans_path } %>
-
-<h1 class="mt-5">利用計画一覧</h1>
-<table class="table table-bordered table-responsive-md shadow">
-  <thead>
-    <tr>
-      <th class="table-active text-center text-nowrap">利用者名</th>
-      <th class="table-active text-center text-nowrap">利用期間</th>
-      <th class="table-active text-center text-nowrap">利用先施設</th>
-      <th class="table-active text-center text-nowrap">状態</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @use_plans.each do |use_plan| %>
-      <tr>
-        <td class="col col-md-1 text-center text-nowrap">
-          <%= link_to care_manager_user_path(use_plan.user) do %>
-            <%= use_plan.user.full_name %> 様
-          <% end %>
-        </td>
-        <td class="col col-md-2 text-center text-nowrap">
-          <%= link_to "#{use_plan.start_date}〜#{use_plan.end_date}", care_manager_use_plan_path(use_plan) %>
-          <%= link_to "編集", edit_care_manager_use_plan_path(use_plan.id), class: "btn btn-success btn-sm px-3 text-nowrap shadow" %>
-        </td>
-        <td class="col col-md-1 text-center text-nowrap">
-          <% if use_plan.facility_id == nil %>
-            未定  <%= link_to "施設選択", care_manager_use_plan_path(use_plan.id), class: "btn btn-success btn-sm px-3 text-nowrap shadow" %>
-          <% else %>
-            <%= use_plan.facility.name %>
-          <% end %>
-        </td>
-        <td class="col col-md-1 text-center text-nowrap"><%= use_plan.status_i18n %></td>
-      </tr>
+<div class="row">
+  <div class="col col-12 col-md-3 border-right">
+    <h1>新規利用計画</h1>
+    <p>利用期間が決まったらこちらへ入力してください。「作成」ボタンをクリックすると問い合わせ先の施設選択画面へ進みます。</p>
+    <%= form_with model: @use_plan, url: care_manager_use_plans_path, class: "text-center" do |f| %>
+      <%= render "care_manager/shared/error_messages", resource: @use_plan %>
+      <div class="container bg-light shadow">
+        <p class="text-nowrap">利用者</p>
+        <%= f.select :user_id, current_care_manager.users.map { |x| [ x.full_name + " 様", x.id ] }, { prompt: "選択してください" }, required: true, class: 'custom-select' %>
+        <p class="pt-3 text-nowrap text-center">入所日</p>
+        <%= f.date_field :start_date, required: true, class: 'custom-select', min: Date.current %>
+        <p class="pt-3 text-nowrap text-center">退所日</p>
+        <%= f.date_field :end_date, required: true, class: 'custom-select', min: Date.current %>
+        <%= f.submit '作成', class: 'btn btn-success my-3 mx-auto' %>
+      </div>
     <% end %>
-  </tbody>
-</table>
+  </div>
+  <div class="col col-12 col-md-9">
+    <h1>利用計画一覧</h1>
+    <div class="form-inline my-3">
+      <%= form_with url: care_manager_use_plans_path, method: :get do |f| %>
+        <%= f.select :status, options_for_select( { '全て表示' => 'all', '計画中' => 'planning', '予約確定' => 'confirmed', 'キャンセル済み' => 'canceled' }, @status), {}, class: 'col custom-select' %>
+        <%= f.submit "表示", class: "btn btn-primary" %>
+      <% end %>
+    </div>
+    <table class="table table-bordered shadow">
+      <thead>
+        <tr>
+          <th class="table-active text-center text-nowrap">利用者名</th>
+          <th class="table-active text-center text-nowrap">利用期間</th>
+          <th class="table-active text-center text-nowrap">利用先施設</th>
+          <th class="table-active text-center text-nowrap">状態</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @use_plans.each do |use_plan| %>
+          <tr>
+            <td class="col col-md-1 text-center text-nowrap">
+              <%= image_tag use_plan.user.get_image(50,50) %>
+              <%= link_to "#{use_plan.user.full_name} 様", care_manager_user_path(use_plan.user) %>
+            </td>
+            <td class="col col-md-2 text-center text-nowrap">
+              <%= link_to "#{use_plan.start_date}〜#{use_plan.end_date}", care_manager_use_plan_path(use_plan) %>
+              <%= link_to "編集", edit_care_manager_use_plan_path(use_plan.id), class: "btn btn-success btn-sm text-nowrap shadow ml-3" %>
+            </td>
+            <td class="col col-md-1 text-center text-nowrap">
+              <% if use_plan.facility_id == nil %>
+                未定  <%= link_to "施設選択", care_manager_use_plan_path(use_plan.id), class: "btn btn-success btn-sm text-nowrap shadow ml-3" %>
+              <% else %>
+                <%= use_plan.facility.name %>
+              <% end %>
+            </td>
+            <td class="col col-md-1 text-center text-nowrap"><%= use_plan.status_i18n %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
