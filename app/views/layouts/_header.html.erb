@@ -16,17 +16,25 @@
             <!--ゲストログイン時は非表示-->
             <p class="my-auto mr-2 text-nowrap">ようこそ、<%= current_care_manager.last_name %>様</p>
             <li class="nav-item mr-1 text-nowrap">
-              <%= link_to 'マイページ', care_managers_path, method: :get, class: 'btn05 bordercircle1' %>
+              <%= link_to care_managers_path, method: :get, class: 'btn05 bordercircle1' do %>
+                <i class="fas fa-user-tie"></i> マイページ
+              <% end %>
             </li>
           <% end %>
           <li class="nav-item mr-1 text-nowrap">
-            <%= link_to '利用計画', care_manager_use_plans_path, method: :get, class: 'btn05 bordercircle1' %>
+            <%= link_to care_manager_use_plans_path, method: :get, class: 'btn05 bordercircle1' do %>
+              <i class="fas fa-tasks"></i> 利用計画
+            <% end %>
           </li>
           <li class="nav-item mr-1 text-nowrap">
-            <%= link_to '利用者様', care_manager_users_path, method: :get, class: 'btn05 bordercircle1' %>
+            <%= link_to care_manager_users_path, method: :get, class: 'btn05 bordercircle1' do %>
+              <i class="fas fa-users"></i> 利用者
+            <% end %>
           </li>
           <li class="nav-item mr-1 text-nowrap">
-            <%= link_to 'ログアウト', destroy_care_manager_session_path, method: :delete, class: 'btn05 bordercircle1' %>
+            <%= link_to destroy_care_manager_session_path, method: :delete, class: 'btn05 bordercircle1' do %>
+              <i class="fas fa-sign-out-alt"></i> ログアウト
+            <% end %>
           </li>
 
         <!-- 施設側ログイン時 -->
@@ -35,20 +43,30 @@
           <% if current_facility.email != "guest@example.com" %>
             <!--ゲストログイン時は非表示-->
             <li class="nav-item mr-1 text-nowrap">
-              <%= link_to 'マイページ', facilities_path, method: :get, class: 'btn05 bordercircle1' %>
+              <%= link_to facilities_path, method: :get, class: 'btn05 bordercircle1' do %>
+                <i class="fas fa-user-tie"></i> マイページ
+              <% end %>
             </li>
           <% end %>
           <li class="nav-item mr-1 text-nowrap">
-            <%= link_to '問い合わせ一覧', facility_booking_contacts_path, method: :get, class: 'btn05 bordercircle1' %>
+            <%= link_to facility_booking_contacts_path, method: :get, class: 'btn05 bordercircle1' do %>
+              <i class="fas fa-mail-bulk"></i> 問い合わせ
+            <% end %>
           </li>
           <li class="nav-item mr-1 text-nowrap">
-            <%= link_to '利用者一覧', facility_users_path, method: :get, class: 'btn05 bordercircle1' %>
+            <%= link_to facility_users_path, method: :get, class: 'btn05 bordercircle1' do %>
+              <i class="fas fa-users"></i> 利用者
+            <% end %>
           </li>
           <li class="nav-item mr-1 text-nowrap">
-            <%= link_to '予約表', facility_schedules_path, method: :get, class: 'btn05 bordercircle1' %>
+            <%= link_to facility_schedules_path, method: :get, class: 'btn05 bordercircle1' do %>
+              <i class="fas fa-table"></i> 予約表
+            <% end %>
           </li>
           <li class="nav-item mr-1 text-nowrap">
-            <%= link_to 'ログアウト', destroy_facility_session_path, method: :delete, class: 'btn05 bordercircle1' %>
+            <%= link_to destroy_facility_session_path, method: :delete, class: 'btn05 bordercircle1' do %>
+              <i class="fas fa-sign-out-alt"></i> ログアウト
+            <% end %>
           </li>
 
         <!-- 未ログイン時 -->

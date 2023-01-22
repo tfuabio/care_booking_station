@@ -1,2 +1,14 @@
 <h2 class="row p-0 text-nowrap">利用計画編集</h2>
-<%= render 'form', { use_plan: @use_plan, submit_text: '編集内容を保存', path: care_manager_use_plan_path(@use_plan) } %>
+<%= form_with model: @use_plan, url: care_manager_use_plan_path(@use_plan) do |f| %>
+  <%= render "care_manager/shared/error_messages", resource: @use_plan %>
+  <div class="container bg-light shadow">
+    <p class="text-nowrap text-center">利用者</p>
+    <%= image_tag @use_plan.user.get_image(100,100) %>
+    <%= "#{@use_plan.user.full_name} 様" %>
+    <p class="pt-3 text-nowrap text-center">入所日</p>
+    <%= f.date_field :start_date, required: true, class: 'custom-select', min: Date.current %>
+    <p class="pt-3 text-nowrap text-center">退所日</p>
+    <%= f.date_field :end_date, required: true, class: 'custom-select', min: Date.current %>
+    <%= f.submit '編集内容を保存', class: 'btn btn-success my-3 mx-auto' %>
+  </div>
+<% end %>
