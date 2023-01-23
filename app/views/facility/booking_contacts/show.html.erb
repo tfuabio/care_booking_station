@@ -1,46 +1,86 @@
-<h1>問い合わせ詳細</h1>
-<table class="table table-bordered table-responsive-md shadow">
-  <tr>
-    <th class="table-active">問い合わせ状態</th>
-    <td>
-      <%= @booking_contact.status_i18n %>
-      <% if @booking_contact.status == "awaiting_reply" %>
-        <%= link_to "予約可能で返事する", facility_booking_contact_reply_path(@booking_contact), method: :patch, data: { confirm: "予約可能でお返事してよろしいですか？(送信先：#{@booking_contact.use_plan.care_manager.full_name} ケアマネージャー)" } %>
-      <% end %>
-    </td>
-  </tr>
-  <tr>
-    <th class="table-active"> 利用計画状態</th>
-    <td>
-      <%= @booking_contact.use_plan.status_i18n %>
-      <% if @booking_contact.use_plan.facility.nil? %>
-        (未定)
-      <% else %>
-        (<%= @booking_contact.use_plan.facility.name %>)
-      <% end %>
-    </td>
-  </tr>
-  <tr>
-    <th class="table-active">問い合わせ日時</th>
-    <td><%= @booking_contact.created_at.strftime('%Y/%m/%d %H:%M:%S') %></td>
-  </tr>
-  <tr>
-    <th class="table-active">ご利用者様</th>
-    <td>
-      <%= @booking_contact.use_plan.user.full_name %> 様
-      <% if @booking_contact.new_user? %>
-        (新規)
-      <% else %>
-        (契約済)
-      <% end %>
-    </td>
-  </tr>
-  <tr>
-    <th class="table-active">期間</th>
-    <td><%= @booking_contact.use_plan.start_date %> 〜 <%= @booking_contact.use_plan.end_date %></td>
-  </tr>
-  <tr>
-    <th class="table-active">問い合わせ元ケアマネージャー</th>
-    <td><%= @booking_contact.use_plan.care_manager.full_name %> (<%= @booking_contact.use_plan.care_manager.office_name %>)</td>
-  </tr>
-</table>
+<div class="row">
+  <div class="col col-12 col-md-3 border-right mb-5">
+    <%= link_to facility_booking_contacts_path do %>
+      <i class="fas fa-arrow-circle-left"></i>
+      予約問い合わせ一覧へ
+    <% end %>
+    <ul class="list-group text-nowrap text-center shadow mt-2">
+      <li class="list-group-item bg-primary text-white m-0">予約問い合わせ詳細</li>
+      <li class="list-group-item">
+        <p class="bg-dark text-light rounded-lg">利用者</p>
+        <%= link_to facility_user_path(@use_plan.user) do %>
+          <%= image_tag @use_plan.user.get_image(100,100), class: "rounded" %>
+          <%= @use_plan.user.full_name %> 様
+          <% if @booking_contact.new_user? %>
+            (新規)
+          <% else %>
+            (契約済)
+          <% end %>
+        <% end %>
+      </li>
+      <li class="list-group-item">
+        <p class="bg-dark text-light rounded-lg">状態</p>
+        <%= @booking_contact.status_i18n %>
+        <% if @booking_contact.status == "awaiting_reply" %>
+          <br>
+          <%= link_to "予約可能で返事する", reply_facility_booking_contact_path(@booking_contact, content: "bookable"), method: :patch, data: { confirm: "予約可能でお返事してよろしいですか？(送信先：#{@use_plan.care_manager.full_name} ケアマネージャー)" }, class: "btn-sm btn-success" unless @booking_contact.no_beds? %>
+          <%= link_to "予約不可で返事する", reply_facility_booking_contact_path(@booking_contact, content: "not_bookable"), method: :patch, data: { confirm: "予約可能でお返事してよろしいですか？(送信先：#{@use_plan.care_manager.full_name} ケアマネージャー)" }, class: "btn-sm btn-danger" %>
+        <% end %>
+      </li>
+      <li class="list-group-item">
+        <p class="bg-dark text-light rounded-lg">利用計画状態</p>
+        <%= @use_plan.status_i18n %>
+        <% if @use_plan.facility.nil? %>
+          (未定)
+        <% else %>
+          (<%= @use_plan.facility.name %>)
+        <% end %>
+      </li>
+      <li class="list-group-item">
+        <p class="bg-dark text-light rounded-lg">問い合わせ日時</p>
+        <%= @booking_contact.created_at.strftime('%Y/%m/%d %H:%M') %>
+      </li>
+      <li class="list-group-item">
+        <p class="bg-dark text-light rounded-lg">利用期間</p>
+        <%= @use_plan.start_date %>〜<%= @use_plan.end_date %>
+      </li>
+      <li class="list-group-item">
+        <p class="bg-dark text-light rounded-lg">問い合わせ元ケアマネージャー</p>
+        <%= @use_plan.care_manager.full_name %> (<%= @use_plan.care_manager.office_name %>)
+      </li>
+    </ul>
+  </div>
+  <div class="col col-12 col-md-9">
+    <h1>利用期間中の予約状況</h1>
+    <p class="text-secondary"><%= @use_plan.start_date %>〜<%= @use_plan.end_date %>を表示中</p>
+    <% if @hash.blank? %>
+      予約データがありません。
+    <% else %>
+      <div class="table-responsive">
+        <table class="table table-sm table-bordered shadow text-nowrap text-center">
+          <caption>この表は横にスクロールできます。</caption>
+          <thead>
+            <tr class="table-active">
+              <th></th>
+              <% @days.each do |day| %>
+                <th class="table-active" style="max-width: 5px;"><%= day.day %><br><%= @week[day.wday] %></th>
+              <% end %>
+            </tr>
+          </thead>
+          <tbody>
+            <% @hash.keys.each do |user| %>
+              <tr>
+                <th class="text-center text-nowrap"><%= link_to "#{user.full_name} 様", facility_user_path(user) %><%= "(新規)" if current_facility.new_user?(user) %></th>
+                <% @days.each do |day| %>
+                  <td class="text-center" style="max-width: 5px;">
+                    <%= @hash[user][day] %>
+                  </td>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+  </div>
+</div>

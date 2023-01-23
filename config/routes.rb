@@ -59,7 +59,7 @@ Rails.application.routes.draw do
       patch 'contract_change' => 'users#contract_change', on: :member
     end
     resources :booking_contacts, only: [:index, :show] do
-      patch 'reply' => 'booking_contacts#reply'
+      patch 'reply' => 'booking_contacts#reply', on: :member
     end
     resources :schedules, only: [:index, :show, :create]
   end

@@ -113,4 +113,10 @@ class UsePlan < ApplicationRecord
       return false
     end
   end
+
+  # 問い合わせの件数を返すメソッド
+  def contact_count(status)  # awaiting_reply or bookable or not_bookable or all
+    return self.booking_contacts.count if status == "all"
+    return self.booking_contacts.where(status: status).count
+  end
 end
