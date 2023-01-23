@@ -8,7 +8,13 @@ class HomesController < ApplicationController
   end
 
   def sign_in
-    @care_manager = CareManager.new
-    @facility = Facility.new
+    if care_manager_signed_in?
+      redirect_to care_manager_use_plans_path, alert: "ログイン中はログインページを表示できません。"
+    elsif facility_signed_in?
+      redirect_to facility_booking_contacts_path, alert: "ログイン中はログインページを表示できません。"
+    else
+      @care_manager = CareManager.new
+      @facility = Facility.new
+    end
   end
 end
