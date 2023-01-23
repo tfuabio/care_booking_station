@@ -1,28 +1,47 @@
-<h1>問い合わせ一覧</h1>
-<table class="table table-bordered table-responsive-md shadow">
-  <thead>
-    <tr>
-      <th class="table-active">状態</th>
-      <th class="table-active">問い合わせ日時</th>
-      <th class="table-active">ご利用者様</th>
-      <th class="table-active">期間</th>
-      <th class="table-active">問い合わせ元ケアマネージャー</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @booking_contacts.each do |booking_contact| %>
-      <tr>
-        <td><%= booking_contact.status_i18n %></td>
-        <td><%= link_to booking_contact.created_at.strftime('%Y/%m/%d %H:%M:%S'), facility_booking_contact_path(booking_contact) %></td>
-        <td>
-          <%= link_to "#{booking_contact.use_plan.user.full_name} 様", facility_user_path(booking_contact.use_plan.user) %>
-          <% if booking_contact.new_user? %>
-            (新規)
-          <% end %>
-        </td>
-        <td><%= booking_contact.use_plan.start_date %> 〜 <%= booking_contact.use_plan.end_date %></td>
-        <td><%= booking_contact.use_plan.care_manager.full_name %> (<%= booking_contact.use_plan.care_manager.office_name %>)</td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<h1>予約問い合わせ一覧</h1>
+<p class="text-secondary">施設への問い合わせがあればここに表示されます。</p>
+<%= form_with url: facility_booking_contacts_path, method: :get, class: "form-inline my-3 col-md-4" do |f| %>
+  <%= f.select :status, options_for_select( { '全て表示' => 'all', '返答待ち' => 'awaiting_reply', '返答済(予約可能)' => 'bookable', '返答済(予約不可)' => 'not_bookable', '問い合わせ終了' => 'closing' }, @status), {}, class: 'form-control' %>
+  <%= f.submit "表示", class: "btn btn-primary" %>
+<% end %>
+<% if @booking_contacts.blank? %>
+  問い合わせはありません。
+<% else %>
+  <div class="table-responsive">
+    <table class="table table-bordered shadow text-center text-nowrap">
+      <caption>この表は横にスクロールできます。</caption>
+      <thead>
+        <tr>
+          <th class="table-active">状態</th>
+          <th class="table-active">問い合わせ日時</th>
+          <th class="table-active">利用者</th>
+          <th class="table-active">期間</th>
+          <th class="table-active">問い合わせ元ケアマネージャー</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @booking_contacts.each do |booking_contact| %>
+          <tr>
+            <td class="align-middle">
+              <%= booking_contact.status_i18n %><br>
+              <%= link_to "確認する", facility_booking_contact_path(booking_contact), class: "btn-sm btn-success" if booking_contact.status == "awaiting_reply" %>
+            </td>
+            <td class="align-middle"><%= link_to booking_contact.created_at.strftime('%Y/%m/%d %H:%M'), facility_booking_contact_path(booking_contact) %></td>
+            <td class="align-middle">
+              <%= link_to facility_user_path(booking_contact.use_plan.user) do %>
+                <%= image_tag booking_contact.use_plan.user.get_image(50,50), class: "rounded" %>
+                <%= "#{booking_contact.use_plan.user.full_name} 様" %>
+                <%= "(新規)" if booking_contact.new_user? %>
+              <% end %>
+            </td>
+            <td class="align-middle"><%= booking_contact.use_plan.start_date %> 〜 <%= booking_contact.use_plan.end_date %></td>
+            <td class="align-middle">
+              <%= booking_contact.use_plan.care_manager.full_name %><br>
+              (<%= booking_contact.use_plan.care_manager.office_name %>)
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

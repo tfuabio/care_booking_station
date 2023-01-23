@@ -15,37 +15,9 @@ body {
   color: red;
 }
 
-
-// a {
-//   color: #333;
-// }
-
-// a:hover {
-//   text-decoration: none;
-// }
-
-.logo {
+.logo, .logo:hover {
   font-family: 'Sacramento', cursive;
   text-decoration: none;
   color: #333;
   font-size: 2em;
-}
-
-table {
-  width: 100%;
-
-}
-
-table th, table td {
-  vertical-align: middle;
-  text-align: center;
-}
-
-@media all and (max-width: 767px) {
-  table th, table td {
-    display: block;
-    width: 100%;
-  }
-  table tr:last-child td:last-child {
-  }
 }

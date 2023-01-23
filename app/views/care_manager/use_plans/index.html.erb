@@ -1,7 +1,7 @@
 <div class="row">
-  <div class="col col-12 col-md-3 border-right">
+  <div class="col col-12 col-md-3 border-right mb-5">
     <h1>新規利用計画</h1>
-    <p>利用期間が決まったらこちらへ入力してください。「作成」ボタンをクリックすると問い合わせ先の施設選択画面へ進みます。</p>
+    <p class="text-secondary">利用期間が決まったらこちらへ入力してください。「作成」ボタンをクリックすると問い合わせ先の施設選択画面へ進みます。</p>
     <%= form_with model: @use_plan, url: care_manager_use_plans_path, class: "text-center" do |f| %>
       <%= render "care_manager/shared/error_messages", resource: @use_plan %>
       <div class="container bg-light shadow">
@@ -17,43 +17,61 @@
   </div>
   <div class="col col-12 col-md-9">
     <h1>利用計画一覧</h1>
-    <div class="form-inline my-3">
-      <%= form_with url: care_manager_use_plans_path, method: :get do |f| %>
-        <%= f.select :status, options_for_select( { '全て表示' => 'all', '計画中' => 'planning', '予約確定' => 'confirmed', 'キャンセル済み' => 'canceled' }, @status), {}, class: 'col custom-select' %>
-        <%= f.submit "表示", class: "btn btn-primary" %>
-      <% end %>
-    </div>
-    <table class="table table-bordered shadow">
-      <thead>
-        <tr>
-          <th class="table-active text-center text-nowrap">利用者名</th>
-          <th class="table-active text-center text-nowrap">利用期間</th>
-          <th class="table-active text-center text-nowrap">利用先施設</th>
-          <th class="table-active text-center text-nowrap">状態</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @use_plans.each do |use_plan| %>
+    <%= form_with url: care_manager_use_plans_path, method: :get, class: "form-inline my-3 col-md-4" do |f| %>
+      <%= f.select :status, options_for_select( { '全て表示' => 'all', '計画中' => 'planning', '予約確定' => 'confirmed', '問い合わせ中' => 'contacting', 'キャンセル済み' => 'canceled' }, @status), {}, class: 'form-control' %>
+      <%= f.submit "表示", class: "btn btn-primary" %>
+    <% end %>
+    <div class="table-responsive">
+      <table class="table table-bordered shadow text-center text-nowrap">
+        <caption>この表は横にスクロールできます。</caption>
+        <thead>
           <tr>
-            <td class="col col-md-1 text-center text-nowrap">
-              <%= image_tag use_plan.user.get_image(50,50) %>
-              <%= link_to "#{use_plan.user.full_name} 様", care_manager_user_path(use_plan.user) %>
-            </td>
-            <td class="col col-md-2 text-center text-nowrap">
-              <%= link_to "#{use_plan.start_date}〜#{use_plan.end_date}", care_manager_use_plan_path(use_plan) %>
-              <%= link_to "編集", edit_care_manager_use_plan_path(use_plan.id), class: "btn btn-success btn-sm text-nowrap shadow ml-3" %>
-            </td>
-            <td class="col col-md-1 text-center text-nowrap">
-              <% if use_plan.facility_id == nil %>
-                未定  <%= link_to "施設選択", care_manager_use_plan_path(use_plan.id), class: "btn btn-success btn-sm text-nowrap shadow ml-3" %>
-              <% else %>
-                <%= use_plan.facility.name %>
-              <% end %>
-            </td>
-            <td class="col col-md-1 text-center text-nowrap"><%= use_plan.status_i18n %></td>
+            <th class="table-active">状態</th>
+            <th class="table-active">利用者名</th>
+            <th class="table-active">利用期間</th>
+            <th class="table-active">利用先施設</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% @use_plans.each do |use_plan| %>
+            <tr>
+              <td class="align-middle">
+                <%= use_plan.status_i18n %>
+                <% if use_plan.status == "contacting" %>
+                  <br>
+                  <%= link_to care_manager_use_plan_path(use_plan) do %>
+                    <% if use_plan.contact_count("bookable") == 0 %>
+                      <% if use_plan.contact_count("awaiting_reply") == 0 %>
+                        <span class="badge badge-danger">全件予約不可</span>
+                      <% else %>
+                        <span class="badge badge-secondary"><%= use_plan.contact_count("awaiting_reply") %>件問い合わせ中</span>
+                      <% end %>
+                    <% else %>
+                      <span class="badge badge-success">予約可<%= use_plan.contact_count("bookable") %>件あり</span>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </td>
+              <td class="align-middle">
+                <%= link_to care_manager_user_path(use_plan.user) do %>
+                  <%= image_tag use_plan.user.get_image(50,50), class: "rounded" %>
+                  <%= "#{use_plan.user.full_name} 様" %>
+                <% end %>
+              </td>
+              <td class="align-middle">
+                <%= link_to "#{use_plan.start_date}〜#{use_plan.end_date}", care_manager_use_plan_path(use_plan) %>
+              </td>
+              <td class="align-middle">
+                <% if use_plan.facility_id == nil %>
+                  未定  <%= link_to "施設選択", care_manager_use_plan_path(use_plan.id), class: "btn btn-success btn-sm text-nowrap shadow ml-3" %>
+                <% else %>
+                  <%= use_plan.facility.name %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
