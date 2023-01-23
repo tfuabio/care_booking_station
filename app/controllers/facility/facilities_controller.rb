@@ -1,5 +1,5 @@
 class Facility::FacilitiesController < ApplicationController
-  # before_action :ensure_guest_facility
+  before_action :ensure_guest_facility
 
   def show
   end
@@ -33,9 +33,9 @@ class Facility::FacilitiesController < ApplicationController
     params.require(:facility).permit(:name,:kana_name, :post_code, :address, :phone_number, :capacity, :email, :password, :password_confirmation)
   end
 
-  # def ensure_guest_facility
-  #   if current_facility.email == "guest@example.com"
-  #     redirect_to root_path, notice: 'ゲストユーザーはプロフィール編集を行えません。'
-  #   end
-  # end
+  def ensure_guest_facility
+    if current_facility.email == "guest@example.com"
+      redirect_to root_path, notice: 'ゲストユーザーはプロフィール編集を行えません。'
+    end
+  end
 end

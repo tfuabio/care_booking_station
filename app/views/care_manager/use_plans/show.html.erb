@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col col-12 col-md-3 border-right">
+  <div class="col col-12 col-md-3 border-right mb-5">
     <%= link_to care_manager_use_plans_path do %>
       <i class="fas fa-arrow-circle-left"></i>
       利用計画一覧へ
@@ -53,25 +53,26 @@
       問い合わせ履歴はありません。
     <% else %>
       <div class="table-responsive">
-        <table class="table table-bordered shadow">
+        <table class="table table-bordered shadow text-center text-nowrap">
+          <caption>この表は横にスクロールできます。</caption>
           <thead>
-            <tr>
-              <th class="table-active text-center text-nowrap">問い合わせ日時</th>
-              <th class="table-active text-center text-nowrap">送信済み施設</th>
-              <th class="table-active text-center text-nowrap">状態</th>
+            <tr class="table-active">
+              <th>状態</th>
+              <th>送信先施設</th>
+              <th>送信日時</th>
             </tr>
           </thead>
           <tbody>
             <% @booking_contacts.each do |booking_contact| %>
               <tr>
-                <td><%= booking_contact.created_at.strftime('%Y/%m/%d %H:%M:%S') %></td>
-                <td><%= booking_contact.facility.name %></td>
                 <td>
                   <%= booking_contact.status_i18n %>
                   <% if booking_contact.status == "bookable" %>
                     <%= link_to "確定する", care_manager_use_plan_booking_contact_determine_path(@use_plan, booking_contact), method: :patch, class: 'btn btn-success', data: { confirm: "予約確定でお返事してよろしいですか？(送信先施設：#{booking_contact.facility.name})" } %>
                   <% end %>
                 </td>
+                <td><%= booking_contact.facility.name %></td>
+                <td><%= booking_contact.created_at.strftime('%Y/%m/%d %H:%M') %></td>
               </tr>
             <% end %>
           </tbody>
@@ -80,7 +81,7 @@
     <% end %>
 
     <% if @use_plan.status == "planning" || @use_plan.status == "contacting" %>
-      <h1 class="mt-5 border-top">問い合わせ先施設選択</h1>
+      <h2 class="mt-5 border-top">問い合わせ先施設選択</h2>
       <div class="container">
         <div class="row my-3">
           <%= form_with url: care_manager_use_plan_path(@use_plan), method: :get, class: "form-inline" do |f| %>
@@ -108,26 +109,21 @@
             <p>施設が見つかりません。</p>
           <% else %>
             <div class="table-responsive">
-              <table class="table table-bordered table-responsive-md shadow">
+              <table class="table table-bordered shadow text-center text-nowrap">
+                <caption>この表は横にスクロールできます。</caption>
                 <thead>
-                  <tr>
-                    <th class="table-active text-center text-nowrap">施設名</th>
-                    <th class="table-active text-center text-nowrap">住所</th>
-                    <th class="table-active text-center text-nowrap"><%= "利用期間（#{@use_plan.start_date}〜#{@use_plan.end_date}）の空き状況" %></th>
+                  <tr class="table-active">
+                    <th>問い合わせ可否</th>
+                    <th>施設名</th>
+                    <th>住所</th>
                   </tr>
                 </thead>
                 <tbody>
                   <% @facilities.each do |facility| %>
                     <tr>
-                      <td class="col col-md-1 text-center text-nowrap">
-                        <%= facility.name %>
-                      </td>
-                      <td class="col col-md-2 text-center text-nowrap">
-                        <%= facility.address %>
-                      </td>
-                      <td class="col col-md-1 text-center text-nowrap">
+                      <td class="align-middle">
                         <% if facility.no_beds?(@use_plan) %>
-                          満床のため問い合わせできません。
+                          満床のため問い合わせ不可
                         <% elsif @booking_contacts.exists?(facility_id: facility.id) %>
                           問い合わせ済み
                         <% else %>
@@ -135,9 +131,15 @@
                           <%= form_with model: @booking_contact, url: care_manager_use_plan_booking_contacts_path(@use_plan) do |f| %>
                             空きあり
                             <%= f.hidden_field :facility_id, :value => facility.id %>
-                            <%= f.submit "問い合わせを送信", data: { confirm: "#{facility.name}へ問い合わせを送信してよろしいですか？" }, class: "btn btn-success" %>
+                            <%= f.submit "問い合わせ送信可", data: { confirm: "#{facility.name}へ問い合わせを送信してよろしいですか？" }, class: "btn-sm btn-success" %>
                           <% end %>
                         <% end %>
+                      </td>
+                      <td class="align-middle">
+                        <%= facility.name %>
+                      </td>
+                      <td class="align-middle">
+                        <%= facility.address %>
                       </td>
                     </tr>
                   <% end %>
