@@ -76,6 +76,9 @@ class CareManager::UsePlansController < ApplicationController
   end
 
   def edit
+    if @use_plan.status == "confirmed" || @use_plan.status == "canceled"
+      redirect_to request.referer, alert: "予約確定またはキャンセルとなった利用計画は編集できません。"
+    end
   end
 
   def update

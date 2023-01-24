@@ -56,7 +56,7 @@ class BookingContact < ApplicationRecord
 
     # 定員に達している日程があればtrue、なければfalse
     schedules.each do |schedule|
-      return true if schedule.use_details.count >= self.facility.capacity.to_i
+      return true if schedule.use_details.select{ |x| x.status != "canceled" || x.status != "out" }.count >= self.facility.capacity.to_i
     end
     false
   end
