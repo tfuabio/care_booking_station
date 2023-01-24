@@ -19,12 +19,7 @@
   <body>
     <% if current_page?(root_path) %>
       <!--トップページの時-->
-      <div id="splash">
-        <div id="splash_text"></div>
-      </div>
-      <div id="container">
         <%= yield %>
-      </div>
     <% else %>
       <!--トップページ以外の時-->
       <%= render 'layouts/header' %>

@@ -1,6 +1,10 @@
-<h1><%= @user.full_name %>様の利用者情報</h1>
-<%= link_to "編集する", edit_care_manager_user_path(@user), class: "btn btn-success btn-sm px-3 col-md-2 shadow" %>
-<div class="row">
+<%= link_to care_manager_users_path do %>
+  <i class="fas fa-arrow-circle-left"></i>
+  利用者一覧へ
+<% end %>
+<h1>担当利用者情報</h1>
+<%= link_to "編集する", edit_care_manager_user_path(@user), class: "btn btn-success btn-sm shadow" %>
+<div class="row mt-3">
   <div class="table-responsive col-md-6">
     <table class="table table-bordered shadow">
       <tr>

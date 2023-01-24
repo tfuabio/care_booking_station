@@ -4,13 +4,19 @@ class CareManager::UsePlansController < ApplicationController
 
   def index
     @use_plan = UsePlan.new
+    @users = current_care_manager.users
+    @use_plans = current_care_manager.use_plans
+
+    # ビューで選択されたステータスによってフィルタする
     @status = params[:status]
-    @status = 'all' if @status.nil?
-    if @status == 'all'
-      @use_plans = current_care_manager.use_plans.sort_by{ |x| x.created_at }.reverse
-    else
-      @use_plans = current_care_manager.use_plans.where(status: @status).sort_by{ |x| x.created_at }.reverse
-    end
+    @use_plans = @use_plans.where(status: @status) unless @status.nil? || @status == 'all'
+
+    # 選んだユーザーの投稿だけにする
+    @user_id = params[:user_id]
+    @use_plans = @use_plans.where(user_id: @user_id) unless @user_id.nil?
+
+    # 最新順に並び変える
+    @use_plans = @use_plans.sort_by{ |x| x.created_at }.reverse
   end
 
   def create
