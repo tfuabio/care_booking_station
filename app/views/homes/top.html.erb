@@ -1,11 +1,12 @@
-<div class="container">
-  <div class="row">
-    <div class="col text-nowrap">
-      <h1>複雑な介護施設の利用予約。<br><strong>Care Booking Station</strong>で簡単に。</h1>
+<div id="splash">
+  <div id="splash_text"></div>
+</div>
+<div class="container-fluid d-flex flex-column align-items-center justify-content-center">
+  <div class="row-fluid align-items-center">
+    <div class="col col-lg-12">
+      <h1 class="">複雑な介護施設の利用予約。<%= image_tag('logo.gif') %>で簡単に。</h1>
     </div>
-  </div>
-  <div class="row">
-    <div class="col">
+    <div class="col col-lg-12">
       <%= link_to '新規登録(CM)', new_care_manager_registration_path, method: :get, class: 'btn05 bordercircle1' %>
       <%= link_to '新規登録', new_facility_registration_path, method: :get, class: 'btn05 bordercircle1' %>
       <%= link_to 'ログイン', sign_in_path, method: :get, class: 'btn05 bordercircle1' %>
@@ -16,8 +17,8 @@
 <!--スクロール促し-->
 <div class="scrolldown4"><span>Scroll</span></div>
 
-<div class="container">
-  <div class="row">
+<div class="container-fluid d-flex flex-column align-items-center justify-content-center">
+  <div class="row-fluid align-items-center">
     <div class="col">
       <h1>About</h1><br>
       <h2>介護施設のスタッフ様、施設の予約受付業務は負担になっていませんか？</h2>
@@ -32,9 +33,9 @@
 <!--スクロール促し-->
 <div class="scrolldown4"><span>Scroll</span></div>
 
-<div class="container">
-  <div class="row">
-    <div class="col text-nowrap">
+<div class="container-fluid d-flex flex-column align-items-center justify-content-center">
+  <div class="row-fluid align-items-center">
+    <div class="col">
       <h1>まずは使ってみましょう。<br>
       <h2>ゲストログインで試すことができます。</h2>
       <br>

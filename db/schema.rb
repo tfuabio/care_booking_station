@@ -128,6 +128,7 @@ ActiveRecord::Schema.define(version: 2023_01_08_161500) do
 
   create_table "use_plan_comments", force: :cascade do |t|
     t.integer "use_plan_id", null: false
+    t.boolean "is_facility", null: false
     t.text "comment", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

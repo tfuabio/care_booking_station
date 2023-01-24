@@ -1,71 +1,77 @@
-<h1><%= @user.last_name %> <%= @user.first_name %>様の詳細情報</h1>
-<div class="row py-3">
-  <div class="col">
-    <h5 class="font-weight-bold">登録情報</h5>
-  </div>
-</div>
-<div class="row mb-4">
-  <div class="col-md-8">
-    <table class="table table-bordered table-responsive-md shadow">
+<h1><%= @user.full_name %>様の利用者情報</h1>
+<div class="row">
+  <div class="table-responsive col-md-6">
+    <table class="table table-bordered shadow text-center text-nowrap">
       <tr>
-        <th class="table-active" style="width:25%">契約状態</td>
-        <td style="width:75%">
+        <th class="table-active align-middle">契約状態</td>
+        <td>
           <% if @is_new_user %>
             未契約
             <%= link_to "契約済に変更", contract_change_facility_user_path(@user), method: :patch, data: { confirm: "契約済に変更してよろしいですか？(対象のご利用者様：#{@user.full_name})" }, class: 'btn btn-success' %>
           <% else %>
             契約済
-            <%= link_to "未契約に変更", contract_change_facility_user_path(@user), method: :patch, data: { confirm: "未契約に変更してよろしいですか？(対象のご利用者様：#{@user.full_name})" }, class: 'btn btn-success' %>
+            <%= link_to "未契約に変更", contract_change_facility_user_path(@user), method: :patch, data: { confirm: "未契約に変更してよろしいですか？(対象のご利用者様：#{@user.full_name})" }, class: 'btn btn-danger' %>
           <% end %>
         </td>
       </tr>
       <tr>
-        <th class="table-active" style="width:25%">氏名</td>
-        <td style="width:75%"><%= @user.last_name %> <%= @user.first_name %></td>
+        <th class="table-active align-middle">本人画像</td>
+        <td><%= image_tag @user.get_image(100,100) %></td>
       </tr>
       <tr>
-        <th class="table-active">カナ</td>
+        <th class="table-active align-middle">氏名</td>
+        <td><%= @user.full_name %></td>
+      </tr>
+      <tr>
+        <th class="table-active align-middle">カナ名</td>
         <td><%= @user.last_name_kana %> <%= @user.first_name_kana %></td>
       </tr>
       <tr>
-        <th class="table-active">郵便番号</td>
+        <th class="table-active align-middle">担当ケアマネージャー</td>
+        <td>
+          <%= @user.care_manager.full_name %> <br>
+          (<%= @user.care_manager.office_name %>)
+        </td>
+      </tr>
+      <tr>
+        <th class="table-active align-middle">郵便番号</td>
         <td><%= @user.post_code %></td>
       </tr>
       <tr>
-        <th class="table-active">住所</td>
+        <th class="table-active align-middle">住所</td>
         <td><%= @user.address %></td>
       </tr>
       <tr>
-        <th class="table-active">電話番号</td>
+        <th class="table-active align-middle">電話番号</td>
         <td><%= @user.phone_number %></td>
       </tr>
       <tr>
-        <th class="table-active">性別</td>
+        <th class="table-active align-middle">性別</td>
         <td><%= @user.gender_i18n %>	</td>
       </tr>
       <tr>
-        <th class="table-active">生年月日</td>
+        <th class="table-active align-middle">生年月日</td>
         <td><%= @user.birthday %></td>
       </tr>
       <tr>
-        <th class="table-active">現在の状態</td>
+        <th class="table-active align-middle">現在の状態</td>
         <td><%= @user.current_status_i18n %></td>
       </tr>
       <tr>
-        <th class="table-active">要介護度</td>
+        <th class="table-active align-middle">要介護度</td>
         <td><%= @user.care_level_status_i18n %></td>
       </tr>
+    </table>
+  </div>
+  <div class="table-responsive col-md-6">
+    <table class="table table-bordered shadow">
       <tr>
-        <th class="table-active">生活歴</td>
-        <td><%= safe_join(@user.life_history.split("\n"),tag(:br)) %></td>
+        <th class="table-active align-middle text-center text-nowrap">生活歴</td>
+        <td class="text-left"><%= safe_join(@user.life_history.split("\n"),tag(:br)) %></td>
       </tr>
       <tr>
-        <th class="table-active">病歴</td>
-        <td><%= safe_join(@user.medical_history.split("\n"),tag(:br)) %></td>
-      </tr>
-      <tr>
-        <th class="table-active">担当ケアマネージャー</td>
-        <td><%= @user.care_manager.full_name %> (<%= @user.care_manager.office_name %>)</td>
+        <th class="table-active align-middle text-center text-nowrap">病歴</td>
+        <td class="text-left"><%= safe_join(@user.medical_history.split("\n"),tag(:br)) %></td>
       </tr>
     </table>
   </div>

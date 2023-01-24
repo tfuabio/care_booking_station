@@ -7,7 +7,12 @@ class CareManager::SessionsController < Devise::SessionsController
   def guest_sign_in
     care_manager = CareManager.guest
     sign_in care_manager
-    redirect_to root_path, notice: 'ゲストログインしました。'
+    if current_care_manager.users.count == 0
+      flash[:alert] = '利用者が登録されていません。新規登録を行ってください。'
+      redirect_to new_care_manager_user_path, notice: 'ゲストログインしました。'
+    else
+      redirect_to root_path, notice: 'ゲストログインしました。'
+    end
   end
 
   # GET /resource/sign_in
@@ -54,7 +59,12 @@ class CareManager::SessionsController < Devise::SessionsController
 
   def after_sign_in_path_for(resource)
     flash[:notice] = "#{@care_manager.full_name}でログインしました。"
-    root_path
+    if current_care_manager.users.count == 0
+      flash[:alert] = '利用者が登録されていません。新規登録を行ってください。'
+      redirect_to new_care_manager_user_path
+    else
+      root_path
+    end
   end
 
   def after_sign_out_path_for(resource)
