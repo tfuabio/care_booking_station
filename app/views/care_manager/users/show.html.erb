@@ -1,54 +1,64 @@
-<div class="container-xl mx-auto">
-  <h1><%= @user.last_name %> <%= @user.first_name %>様の利用者情報</h1>
-  <%= link_to "編集する", edit_care_manager_user_path(@user), class: "btn btn-success btn-sm px-3 col-md-2 shadow" %>
-  <table class="table table-bordered shadow">
-    <tr>
-      <th class="table-active col-md-2">本人画像</td>
-      <td><%= image_tag @user.get_image(100,100) %></td>
-    </tr>
-    <tr>
-      <th class="table-active">氏名</td>
-      <td><%= @user.full_name %></td>
-    </tr>
-    <tr>
-      <th class="table-active">カナ</td>
-      <td><%= @user.last_name_kana %> <%= @user.first_name_kana %></td>
-    </tr>
-    <tr>
-      <th class="table-active">郵便番号</td>
-      <td><%= @user.post_code %></td>
-    </tr>
-    <tr>
-      <th class="table-active">住所</td>
-      <td><%= @user.address %></td>
-    </tr>
-    <tr>
-      <th class="table-active">電話番号</td>
-      <td><%= @user.phone_number %></td>
-    </tr>
-    <tr>
-      <th class="table-active">性別</td>
-      <td><%= @user.gender_i18n %>	</td>
-    </tr>
-    <tr>
-      <th class="table-active">生年月日</td>
-      <td><%= @user.birthday %></td>
-    </tr>
-    <tr>
-      <th class="table-active">現在の状態</td>
-      <td><%= @user.current_status_i18n %></td>
-    </tr>
-    <tr>
-      <th class="table-active">要介護度</td>
-      <td><%= @user.care_level_status_i18n %></td>
-    </tr>
-    <tr>
-      <th class="table-active">生活歴</td>
-      <td><%= safe_join(@user.life_history.split("\n"),tag(:br)) %></td>
-    </tr>
-    <tr>
-      <th class="table-active">病歴</td>
-      <td><%= safe_join(@user.medical_history.split("\n"),tag(:br)) %></td>
-    </tr>
-  </table>
+<%= link_to care_manager_users_path do %>
+  <i class="fas fa-arrow-circle-left"></i>
+  利用者一覧へ
+<% end %>
+<h1>担当利用者情報</h1>
+<%= link_to "編集する", edit_care_manager_user_path(@user), class: "btn btn-success btn-sm shadow" %>
+<div class="row mt-3">
+  <div class="table-responsive col-md-6">
+    <table class="table table-bordered shadow">
+      <tr>
+        <th class="table-active">本人画像</td>
+        <td><%= image_tag @user.get_image(100,100) %></td>
+      </tr>
+      <tr>
+        <th class="table-active">氏名</td>
+        <td><%= @user.full_name %></td>
+      </tr>
+      <tr>
+        <th class="table-active">カナ名</td>
+        <td><%= @user.last_name_kana %> <%= @user.first_name_kana %></td>
+      </tr>
+      <tr>
+        <th class="table-active">郵便番号</td>
+        <td><%= @user.post_code %></td>
+      </tr>
+      <tr>
+        <th class="table-active">住所</td>
+        <td><%= @user.address %></td>
+      </tr>
+      <tr>
+        <th class="table-active">電話番号</td>
+        <td><%= @user.phone_number %></td>
+      </tr>
+      <tr>
+        <th class="table-active">性別</td>
+        <td><%= @user.gender_i18n %>	</td>
+      </tr>
+      <tr>
+        <th class="table-active">生年月日</td>
+        <td><%= @user.birthday %></td>
+      </tr>
+      <tr>
+        <th class="table-active">現在の状態</td>
+        <td><%= @user.current_status_i18n %></td>
+      </tr>
+      <tr>
+        <th class="table-active">要介護度</td>
+        <td><%= @user.care_level_status_i18n %></td>
+      </tr>
+    </table>
+  </div>
+  <div class="table-responsive col-md-6">
+    <table class="table table-bordered shadow">
+      <tr>
+        <th class="table-active align-middle text-center text-nowrap">生活歴</td>
+        <td class="text-left"><%= safe_join(@user.life_history.split("\n"),tag(:br)) %></td>
+      </tr>
+      <tr>
+        <th class="table-active align-middle text-center text-nowrap">病歴</td>
+        <td class="text-left"><%= safe_join(@user.medical_history.split("\n"),tag(:br)) %></td>
+      </tr>
+    </table>
+  </div>
 </div>
