@@ -7,15 +7,11 @@ class User < ApplicationRecord
   has_many :facilities, through: :contracts
   validates :last_name, presence: true
   validates :first_name, presence: true
-  validates :last_name_kana, presence: true
-  validates :first_name_kana, presence: true
   validates :address, presence: true
   validates :post_code, presence: true
-  validates :phone_number, presence: true
   validates :current_status, presence: true
   validates :care_level_status, presence: true
   validates :gender, presence: true
-  validates :birthday, presence: true
   validates :life_history, length: { maximum: 500 }
   validates :medical_history, length: { maximum: 500 }
   has_one_attached :image

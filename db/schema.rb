@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(version: 2023_01_08_161500) do
     t.string "post_code", null: false
     t.string "phone_number", null: false
     t.integer "relationship", null: false
-    t.integer "status", default: 0, null: false
+    t.integer "status", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

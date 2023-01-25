@@ -8,7 +8,7 @@
     <td class="col-md-3"><%= f.text_field :first_name, placeholder: "道子", required: true, class: 'form-control' %></td>
   </tr>
   <tr>
-    <th class="pt-3 text-nowrap text-center">フリガナ *</td>
+    <th class="pt-3 text-nowrap text-center">フリガナ</td>
     <td class="col-md-1 pt-3 text-nowrap text-right">(セイ) </td>
     <td class="col-md-3"><%= f.text_field :last_name_kana, placeholder: "レイワ", required: true, class: 'form-control' %></td>
     <td class="col-md-1 pt-3 text-nowrap text-right">(メイ) </td>
@@ -27,7 +27,7 @@
     <td colspan="3"><%= f.text_field :address, placeholder: "東京都渋谷区代々木神園町0-0", required: true, class: 'form-control' %></td>
   </tr>
   <tr>
-    <th class="pt-3 text-nowrap text-center">電話番号(ハイフンなし) *</td>
+    <th class="pt-3 text-nowrap text-center">電話番号(ハイフンなし)</td>
     <td></td>
     <td><%= f.text_field :phone_number, placeholder: "08012345678", required: true, class: 'form-control' %></td>
     <td></td>
@@ -53,7 +53,7 @@
     <td></td>
   </tr>
   <tr>
-    <th class="pt-3 text-nowrap text-center">生年月日 *</td>
+    <th class="pt-3 text-nowrap text-center">生年月日</td>
     <td></td>
     <td colspan="3"><%= f.date_select :birthday, use_month_numbers: true, start_year: (Time.now.year - 115), end_year: (Time.now.year - 40), prompt: "--", required: true, class: 'custom-select' %></td>
   </tr>

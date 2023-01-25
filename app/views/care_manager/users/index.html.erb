@@ -4,13 +4,12 @@
   利用者が登録されていません。新規登録を行ってください。
 <% else %>
   <div class="table-responsive">
-    <table class="table table-bordered shadow">
+    <table class="table table-bordered shadow mt-3">
       <thead>
         <tr class="text-center">
           <th class="table-active">氏名</th>
           <th class="table-active">現在の状態</th>
           <th class="table-active">要介護度</th>
-          <th class="table-active"></th>
         </tr>
       </thead>
       <tbody>
@@ -24,7 +23,6 @@
             </td>
             <td><%= user.current_status_i18n %></td>
             <td><%= user.care_level_status_i18n %></td>
-            <td><%= link_to "編集", edit_care_manager_user_path(user), class: "btn btn-success btn-sm px-3 text-nowrap shadow" %></td>
           </tr>
         <% end %>
       </tbody>
