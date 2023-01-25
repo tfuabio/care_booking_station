@@ -61,7 +61,7 @@
       </div>
     </div>
     <%= form_with url: care_manager_use_plans_path, method: :get, class: "form-inline my-3 col-md-4" do |f| %>
-      <%= f.select :status, options_for_select( { '全て表示' => 'all', '計画中' => 'planning', '予約確定' => 'confirmed', '問い合わせ中' => 'contacting', 'キャンセル済み' => 'canceled' }, @status), {}, class: 'form-control' %>
+      <%= f.select :status, options_for_select( { '全て' => 'all', '計画中' => 'planning', '予約確定' => 'confirmed', '問い合わせ中' => 'contacting', '中止' => 'canceled' }, @status), {}, class: 'form-control' %>
       <%= f.hidden_field :user_id, :value => @user_id %>
       <%= f.submit "表示", class: "btn btn-primary" %>
     <% end %>

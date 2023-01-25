@@ -9,11 +9,12 @@ class CareManager::UsePlansController < ApplicationController
 
     # ビューで選択されたステータスによってフィルタする
     @status = params[:status]
-    @use_plans = @use_plans.where(status: @status) unless @status.nil? || @status == 'all'
+    @status = 'all' if @status.blank?
+    @use_plans = @use_plans.where(status: @status) unless @status == 'all'
 
     # 選んだユーザーの投稿だけにする
     @user_id = params[:user_id]
-    @use_plans = @use_plans.where(user_id: @user_id) unless @user_id.nil?
+    @use_plans = @use_plans.where(user_id: @user_id) unless @user_id.blank?
 
     # 最新順に並び変える
     @use_plans = @use_plans.sort_by{ |x| x.created_at }.reverse
@@ -100,21 +101,52 @@ class CareManager::UsePlansController < ApplicationController
     render :edit
   end
 
-  # 利用計画を中止にするアクション（これから）
+  # 利用計画を中止にするアクション
   def cancel
-    # 利用計画の内容を施設スケジュールにキャンセルとして反映
-    if @use_plan.save_schdule("canceled") && @use_plan.status != "canceled"
-      flash.now[:notice] = "#{@use_plan.facility.name}へ予約の中止を送信しました。"
+    @booking_contacts = @use_plan.booking_contacts
+    status = @use_plan.status
+    if status == "canceled"
+      # 中止されている場合
+      flash.now[:alert] = "この処理はできません"
+    elsif status == "planning"
       if @use_plan.update(status: "canceled")
-        flash.now[:notice] += "この利用計画を中止にしました。"
+        redirect_to care_manager_use_plan_path(@use_plan), notice: "この利用計画を中止にしました。"
       else
         flash.now[:alert] = "処理中にエラーが発生しました。"
+        render :show
       end
-    else
-      flash.now[:alert] = "問題が発生したため処理を終了しました。"
+    elsif status == "contacting"
+      # 問い合わせ中の場合
+      # 利用計画の問い合わせをすべて問い合わせ終了にする
+      if @use_plan.booking_contacts.update_all(status: "closing")
+        flash.now[:notice] = "問い合わせを締め切りました。"
+        if @use_plan.update(status: "canceled")
+          flash.now[:notice] += "この利用計画を中止にしました。"
+          redirect_to care_manager_use_plan_path(@use_plan)
+        else
+          flash.now[:alert] = "処理中にエラーが発生しました。"
+          render :show
+        end
+      else
+        flash.now[:alert] = "問い合わせの締め切りに失敗しました"
+        render :show
+      end
+    elsif status == "confirmed"
+      # 予約確定している場合
+      if @use_plan.save_schdule("canceled")  # 施設スケジュールに中止として反映
+        flash.now[:notice] += "#{@use_plan.facility.name}へ予約の中止を送信しました。"
+        if @use_plan.update(status: "canceled")
+          flash.now[:notice] += "この利用計画を中止にしました。"
+          redirect_to care_manager_use_plan_path(@use_plan)
+        else
+          flash.now[:alert] = "処理中にエラーが発生しました。"
+          render :show
+        end
+      else
+        flash.now[:alert] = "問題が発生したため処理を終了しました。"
+        render :show
+      end
     end
-    @booking_contacts = @use_plan.booking_contacts
-    render :show
   end
 
   private
