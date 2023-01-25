@@ -8,6 +8,7 @@ class Facility::UsersController < ApplicationController
 
   def show
     @is_new_user = current_facility.new_user?(@user)
+    @emergency_contacts = @user.emergency_contacts
   end
 
   # 利用者の契約状態を切り替えるアクション

@@ -10,7 +10,7 @@ class CreateEmergencyContacts < ActiveRecord::Migration[6.1]
       t.string :post_code, null: false
       t.string :phone_number, null: false
       t.integer :relationship, null: false
-      t.integer :status, null: false, default: 0
+      t.integer :status, null: false
       t.timestamps
     end
   end
