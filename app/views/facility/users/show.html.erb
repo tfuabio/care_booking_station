@@ -76,3 +76,39 @@
     </table>
   </div>
 </div>
+<h1>緊急連絡先一覧</h1>
+<% if @emergency_contacts.blank? %>
+  緊急連絡先が登録されていません。
+<% else %>
+  <div class="table-responsive">
+    <table class="table table-bordered shadow text-center text-nowrap">
+      <caption>この表は横にスクロールできます。</caption>
+      <thead>
+        <tr>
+          <th class="table-active">氏名</th>
+          <th class="table-active">電話番号</th>
+          <th class="table-active">続柄</th>
+          <th class="table-active">同居状況</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @emergency_contacts.each do |emergency_contact| %>
+          <tr>
+            <td class="align-middle">
+              <%= "#{emergency_contact.full_name} 様" %>
+            </td>
+            <td class="align-middle">
+              <%= emergency_contact.phone_number %>
+            </td>
+            <td class="align-middle">
+              <%= emergency_contact.relationship_i18n %>
+            </td>
+            <td class="align-middle">
+              <%= emergency_contact.status_i18n %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

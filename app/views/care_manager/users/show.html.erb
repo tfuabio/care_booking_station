@@ -62,3 +62,114 @@
     </table>
   </div>
 </div>
+<h1>緊急連絡先一覧</h1>
+<p>
+  <button class="btn btn-success shadow" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    新規緊急連絡先 <i class="fas fa-plus-circle"></i>
+  </button>
+</p>
+<div class="collapse" id="collapseExample">
+  <div class="card card-body col-lg-6">
+    <h1>新規緊急連絡先</h1>
+    <p class="text-secondary">緊急連絡先の情報を入力し、登録をクリックしてください。* は必須項目です。</p>
+    <%= form_with model: @emergency_contact, url: care_manager_user_emergency_contacts_path(@user), class: "text-center" do |f| %>
+      <table class="table table-hover bg-light shadow p-0">
+        <tr>
+          <th class="col-md-2 pt-3 text-nowrap text-center">名前 *</td>
+          <td class="col-md-1 pt-3 text-nowrap text-right">(性) </td>
+          <td class="col-md-3"><%= f.text_field :last_name, autofocus: true, placeholder: "令和", required: true, class: 'form-control' %></td>
+          <td class="col-md-1 pt-3 text-nowrap text-right">(名) </td>
+          <td class="col-md-3"><%= f.text_field :first_name, placeholder: "令子", required: true, class: 'form-control' %></td>
+        </tr>
+        <tr>
+          <th class="pt-3 text-nowrap text-center">フリガナ</td>
+          <td class="col-md-1 pt-3 text-nowrap text-right">(セイ) </td>
+          <td class="col-md-3"><%= f.text_field :last_name_kana, placeholder: "レイワ", required: true, class: 'form-control' %></td>
+          <td class="col-md-1 pt-3 text-nowrap text-right">(メイ) </td>
+          <td class="col-md-3"><%= f.text_field :first_name_kana, placeholder: "レイコ", required: true, class: 'form-control' %></td>
+        </tr>
+        <tr>
+          <th class="pt-3 text-nowrap text-center">電話番号(ハイフンなし) *</td>
+          <td></td>
+          <td><%= f.text_field :phone_number, placeholder: "08012345678", required: true, class: 'form-control' %></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th class="pt-3 text-nowrap text-center">続柄 *</td>
+          <td></td>
+          <td><%= f.select :relationship, EmergencyContact.relationships.keys.map { |k| [t("enums.emergency_contact.relationship.#{k}"), k] }, { prompt: "選択してください" }, required: true, class: 'custom-select' %></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th class="pt-3 text-nowrap text-center">同居状況 *</td>
+          <td></td>
+          <td><%= f.select :status, EmergencyContact.statuses.keys.map { |k| [t("enums.emergency_contact.status.#{k}"), k] }, { prompt: "選択してください" }, required: true, class: 'custom-select' %></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th class="col-md-2 pt-3 text-nowrap text-center">郵便番号(ハイフンなし)</td>
+          <td></td>
+          <td><%= f.text_field :post_code, placeholder: "1234567", class: 'form-control' %></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th class="pt-3 text-nowrap text-center">住所</td>
+          <td></td>
+          <td colspan="3"><%= f.text_field :address, placeholder: "東京都渋谷区代々木神園町0-0", class: 'form-control' %></td>
+        </tr>
+        <tr>
+          <th></th>
+          <td></td>
+          <td colspan="3" class="pt-3 text-nowrap">
+            <div class="actions">
+              <%= f.submit "登録", class: 'btn btn-success' %>
+            </div>
+          </td>
+        </tr>
+      </table>
+    <% end %>
+  </div>
+</div>
+<% if @emergency_contacts.blank? %>
+  緊急連絡先が登録されていません。
+<% else %>
+  <div class="table-responsive">
+    <table class="table table-bordered shadow text-center text-nowrap">
+      <caption>この表は横にスクロールできます。</caption>
+      <thead>
+        <tr class="table-active">
+          <th>氏名</th>
+          <th>電話番号</th>
+          <th>続柄</th>
+          <th>同居状況</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @emergency_contacts.each do |emergency_contact| %>
+          <tr>
+            <td class="align-middle">
+              <%= "#{emergency_contact.full_name} 様" %>
+            </td>
+            <td class="align-middle">
+              <%= emergency_contact.phone_number %>
+            </td>
+            <td class="align-middle">
+              <%= emergency_contact.relationship_i18n %>
+            </td>
+            <td class="align-middle">
+              <%= emergency_contact.status_i18n %>
+            </td>
+            <td class="align-middle">
+              <%= link_to "削除", care_manager_user_emergency_contact_path(@user, emergency_contact), method: :delete, class: "btn btn-danger shadow text-nowrap ml-3", data: { confirm: "緊急連絡先から「#{emergency_contact.full_name} 様」の情報を削除してよろしいですか？" } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

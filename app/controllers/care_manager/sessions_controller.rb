@@ -59,12 +59,7 @@ class CareManager::SessionsController < Devise::SessionsController
 
   def after_sign_in_path_for(resource)
     flash[:notice] = "#{@care_manager.full_name}でログインしました。"
-    if current_care_manager.users.count == 0
-      flash[:alert] = '利用者が登録されていません。新規登録を行ってください。'
-      redirect_to new_care_manager_user_path
-    else
-      root_path
-    end
+    root_path
   end
 
   def after_sign_out_path_for(resource)

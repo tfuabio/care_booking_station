@@ -37,6 +37,17 @@ ja:
         all_day: "1"
         out: "退"
         canceled: "キ"
+    emergency_contact:
+      relationship:
+        eldest_daughter: "長女"
+        second_daughter: "次女"
+        eldest_son: "長男"
+        second_son: "次男"
+        wife_of_son: "嫁"
+        other: "その他"
+      status:
+        living_together: "同居"
+        separated: "別居"
   date:
     formats:
       default: "%Y/%m/%d"
