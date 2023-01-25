@@ -14,7 +14,10 @@ class CareManager::UsePlansController < ApplicationController
 
     # 選んだユーザーの投稿だけにする
     @user_id = params[:user_id]
-    @use_plans = @use_plans.where(user_id: @user_id) unless @user_id.blank?
+    unless @user_id.blank?
+      @use_plans = @use_plans.where(user_id: @user_id)
+      @use_plan.user_id = @user_id
+    end
 
     # 最新順に並び変える
     @use_plans = @use_plans.sort_by{ |x| x.created_at }.reverse
@@ -119,9 +122,9 @@ class CareManager::UsePlansController < ApplicationController
       # 問い合わせ中の場合
       # 利用計画の問い合わせをすべて問い合わせ終了にする
       if @use_plan.booking_contacts.update_all(status: "closing")
-        flash.now[:notice] = "問い合わせを締め切りました。"
+        flash[:notice] = "問い合わせを締め切りました。"
         if @use_plan.update(status: "canceled")
-          flash.now[:notice] += "この利用計画を中止にしました。"
+          flash[:notice] += "この利用計画を中止にしました。"
           redirect_to care_manager_use_plan_path(@use_plan)
         else
           flash.now[:alert] = "処理中にエラーが発生しました。"
@@ -134,9 +137,9 @@ class CareManager::UsePlansController < ApplicationController
     elsif status == "confirmed"
       # 予約確定している場合
       if @use_plan.save_schdule("canceled")  # 施設スケジュールに中止として反映
-        flash.now[:notice] += "#{@use_plan.facility.name}へ予約の中止を送信しました。"
+        flash[:notice] = "#{@use_plan.facility.name}へ予約の中止を送信しました。"
         if @use_plan.update(status: "canceled")
-          flash.now[:notice] += "この利用計画を中止にしました。"
+          flash[:notice] += "この利用計画を中止にしました。"
           redirect_to care_manager_use_plan_path(@use_plan)
         else
           flash.now[:alert] = "処理中にエラーが発生しました。"
