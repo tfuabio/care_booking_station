@@ -32,12 +32,14 @@ class CareManager::BookingContactsController < ApplicationController
     if booking_contact.no_beds?
       flash[:alert] = "満床の日程があるため予約確定できませんでした。"
       redirect_to care_manager_use_plan_path(@use_plan)
+      return
     end
 
     # 施設スケジュールに反映
     unless booking_contact.save_schdule
       flash[:alert] = "予約確定に失敗しました。"
       redirect_to care_manager_use_plan_path(@use_plan)
+      return
     end
 
     # 利用計画に利用先施設を設定し、ステータスを予約確定にする

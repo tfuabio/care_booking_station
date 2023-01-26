@@ -1,13 +1,15 @@
 class Facility::SchedulesController < ApplicationController
   def index
-    # 今日の日付を取得
-    @today = Date.today
+    # 何月予約表を表示するか、パラメータnumを使い切り替える
+    @num = params[:num].to_i
+    @num = 0 if @num.blank?
+    @date = Date.today >> @num
 
     # 今月のスケジュールをすべて取得
-    schedules = current_facility.schedules.select { |schedule| schedule.date.month == @today.month }
+    schedules = current_facility.schedules.select { |schedule| schedule.date.month == @date.month }
 
     # 予約表用に今月の日付を取得
-    @days = @today.all_month
+    @dates = @date.all_month
 
     @week = ["日", "月", "火", "水", "木", "金", "土"]
 

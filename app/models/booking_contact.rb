@@ -71,11 +71,15 @@ class BookingContact < ApplicationRecord
     (from..to).each do |date|
       # 施設のスケジュールから日付が一致するレコードを取得（なければ作成）
       schedule = self.facility.schedules.find_or_create_by(date: date)
+      return false unless schedule.save  # saveに失敗したらfalse
 
-      # 日付が該当するスケジュールの利用詳細を１つ作成
-      use_detail = schedule.use_details.new(user_id: use_plan.user_id)
+      # 利用者が一致する利用詳細を取得
+      use_detail = schedule.use_details.find_or_create_by(user_id: use_plan.user_id)
 
-      # 利用詳細に格納するステータスを変更
+      # 取得した利用詳細のステータスが中止またはnilでなかった場合、処理を終了
+      return false unless use_detail.status == "canceled" || use_detail.status.nil?
+
+      # 入所日や退所日でステータスを変更
       if date == from
         use_detail.status = "in"  # 入所日
       elsif date == to
@@ -84,7 +88,9 @@ class BookingContact < ApplicationRecord
         use_detail.status = "all_day"  # 終日利用
       end
 
-      use_detail.save
+      return false unless use_detail.save  # saveに失敗したらfalse
     end
+
+    return true  # 正常に終了したらtrueを返す
   end
 end
