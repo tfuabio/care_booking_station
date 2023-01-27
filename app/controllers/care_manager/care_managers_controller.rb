@@ -1,4 +1,5 @@
 class CareManager::CareManagersController < ApplicationController
+  before_action :authenticate_care_manager!
   before_action :ensure_guest_care_manager
 
   def show
