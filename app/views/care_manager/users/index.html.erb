@@ -28,7 +28,7 @@
             </td>
             <td class="align-middle"><%= user.current_status_i18n %></td>
             <td class="align-middle"><%= user.care_level_status_i18n %></td>
-            <td class="align-middle"><%= user.birthday %></td>
+            <td class="align-middle"><%= user.birthday %> (<%= user.age %>歳)</td>
             <td class="align-middle"><%= user.address %></td>
           </tr>
         <% end %>

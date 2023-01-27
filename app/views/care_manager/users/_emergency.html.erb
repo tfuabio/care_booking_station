@@ -1,0 +1,43 @@
+<% if emergency_contacts.blank? %>
+  <p class="text-secondary">緊急連絡先が登録されていません。</p>
+<% else %>
+  <div class="table-responsive border border-light rounded p-2 mt-3">
+    <table class="table table-bordered shadow text-center text-nowrap">
+      <caption class="d-lg-none">この表は横にスクロールできます。</caption>
+      <thead>
+        <tr class="table-active">
+          <th>氏名</th>
+          <th>電話番号</th>
+          <th>続柄</th>
+          <th>同居状況</th>
+          <% if care_manager_signed_in? %>
+            <th></th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% emergency_contacts.each do |emergency_contact| %>
+          <tr>
+            <td class="align-middle">
+              <%= "#{emergency_contact.full_name} 様" %>
+            </td>
+            <td class="align-middle">
+              <%= emergency_contact.phone_number %>
+            </td>
+            <td class="align-middle">
+              <%= emergency_contact.relationship_i18n %>
+            </td>
+            <td class="align-middle">
+              <%= emergency_contact.status_i18n %>
+            </td>
+            <% if care_manager_signed_in? %>
+              <td class="align-middle">
+                <%= link_to "削除", care_manager_user_emergency_contact_path(emergency_contact.user, emergency_contact), method: :delete, class: "btn btn-danger shadow text-nowrap ml-3", data: { confirm: "緊急連絡先から「#{emergency_contact.full_name} 様」の情報を削除してよろしいですか？" } %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

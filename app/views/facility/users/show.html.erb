@@ -1,114 +1,20 @@
-<h1><%= @user.full_name %>様の利用者情報</h1>
-<div class="row">
-  <div class="table-responsive col-md-6">
-    <table class="table table-bordered shadow text-center text-nowrap">
-      <tr>
-        <th class="table-active align-middle">契約状態</td>
-        <td>
-          <% if @is_new_user %>
-            未契約
-            <%= link_to "契約済に変更", contract_change_facility_user_path(@user), method: :patch, data: { confirm: "契約済に変更してよろしいですか？(対象のご利用者様：#{@user.full_name})" }, class: 'btn btn-success' %>
-          <% else %>
-            契約済
-            <%= link_to "未契約に変更", contract_change_facility_user_path(@user), method: :patch, data: { confirm: "未契約に変更してよろしいですか？(対象のご利用者様：#{@user.full_name})" }, class: 'btn btn-danger' %>
-          <% end %>
-        </td>
-      </tr>
-      <tr>
-        <th class="table-active align-middle">本人画像</td>
-        <td><%= image_tag @user.get_image(100,100) %></td>
-      </tr>
-      <tr>
-        <th class="table-active align-middle">氏名</td>
-        <td><%= @user.full_name %></td>
-      </tr>
-      <tr>
-        <th class="table-active align-middle">カナ名</td>
-        <td><%= @user.last_name_kana %> <%= @user.first_name_kana %></td>
-      </tr>
-      <tr>
-        <th class="table-active align-middle">担当ケアマネージャー</td>
-        <td>
-          <%= @user.care_manager.full_name %> <br>
-          (<%= @user.care_manager.office_name %>)
-        </td>
-      </tr>
-      <tr>
-        <th class="table-active align-middle">郵便番号</td>
-        <td><%= @user.post_code %></td>
-      </tr>
-      <tr>
-        <th class="table-active align-middle">住所</td>
-        <td><%= @user.address %></td>
-      </tr>
-      <tr>
-        <th class="table-active align-middle">電話番号</td>
-        <td><%= @user.phone_number %></td>
-      </tr>
-      <tr>
-        <th class="table-active align-middle">性別</td>
-        <td><%= @user.gender_i18n %>	</td>
-      </tr>
-      <tr>
-        <th class="table-active align-middle">生年月日</td>
-        <td><%= @user.birthday %></td>
-      </tr>
-      <tr>
-        <th class="table-active align-middle">現在の状態</td>
-        <td><%= @user.current_status_i18n %></td>
-      </tr>
-      <tr>
-        <th class="table-active align-middle">要介護度</td>
-        <td><%= @user.care_level_status_i18n %></td>
-      </tr>
-    </table>
+<%= link_to facility_users_path do %>
+  <i class="fas fa-arrow-circle-left"></i>
+  利用者情報一覧へ</i>
+<% end %>
+<div class="row mt-3">
+  <div class="col col-12 col-md-4 mb-5">
+    <span>
+      <h1>利用者情報 <i class="fas fa-user"></i></h1>
+      <p class="text-secondary">利用者情報を表示しています。</p>
+    </span>
+    <%= render 'care_manager/users/info', user: @user %>
   </div>
-  <div class="table-responsive col-md-6">
-    <table class="table table-bordered shadow">
-      <tr>
-        <th class="table-active align-middle text-center text-nowrap">生活歴</td>
-        <td class="text-left"><%= safe_join(@user.life_history.split("\n"),tag(:br)) %></td>
-      </tr>
-      <tr>
-        <th class="table-active align-middle text-center text-nowrap">病歴</td>
-        <td class="text-left"><%= safe_join(@user.medical_history.split("\n"),tag(:br)) %></td>
-      </tr>
-    </table>
+  <div class="col col-12 col-md-8">
+    <span>
+      <h1>緊急連絡先一覧 <i class="fas fa-phone"></i></h1>
+      <p class="text-secondary"><%= @user.full_name %>様の緊急連絡先です。</p>
+    </span>
+    <%= render 'care_manager/users/emergency', emergency_contacts: @user.emergency_contacts %>
   </div>
 </div>
-<h1>緊急連絡先一覧</h1>
-<% if @emergency_contacts.blank? %>
-  緊急連絡先が登録されていません。
-<% else %>
-  <div class="table-responsive">
-    <table class="table table-bordered shadow text-center text-nowrap">
-      <caption>この表は横にスクロールできます。</caption>
-      <thead>
-        <tr>
-          <th class="table-active">氏名</th>
-          <th class="table-active">電話番号</th>
-          <th class="table-active">続柄</th>
-          <th class="table-active">同居状況</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @emergency_contacts.each do |emergency_contact| %>
-          <tr>
-            <td class="align-middle">
-              <%= "#{emergency_contact.full_name} 様" %>
-            </td>
-            <td class="align-middle">
-              <%= emergency_contact.phone_number %>
-            </td>
-            <td class="align-middle">
-              <%= emergency_contact.relationship_i18n %>
-            </td>
-            <td class="align-middle">
-              <%= emergency_contact.status_i18n %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-<% end %>
