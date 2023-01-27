@@ -6,7 +6,7 @@ class CareManager::EmergencyContactsController < ApplicationController
     user = User.find(params[:user_id])
     emergency_contact = user.emergency_contacts.new(emergency_contact_params)
     if emergency_contact.save
-      redirect_to care_manager_user_path(user), notice: "正常に緊急連絡先が登録されました。"
+      redirect_to care_manager_user_path(user), notice: "緊急連絡先が登録されました。"
     else
       redirect_to care_manager_user_path(user), alert: "緊急連絡先の登録時にエラーが発生しました"
     end
@@ -16,7 +16,7 @@ class CareManager::EmergencyContactsController < ApplicationController
     user = User.find(params[:user_id])
     emergency_contact = user.emergency_contacts.find(params[:id])
     emergency_contact.destroy
-    redirect_to care_manager_user_path(user), notice: "緊急連絡先(#{emergency_contact.full_name} 様)の情報が登録されました。"
+    redirect_to care_manager_user_path(user), notice: "緊急連絡先が削除されました。"
   end
 
   private

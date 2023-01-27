@@ -47,6 +47,10 @@ class Facility < ApplicationRecord
   # 未契約かどうかチェックする
   def new_user?(user)
     contract = Contract.find_by(facility_id: self.id, user_id: user.id)
-    return contract.is_contracted ? false : true
+    if contract == nil
+      return true
+    else
+      return contract.is_contracted ? false : true
+    end
   end
 end

@@ -1,10 +1,13 @@
 <div class="row">
   <div class="col col-md-3 border-right mb-5 d-none d-md-block">
-    <div class="list-group text-center shadow mt-2">
-      <li class="list-group-item bg-dark text-white">担当利用者リスト</li>
+    <div class="list-group text-center mt-2">
+      <li class="list-group-item bg-dark text-white">
+        利用者リスト <i class="fas fa-users mr-1"></i>
+        <p class="text-secondary m-0">このリストでは、利用計画一覧の表示内容を登録済みの利用者で絞ることできます。</p>
+      </li>
       <% if @users.blank? %>
-        <li class="list-group-item">
-          まだ利用者情報が登録されていません。<%= link_to "こちら", new_care_manager_user_path %>から新規利用者登録を行ってください。
+        <li class="list-group-item text-secondary">
+          まだ利用者情報が登録されていません。<%= link_to "利用者情報登録ページ", new_care_manager_user_path %>で登録を行ってください。
         </li>
       <% else %>
         <% @users.each do |user| %>
@@ -38,16 +41,15 @@
     </div>
   </div>
   <div class="col col-md-9">
-    <h1>利用計画一覧</h1>
-    <p>
-      <button class="btn btn-success shadow" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-        新規利用計画 <i class="fas fa-plus-circle"></i>
-      </button>
-    </p>
+    <h1>利用計画一覧 <i class="fas fa-tasks"></i></h1>
+    <p class="text-secondary">利用計画一覧を表示しています。利用期間が決まったら新規利用計画ボタンからフォームを開き、利用計画を作成してください。</p>
+    <button class="btn btn-success m-3" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+      新規利用計画 <i class="fas fa-plus-circle"></i>
+    </button>
     <div class="collapse" id="collapseExample">
       <div class="card card-body col-lg-6">
-        <h1>新規利用計画</h1>
-        <p class="text-secondary">利用期間が決まったらこちらへ入力してください。「作成」ボタンをクリックすると問い合わせ先の施設選択画面へ進みます。</p>
+        <h1>新規利用計画 <i class="fas fa-plus-circle"></i></h1>
+        <p class="text-secondary">フォームに入力し、「作成」ボタンをクリックすると問い合わせ先の施設選択画面へ進みます。</p>
         <%= form_with model: @use_plan, url: care_manager_use_plans_path, class: "text-center" do |f| %>
           <%= render "care_manager/shared/error_messages", resource: @use_plan %>
           <p class="text-nowrap">利用者</p>
@@ -68,9 +70,9 @@
     <% if @use_plans.blank? %>
       利用計画が見つかりません。
     <% else %>
-      <div class="table-responsive">
+      <div class="table-responsive border border-light rounded p-2">
         <table class="table table-bordered shadow text-center text-nowrap">
-          <caption>この表は横にスクロールできます。</caption>
+          <caption class="d-md-none">この表は横にスクロールできます。</caption>
           <thead>
             <tr>
               <th class="table-active">状態</th>
@@ -97,6 +99,11 @@
                         <span class="badge badge-success">予約可<%= use_plan.contact_count("bookable") %>件あり</span>
                       <% end %>
                     <% end %>
+                  <% elsif use_plan.status == "planning" %>
+                    <br>
+                    <%= link_to care_manager_use_plan_path(use_plan.id) do %>
+                      <span class="badge badge-success">問い合わせ未送信</span>
+                    <% end %>
                   <% end %>
                 </td>
                 <td class="align-middle">
@@ -110,7 +117,8 @@
                 </td>
                 <td class="align-middle">
                   <% if use_plan.facility_id == nil %>
-                    未定  <%= link_to "施設選択", care_manager_use_plan_path(use_plan.id), class: "btn btn-success btn-sm text-nowrap shadow ml-3" %>
+                    未定<br>
+                    <%= link_to "施設選択", care_manager_use_plan_path(use_plan.id), class: "badge badge-success" %>
                   <% else %>
                     <%= use_plan.facility.name %>
                   <% end %>

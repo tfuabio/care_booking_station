@@ -2,6 +2,11 @@
   <nav class="navbar navbar-expand-md navbar-light py-0">
     <!--<a class="navbar-brand font-weight-normal" href="/"><img src="/assets/logo.png" alt="Care Booking Station"></a>-->
     <a class="navbar-brand" href="/"><%= image_tag('logo.gif') %></a>
+    <% if care_manager_signed_in? %>
+      <span class="badge badge-danger badge-pill">for ケアマネージャー</span>
+    <% elsif facility_signed_in? %>
+      <span class="badge badge-info badge-pill">for 介護施設</span>
+    <% end %>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -40,7 +45,7 @@
         <!-- 施設側ログイン時 -->
         <% elsif facility_signed_in? %>
           <p class="my-auto mr-2 text-nowrap">ようこそ、<%= current_facility.name %>様</p>
-          <% if current_facility.email != "guest@example.com" %>
+          <% unless current_facility.email == "guest@example.com" %>
             <!--ゲストログイン時は非表示-->
             <li class="nav-item mr-1 text-nowrap">
               <%= link_to facilities_path, method: :get, class: 'btn05 bordercircle1' do %>

@@ -1,6 +1,8 @@
-<h2 class="row p-0 text-nowrap">担当利用者情報編集</h2>
-
-<p>* は入力必須項目です</p>
+<%= link_to care_manager_user_path(@user) do %>
+  <i class="fas fa-arrow-circle-left"></i>
+  <%= @user.full_name %>様の利用者ページへ
+<% end %>
+<h2 class="text-nowrap">利用者情報編集 <i class="fas fa-edit ml-1"></i></h2>
 <%= form_with model: @user, url: care_manager_user_path(@user) do |f| %>
   <%= render 'form', { user: @user, submit_text: '編集内容を保存', f: f } %>
 <% end %>
