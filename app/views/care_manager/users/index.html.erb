@@ -1,28 +1,35 @@
-<h1>担当利用者一覧</h1>
-<%= link_to "新規利用者登録", new_care_manager_user_path, class: "btn btn-success shadow" %>
+<h1>利用者情報一覧 <i class="fas fa-users"></i></h1>
+<%= link_to new_care_manager_user_path, class: "btn btn-success" do %>
+  <i class="fas fa-plus-circle"></i> 利用者情報登録
+<% end %>
 <% if current_care_manager.users.count == 0 %>
   利用者が登録されていません。新規登録を行ってください。
 <% else %>
-  <div class="table-responsive">
-    <table class="table table-bordered shadow mt-3">
+  <div class="table-responsive border border-light rounded p-2 mt-3">
+    <table class="table table-bordered text-center">
+      <caption class="d-md-none">この表は横にスクロールできます。</caption>
       <thead>
-        <tr class="text-center">
-          <th class="table-active">氏名</th>
-          <th class="table-active">現在の状態</th>
-          <th class="table-active">要介護度</th>
+        <tr class="table-active">
+          <th>氏名</th>
+          <th>現在の状態</th>
+          <th>要介護度</th>
+          <th>生年月日</th>
+          <th>住所</th>
         </tr>
       </thead>
       <tbody>
         <% @users.each do |user| %>
           <tr>
-            <td>
+            <td class="align-middle">
               <%= link_to care_manager_user_path(user) do %>
-                <%= image_tag user.get_image(50,50) %>
+                <%= image_tag user.get_image(50,50), class: "rounded" %>
                 <%= user.full_name %> 様
               <% end %>
             </td>
-            <td><%= user.current_status_i18n %></td>
-            <td><%= user.care_level_status_i18n %></td>
+            <td class="align-middle"><%= user.current_status_i18n %></td>
+            <td class="align-middle"><%= user.care_level_status_i18n %></td>
+            <td class="align-middle"><%= user.birthday %> (<%= user.age %>歳)</td>
+            <td class="align-middle"><%= user.address %></td>
           </tr>
         <% end %>
       </tbody>
