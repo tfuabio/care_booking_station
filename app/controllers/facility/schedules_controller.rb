@@ -1,4 +1,6 @@
 class Facility::SchedulesController < ApplicationController
+  before_action :authenticate_facility!
+
   def index
     # 何月予約表を表示するか、パラメータnumを使い切り替える
     @num = params[:num].to_i
@@ -22,9 +24,5 @@ class Facility::SchedulesController < ApplicationController
         @hash[use_detail.user][date] = use_detail.status_i18n
       end
     end
-  end
-
-  def show
-    @schedule = Schedules.find(params[:id])
   end
 end

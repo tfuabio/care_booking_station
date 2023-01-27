@@ -94,14 +94,15 @@ class CareManager::UsePlansController < ApplicationController
   def update
     if UsePlan.new(use_plan_params).correct_date?
       if @use_plan.update(use_plan_params)
-        redirect_to care_manager_use_plans_path(@use_plan), notice: '利用計画が正常に更新されました。'
+        redirect_to care_manager_use_plan_path(@use_plan), notice: '利用計画が正常に更新されました。'
       else
         flash.now[:alert] = "利用計画更新中にエラーが発生しました。"
+        render :edit
       end
     else
       flash.now[:alert] = "入力された日付に問題があります。"
+      render :edit
     end
-    render :edit
   end
 
   # 利用計画を中止にするアクション

@@ -44,7 +44,7 @@ Facility.create!(
       password: "testtest",
       name: "ケアセンター令和",
       kana_name: "ケアセンターレイワ",
-      address: "埼玉県令和市令和123",
+      address: "埼玉県テスト市令和1-1",
       post_code: "7654321",
       phone_number: "0123456789",
       capacity: 20,
@@ -55,12 +55,23 @@ Facility.create!(
       password: "testtest",
       name: "ケアセンター平成",
       kana_name: "ケアセンターヘイセイ",
-      address: "埼玉県平成市平成123",
+      address: "埼玉県テスト市平成1-1",
       post_code: "8765432",
       phone_number: "1234567890",
-      capacity: 25,
+      capacity: 20,
       is_deleted: false
-    }
+    },
+    {
+      email: "meiji@mail.com",
+      password: "testtest",
+      name: "ケアセンター明治",
+      kana_name: "ケアセンターメイジ",
+      address: "埼玉県テスト市明治1-1",
+      post_code: "8765432",
+      phone_number: "1234567890",
+      capacity: 20,
+      is_deleted: false
+    },
   ]
 )
 
@@ -69,10 +80,10 @@ User.create!(
     {
       care_manager_id: 1,
       last_name: "令和",
-      first_name: "道子",
+      first_name: "令子",
       last_name_kana: "レイワ",
-      first_name_kana: "ミチコ",
-      address: "埼玉県てすと市てすと123",
+      first_name_kana: "レイコ",
+      address: "埼玉県テスト市令和123",
       post_code: "1234567",
       phone_number: "08012345678",
       current_status: "home_care",
@@ -88,31 +99,47 @@ User.create!(
       first_name: "昭子",
       last_name_kana: "ショウワ",
       first_name_kana: "アキコ",
-      address: "埼玉県てすと市てすと234",
+      address: "埼玉県テスト市昭和123",
       post_code: "1234567",
       phone_number: "08012345678",
       current_status: "home_care",
       care_level_status: "long_term_care_level_3",
       gender: "female",
-      birthday: Date.new(1937, 8, 30),
+      birthday: Date.new(1925, 5, 2),
       life_history: "○○小学校を卒業後、洋裁学校に通った。成人してからは文房具製造工場に勤め、結婚後は家業の農家を手伝っていた。夫は幼なじみで恋愛結婚であった。几帳面で面倒見の良い性格で、夫が亡くなってからも畑仕事に精を出しては近所に配ったりしていた。また、孫が顔を見せに行くと大変喜んでいた。現在は年金と長男からの仕送りで生活している。",
       medical_history: "【既往歴】\r\nなし\r\n【現病歴】\r\n① 高血圧：平成 6 年（55 歳）頃診断。通院、内服治療を受けていた。② 糖尿病（II 型）：平成 6 年（55 歳）頃診断。通院、内服治療を受けていた。\r\n③ 両変形性膝関節症：平成 21 年（70 歳）診断。通院、内服治療を受けていた。\r\n④ アルツハイマー性認知症：平成 28 年（77 歳） △△病院にて確定診断され治療開始\r\n→①②③については、入所後は嘱託医が継続して診察する\r\n→④については、△△病院（脳神経内科 XXX 医師）に継続して通院する（連絡先：XXX-XXXX-XXXX）\r\n≪主治医≫\r\n嘱託医 ○○医師 （高血圧、糖尿病、変形性膝関節症の診察）"
     },
     {
-      care_manager_id: 2,
+      care_manager_id: 1,
       last_name: "大正",
       first_name: "正子",
       last_name_kana: "タイショウ",
       first_name_kana: "マサコ",
-      address: "埼玉県てすと市てすと234",
+      address: "埼玉県テスト市大正234",
       post_code: "1234567",
       phone_number: "08012345678",
       current_status: "home_care",
       care_level_status: "long_term_care_level_5",
       gender: "female",
-      birthday: Date.new(1937, 8, 30),
+      birthday: Date.new(1915, 6, 5),
       life_history: "○○小学校を卒業後、洋裁学校に通った。成人してからは文房具製造工場に勤め、結婚後は家業の農家を手伝っていた。夫は幼なじみで恋愛結婚であった。几帳面で面倒見の良い性格で、夫が亡くなってからも畑仕事に精を出しては近所に配ったりしていた。また、孫が顔を見せに行くと大変喜んでいた。現在は年金と長男からの仕送りで生活している。",
       medical_history: "【既往歴】\r\nなし\r\n【現病歴】\r\n① 高血圧：平成 6 年（55 歳）頃診断。通院、内服治療を受けていた。② 糖尿病（II 型）：平成 6 年（55 歳）頃診断。通院、内服治療を受けていた。\r\n③ 両変形性膝関節症：平成 21 年（70 歳）診断。通院、内服治療を受けていた。\r\n④ アルツハイマー性認知症：平成 28 年（77 歳） △△病院にて確定診断され治療開始\r\n→①②③については、入所後は嘱託医が継続して診察する\r\n→④については、△△病院（脳神経内科 XXX 医師）に継続して通院する（連絡先：XXX-XXXX-XXXX）\r\n≪主治医≫\r\n嘱託医 ○○医師 （高血圧、糖尿病、変形性膝関節症の診察）"
+    },
+    {
+      care_manager_id: 1,
+      last_name: "明治",
+      first_name: "明男",
+      last_name_kana: "メイジ",
+      first_name_kana: "アキオ",
+      address: "埼玉県テスト市明治234",
+      post_code: "1234567",
+      phone_number: "08012345678",
+      current_status: "home_care",
+      care_level_status: "long_term_care_level_2",
+      gender: "male",
+      birthday: Date.new(1932, 9, 24),
+      life_history: "",
+      medical_history: ""
     }
   ]
 )
