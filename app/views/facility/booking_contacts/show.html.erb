@@ -2,20 +2,34 @@
   <div class="col col-12 col-md-3 border-right mb-5">
     <%= link_to facility_booking_contacts_path do %>
       <i class="fas fa-arrow-circle-left"></i>
-      予約問い合わせ一覧へ
+      問い合わせ一覧へ
     <% end %>
-    <ul class="list-group text-nowrap text-center shadow mt-2">
-      <li class="list-group-item bg-primary text-white m-0">予約問い合わせ詳細</li>
+    <ul class="list-group text-center shadow mt-2">
+      <li class="list-group-item bg-primary text-white m-0">問い合わせ詳細</li>
       <li class="list-group-item">
-        <p class="bg-dark text-light rounded-lg">利用者</p>
-        <%= link_to facility_user_path(@use_plan.user) do %>
-          <%= image_tag @use_plan.user.get_image(100,100), class: "rounded" %>
-          <%= @use_plan.user.full_name %> 様
-          <% if @booking_contact.new_user? %>
-            (新規)
-          <% else %>
-            (契約済)
-          <% end %>
+        <p class="bg-dark text-light rounded-lg">問い合わせ元</p>
+        <%= @use_plan.care_manager.full_name %>CM<br>
+        (<%= @use_plan.care_manager.office_name %>)
+      </li>
+      <li class="list-group-item">
+        <p class="bg-dark text-light rounded-lg">利用者情報</p>
+        <%= link_to facility_user_path(@user) do %>
+          <div class="row">
+            <div class="col text-right p-0">
+              <%= image_tag @user.get_image(100,100), class: "rounded" %>
+            </div>
+            <div class="col text-left">
+              <% if current_facility.new_user?(@user) %>
+                <span class="badge badge-danger">新規</span>
+              <% else %>
+                <span class="badge badge-primary">契約済</span>
+              <% end %>
+              <br>
+              <%= @user.full_name %> 様<br>
+              <%= @user.age %>歳<br>
+              <%= @user.care_level_status_i18n %>
+            </div>
+          </div>
         <% end %>
       </li>
       <li class="list-group-item">
@@ -23,8 +37,15 @@
         <%= @booking_contact.status_i18n %>
         <% if @booking_contact.status == "awaiting_reply" %>
           <br>
-          <%= link_to "予約可能で返事する", reply_facility_booking_contact_path(@booking_contact, content: "bookable"), method: :patch, data: { confirm: "予約可能でお返事してよろしいですか？(送信先：#{@use_plan.care_manager.full_name} ケアマネージャー)" }, class: "btn-sm btn-success" unless @booking_contact.no_beds? %>
-          <%= link_to "予約不可で返事する", reply_facility_booking_contact_path(@booking_contact, content: "not_bookable"), method: :patch, data: { confirm: "予約可能でお返事してよろしいですか？(送信先：#{@use_plan.care_manager.full_name} ケアマネージャー)" }, class: "btn-sm btn-danger" %>
+          <% unless @booking_contact.no_beds? %>
+            <%= button_to reply_facility_booking_contact_path(@booking_contact, content: "bookable"), method: :patch, data: { confirm: "予約可能でお返事してよろしいですか？(送信先：#{@use_plan.care_manager.full_name} ケアマネージャー)" }, class: "btn-sm btn-success" do %>
+              <i class="fas fa-thumbs-up"></i> 予約可能で返答
+            <% end %>
+          <% end %>
+          <br>
+          <%= button_to reply_facility_booking_contact_path(@booking_contact, content: "not_bookable"), method: :patch, data: { confirm: "予約可能でお返事してよろしいですか？(送信先：#{@use_plan.care_manager.full_name} ケアマネージャー)" }, class: "btn-sm btn-danger" do %>
+            <i class="fas fa-times-circle"></i> 予約不可で返答
+          <% end %>
         <% end %>
       </li>
       <li class="list-group-item">
@@ -43,10 +64,6 @@
       <li class="list-group-item">
         <p class="bg-dark text-light rounded-lg">利用期間</p>
         <%= @use_plan.start_date %>〜<%= @use_plan.end_date %>
-      </li>
-      <li class="list-group-item">
-        <p class="bg-dark text-light rounded-lg">問い合わせ元ケアマネージャー</p>
-        <%= @use_plan.care_manager.full_name %> (<%= @use_plan.care_manager.office_name %>)
       </li>
     </ul>
   </div>

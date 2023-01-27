@@ -53,4 +53,11 @@ class User < ApplicationRecord
     end
     image.variant(resize_to_limit: [width, height]).processed
   end
+
+  # 年齢を返すメソッド
+  def age
+    birthday = self.birthday
+    today = Date.today
+    (today.strftime('%Y%m%d').to_i - birthday.strftime('%Y%m%d').to_i) / 10000
+  end
 end
