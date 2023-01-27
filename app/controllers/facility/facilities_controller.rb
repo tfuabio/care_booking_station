@@ -1,4 +1,5 @@
 class Facility::FacilitiesController < ApplicationController
+  before_action :authenticate_facility!
   before_action :ensure_guest_facility
 
   def show

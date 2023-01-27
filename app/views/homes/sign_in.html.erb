@@ -21,6 +21,7 @@
         </div>
       <% end %>
       未登録の方は<%= link_to "こちら", new_facility_registration_path %>
+      <%= link_to '施設様ゲストログイン', facility_guest_sign_in_path, class: "btn btn-secondary btn-sm btn-block my-3", method: :post %>
     </div>
     <div class="col">
       <h2>ケアマネージャー様はこちら</h2>
@@ -38,6 +39,7 @@
         </div>
       <% end %>
       未登録の方は<%= link_to "こちら", new_care_manager_registration_path %>
+      <%= link_to 'ケアマネージャー様ゲストログイン', care_manager_guest_sign_in_path, class: "btn btn-secondary btn-sm btn-block my-3", method: :post %>
     </div>
   </div>
 </div>

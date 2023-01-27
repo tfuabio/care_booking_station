@@ -63,6 +63,6 @@ Rails.application.routes.draw do
     resources :booking_contacts, only: [:index, :show] do
       patch 'reply' => 'booking_contacts#reply', on: :member
     end
-    resources :schedules, only: [:index, :show, :create]
+    resources :schedules, only: [:index]
   end
 end
