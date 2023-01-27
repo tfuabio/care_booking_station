@@ -24,7 +24,6 @@ class CareManager::UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @emergency_contact = EmergencyContact.new
-    @emergency_contacts = @user.emergency_contacts
   end
 
   def edit

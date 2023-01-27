@@ -29,20 +29,19 @@ class CareManager::UsePlansController < ApplicationController
     if @use_plan.correct_date?  # 日付が正しいか判定
       @use_plan.care_manager_id = current_care_manager.id
       if @use_plan.duplicate?  # 日付が登録済みの計画と重複していないか判定
-        flash.now[:alert] = "入力された日付がすでに登録されている計画と重複しています。"
-        render :index
+        flash[:alert] = "入力された日付がすでに登録されている計画と重複しています。"
       else
         if @use_plan.save
           redirect_to care_manager_use_plan_path(@use_plan), notice: "利用計画が正常に作成されました。"
+          return
         else
-          flash.now[:alert] = "利用計画作成中にエラーが発生しました。"
-          render :index
+          flash[:alert] = "利用計画作成中にエラーが発生しました。"
         end
       end
     else
-      flash.now[:alert] = "入力された日付に問題があります。"
-      render :index
+      flash[:alert] = "入力された日付に問題があります。"
     end
+    redirect_to care_manager_use_plans_path
   end
 
   def show

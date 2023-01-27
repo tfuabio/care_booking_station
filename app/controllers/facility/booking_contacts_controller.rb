@@ -36,6 +36,7 @@ class Facility::BookingContactsController < ApplicationController
     end
 
     @use_plan = @booking_contact.use_plan
+    @user = @use_plan.user
   end
 
   def reply

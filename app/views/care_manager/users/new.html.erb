@@ -1,6 +1,8 @@
-<h2 class="row p-0 text-nowrap">担当利用者登録</h2>
-
-<p>* は入力必須項目です</p>
+<%= link_to care_manager_users_path do %>
+  <i class="fas fa-arrow-circle-left"></i>
+  利用者一覧へ
+<% end %>
+<h2 class="text-nowrap">利用者情報登録</h2>
 <%= form_with model: @user, url: care_manager_users_path do |f| %>
   <%= render 'form', { user: @user, submit_text: '新規登録', f: f } %>
 <% end %>

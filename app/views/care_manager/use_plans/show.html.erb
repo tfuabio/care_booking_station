@@ -5,16 +5,24 @@
       利用計画一覧へ
     <% end %>
     <ul class="list-group text-nowrap text-center shadow mt-2">
-      <li class="list-group-item bg-primary text-white m-0">利用計画詳細</li>
+      <li class="list-group-item bg-primary text-white m-0">利用計画詳細 <i class="fas fa-calendar-alt"></i></li>
       <li class="list-group-item">
         <% unless @use_plan.status == "canceled" %>
-          <%= link_to "編集", edit_care_manager_use_plan_path(@use_plan), class: "btn btn-success shadow text-nowrap" %>
+          <%= link_to edit_care_manager_use_plan_path(@use_plan), class: "btn btn-success" do %>
+            <i class="fas fa-edit"></i> 編集
+          <% end %>
           <% if @use_plan.status == "confirmed" %>
-            <%= link_to "中止", cancel_care_manager_use_plan_path(@use_plan), method: :patch, class: "btn btn-danger shadow text-nowrap ml-3", data: { confirm: "この利用計画を中止にしてよろしいですか？この操作を行うと、#{@use_plan.facility.name}へ送信され、即時利用中止の処理が行われます。" } %>
+            <%= link_to cancel_care_manager_use_plan_path(@use_plan), method: :patch, class: "btn btn-danger shadow text-nowrap ml-3", data: { confirm: "この利用計画を中止にしてよろしいですか？この操作を行うと、#{@use_plan.facility.name}へ送信され、即時利用中止の処理が行われます。" } do %>
+              <i class="fas fa-minus-circle"></i> 中止
+            <% end %>
           <% elsif @use_plan.status == "contacting"%>
-            <%= link_to "中止", cancel_care_manager_use_plan_path(@use_plan), method: :patch, class: "btn btn-danger shadow text-nowrap ml-3", data: { confirm: "この利用計画を中止にしてよろしいですか？この操作を行うと、すべての問い合わせは締め切られます。" } %>
+            <%= link_to cancel_care_manager_use_plan_path(@use_plan), method: :patch, class: "btn btn-danger shadow text-nowrap ml-3", data: { confirm: "この利用計画を中止にしてよろしいですか？この操作を行うと、すべての問い合わせは締め切られます。" } do %>
+              <i class="fas fa-minus-circle"></i> 中止
+            <% end %>
           <% else %>
-            <%= link_to "中止", cancel_care_manager_use_plan_path(@use_plan), method: :patch, class: "btn btn-danger shadow text-nowrap ml-3", data: { confirm: "この利用計画を中止にしてよろしいですか？" } %>
+            <%= link_to cancel_care_manager_use_plan_path(@use_plan), method: :patch, class: "btn btn-danger shadow text-nowrap ml-3", data: { confirm: "この利用計画を中止にしてよろしいですか？" } do %>
+              <i class="fas fa-minus-circle"></i> 中止
+            <% end %>
           <% end %>
         <% end %>
       </li>
@@ -49,13 +57,15 @@
     </ul>
   </div>
   <div class="col col-12 col-md-9">
-    <h2>問い合わせ履歴</h2>
-    <p class="text-secondary">問い合わせ済みの施設があればここに表示されます。</p>
+    <span>
+      <h2>問い合わせ履歴 <i class="fas fa-history"></i></h2>
+      <p class="text-secondary">問い合わせ済みの施設があればここに表示されます。</p>
+    </span>
     <% if @booking_contacts.blank? %>
-      問い合わせ履歴はありません。
+      <p class="text-secondary">問い合わせ履歴はありません。</p>
     <% else %>
       <div class="table-responsive">
-        <table class="table table-bordered shadow text-center text-nowrap">
+        <table class="table table-sm table-bordered text-center text-nowrap">
           <caption>この表は横にスクロールできます。</caption>
           <thead>
             <tr class="table-active">
@@ -83,7 +93,7 @@
     <% end %>
 
     <% if @use_plan.status == "planning" || @use_plan.status == "contacting" %>
-      <h2 class="mt-5 border-top">問い合わせ先施設選択</h2>
+      <h2 class="mt-5 border-top">問い合わせ先施設選択 <i class="fas fa-check-square"></i></h2>
       <div class="container">
         <div class="row my-3">
           <%= form_with url: care_manager_use_plan_path(@use_plan), method: :get, class: "form-inline" do |f| %>
@@ -110,9 +120,9 @@
           <% if @facilities.blank? %>
             <p>施設が見つかりません。</p>
           <% else %>
-            <div class="table-responsive">
-              <table class="table table-bordered shadow text-center text-nowrap">
-                <caption>この表は横にスクロールできます。</caption>
+            <div class="table-responsive border border-light rounded">
+              <table class="table table-sm table-bordered text-center text-nowrap">
+                <caption class="d-md-none">この表は横にスクロールできます。</caption>
                 <thead>
                   <tr class="table-active">
                     <th>問い合わせ可否</th>
@@ -133,12 +143,20 @@
                           <%= form_with model: @booking_contact, url: care_manager_use_plan_booking_contacts_path(@use_plan) do |f| %>
                             空きあり
                             <%= f.hidden_field :facility_id, :value => facility.id %>
-                            <%= f.submit "問い合わせ送信可", data: { confirm: "#{facility.name}へ問い合わせを送信してよろしいですか？" }, class: "btn-sm btn-success" %>
+                            <%= button_tag type: "submit", class: "btn-sm btn-success", data: { confirm: "#{facility.name}へ問い合わせを送信してよろしいですか？" } do %>
+                              問い合わせ送信可 <i class="fas fa-paper-plane"></i>
+                            <% end %>
                           <% end %>
                         <% end %>
                       </td>
                       <td class="align-middle">
                         <%= facility.name %>
+                        <br>
+                        <% if facility.new_user?(@use_plan.user) %>
+                          <span class="badge badge-danger">未契約</span>
+                        <% else %>
+                          <span class="badge badge-success">契約済み</span>
+                        <% end %>
                       </td>
                       <td class="align-middle">
                         <%= facility.address %>

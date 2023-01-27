@@ -1,0 +1,52 @@
+<div class="table-responsive mt-3">
+  <table class="table table-bordered">
+    <tr>
+      <th class="table-active align-middle text-center text-nowrap">本人画像</td>
+      <td class="align-middle"><%= image_tag user.get_image(100,100), class: "rounded" %></td>
+    </tr>
+    <tr>
+      <th class="table-active align-middle text-center text-nowrap">氏名</td>
+      <td class="align-middle"><%= user.full_name %></td>
+    </tr>
+    <tr>
+      <th class="table-active align-middle text-center text-nowrap">カナ名</td>
+      <td class="align-middle"><%= user.last_name_kana %> <%= user.first_name_kana %></td>
+    </tr>
+    <tr>
+      <th class="table-active align-middle text-center text-nowrap">郵便番号</td>
+      <td class="align-middle"><%= user.post_code %></td>
+    </tr>
+    <tr>
+      <th class="table-active align-middle text-center text-nowrap">住所</td>
+      <td class="align-middle"><%= user.address %></td>
+    </tr>
+    <tr>
+      <th class="table-active align-middle text-center text-nowrap">電話番号</td>
+      <td class="align-middle"><%= user.phone_number %></td>
+    </tr>
+    <tr>
+      <th class="table-active align-middle text-center text-nowrap">性別</td>
+      <td class="align-middle"><%= user.gender_i18n %>	</td>
+    </tr>
+    <tr>
+      <th class="table-active align-middle text-center text-nowrap">生年月日</td>
+      <td class="align-middle"><%= user.birthday %> (<%= user.age %>歳)</td>
+    </tr>
+    <tr>
+      <th class="table-active align-middle text-center text-nowrap">現在の状態</td>
+      <td class="align-middle"><%= user.current_status_i18n %></td>
+    </tr>
+    <tr>
+      <th class="table-active align-middle text-center text-nowrap">要介護度</td>
+      <td class="align-middle"><%= user.care_level_status_i18n %></td>
+    </tr>
+    <tr>
+      <th class="table-active align-middle text-center text-nowrap">生活歴</td>
+      <td class="text-left align-middle"><%= safe_join(user.life_history.split("\n"),tag(:br)) %></td>
+    </tr>
+    <tr>
+      <th class="table-active align-middle text-center text-nowrap">病歴</td>
+      <td class="text-left align-middle"><%= safe_join(user.medical_history.split("\n"),tag(:br)) %></td>
+    </tr>
+  </table>
+</div>
