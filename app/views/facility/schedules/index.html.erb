@@ -1,27 +1,37 @@
-<h1>利用予約表</h1>
-<h1><%= "#{@date.year}年#{@date.month}月" %></h1>
-<%= link_to "前月", facility_schedules_path(num: @num - 1), class: "btn-sm btn-primary" %>
-<%= link_to "次月", facility_schedules_path(num: @num + 1), class: "btn-sm btn-primary" %>
+<span>
+  <h1>利用予約表 <i class="fas fa-table"></i></h1>
+  <p class="text-secondary">問い合わせに予約可能で返答し、ケアマネージャーが予約確定すると自動的にこの予約表へ反映されます。</p>
+</span>
+<div class="mb-3">
+  <%= link_to "前月", facility_schedules_path(num: @num - 1), class: "btn-sm btn-primary" %>
+  <%= link_to "次月", facility_schedules_path(num: @num + 1), class: "btn-sm btn-primary" %>
+</div>
 <% if @hash.blank? %>
-  予約がありません。
+  <p class="text-secondary"><%= "#{@date.year}年#{@date.month}月" %>は予約がありません。</p>
 <% else %>
-  <div class="table-responsive mt-3">
-    <table class="table table-sm table-bordered shadow">
-      <caption>この表は横にスクロールできます。</caption>
+  <p class="text-secondary d-md-none mb-0">この表は横にスクロールできます。</p>
+  <div class="table-responsive border border-secondary rounded">
+    <table class="table table-sm table-bordered text-center text-nowrap m-0">
       <thead>
         <tr class="table-active">
-          <th></th>
+          <th class="align-middle"><%= "#{@date.year}年#{@date.month}月" %></th>
           <% @dates.each do |day| %>
-            <th class="text-center"><%= day.day %><br><%= @week[day.wday] %></th>
+            <th class="align-middle"><%= day.day %><br><%= @week[day.wday] %></th>
           <% end %>
         </tr>
       </thead>
       <tbody>
         <% @hash.keys.each do |user| %>
           <tr>
-            <th class="text-center text-nowrap"><%= link_to "#{user.full_name} 様", facility_user_path(user) %><%= "(新規)" if current_facility.new_user?(user) %></th>
+            <th class="align-middle">
+              <%= link_to facility_user_path(user) do %>
+                <%= image_tag user.get_image(30,30), class: "rounded" %>
+                <%= "#{user.full_name} 様" %>
+                <%= "(新規)" if current_facility.new_user?(user) %>
+              <% end %>
+            </th>
             <% @dates.each do |day| %>
-              <td class="text-center">
+              <td class="align-middle">
                 <%= @hash[user][day] %>
               </td>
             <% end %>

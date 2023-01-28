@@ -1,15 +1,29 @@
-<h1>予約問い合わせ一覧</h1>
-<p class="text-secondary">施設への問い合わせがあればここに表示されます。</p>
-<%= form_with url: facility_booking_contacts_path, method: :get, class: "form-inline my-3 col-md-4" do |f| %>
-  <%= f.select :status, options_for_select( { '全て表示' => 'all', '返答待ち' => 'awaiting_reply', '返答済(予約可能)' => 'bookable', '返答済(予約不可)' => 'not_bookable', '問い合わせ終了' => 'closing' }, @status), {}, class: 'form-control' %>
-  <%= f.submit "表示", class: "btn btn-primary" %>
-<% end %>
+<span>
+  <h1>問い合わせ一覧 <i class="fas fa-mail-bulk"></i></h1>
+  <p class="text-secondary">施設への問い合わせがあればここに表示されます。</p>
+</span>
+<div class="btn-group mb-3" role="group">
+  <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <% if @status == 'all' %>
+      全て
+    <% else %>
+      <%= I18n.t("enums.booking_contact.status.#{@status}") %>
+    <% end %>
+  </button>
+  <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+    <%= link_to '全て', facility_booking_contacts_path(status: 'all'), class: "dropdown-item" %>
+    <%= link_to '返答待ち', facility_booking_contacts_path(status: 'awaiting_reply'), class: "dropdown-item" %>
+    <%= link_to '返答済(予約可能)', facility_booking_contacts_path(status: 'bookable'), class: "dropdown-item" %>
+    <%= link_to '返答済(予約不可)', facility_booking_contacts_path(status: 'not_bookable'), class: "dropdown-item" %>
+    <%= link_to '問い合わせ終了', facility_booking_contacts_path(status: 'closing'), class: "dropdown-item" %>
+  </div>
+</div>
 <% if @booking_contacts.blank? %>
-  問い合わせはありません。
+  <p class="text-secondary">問い合わせはありません。</p>
 <% else %>
-  <div class="table-responsive">
-    <table class="table table-bordered shadow text-center text-nowrap">
-      <caption>この表は横にスクロールできます。</caption>
+  <p class="text-secondary d-md-none mb-0">この表は横にスクロールできます。</p>
+  <div class="table-responsive border border-secondary rounded">
+    <table class="table table-sm table-bordered text-center text-nowrap m-0">
       <thead>
         <tr>
           <th class="table-active">状態</th>

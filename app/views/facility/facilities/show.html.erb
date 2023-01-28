@@ -1,43 +1,34 @@
 <h1>施設様マイページ</h1>
-<div class="row py-3">
-  <div class="col-md-2">
-    <h5 class="font-weight-bold">登録情報</h5>
-  </div>
-  <div class="col mr-auto">
-    <%= link_to "編集する", edit_facilities_path, class: "btn btn-success btn-sm px-3 col-md-2 shadow" %>
-  </div>
-</div>
-<div class="row mb-4">
-  <div class="col-md-8">
-    <table class="table table-bordered table-responsive-md shadow">
-      <tr>
-        <th class="table-active text-nowrap" style="width:25%">施設名称</td>
-        <td style="width:75%"><%= current_facility.name %></td>
-      </tr>
-      <tr>
-        <th class="table-active text-nowrap">カナ名称</td>
-        <td><%= current_facility.kana_name %></td>
-      </tr>
-      <tr>
-        <th class="table-active text-nowrap">郵便番号</td>
-        <td><%= current_facility.post_code %></td>
-      </tr>
-      <tr>
-        <th class="table-active text-nowrap">住所</td>
-        <td><%= current_facility.address %></td>
-      </tr>
-      <tr>
-        <th class="table-active text-nowrap">電話番号</td>
-        <td><%= current_facility.phone_number %></td>
-      </tr>
-      <tr>
-        <th class="table-active text-nowrap">定員（居室数）</td>
-        <td><%= current_facility.capacity %></td>
-      </tr>
-      <tr>
-        <th class="table-active text-nowrap">メールアドレス</td>
-        <td><%= current_facility.email %></td>
-      </tr>
-    </table>
-  </div>
+<%= link_to "編集する", edit_facilities_path, class: "btn btn-success col-md-2" %>
+<div class="table-responsive mt-3 border border-secondary rounded">
+  <table class="table table-bordered text-nowrap m-0">
+    <tr>
+      <th class="table-active">施設名称</td>
+      <td><%= current_facility.name %></td>
+    </tr>
+    <tr>
+      <th class="table-active">カナ名称</td>
+      <td><%= current_facility.kana_name %></td>
+    </tr>
+    <tr>
+      <th class="table-active">郵便番号</td>
+      <td><%= current_facility.post_code %></td>
+    </tr>
+    <tr>
+      <th class="table-active">住所</td>
+      <td><%= current_facility.address %></td>
+    </tr>
+    <tr>
+      <th class="table-active">電話番号</td>
+      <td><%= current_facility.phone_number %></td>
+    </tr>
+    <tr>
+      <th class="table-active">定員（居室数）</td>
+      <td><%= current_facility.capacity %></td>
+    </tr>
+    <tr>
+      <th class="table-active">メールアドレス</td>
+      <td><%= current_facility.email %></td>
+    </tr>
+  </table>
 </div>

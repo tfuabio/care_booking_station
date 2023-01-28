@@ -1,38 +1,37 @@
-<h1>施設利用者一覧</h1>
-<div class="row mb-4">
-  <div class="col-md-8">
-    <table class="table table-bordered table-responsive-md shadow">
-      <thead>
+<h1>施設利用者一覧 <i class="fas fa-users"></i></h1>
+<p class="text-secondary d-md-none mb-0">この表は横にスクロールできます。</p>
+<div class="table-responsive border border-secondary rounded">
+  <table class="table table-sm table-bordered text-center text-nowrap m-0">
+    <thead>
+      <tr class="table-active">
+        <th>氏名</th>
+        <th>現在の状態</th>
+        <th>要介護度</th>
+        <th>契約状態</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
         <tr>
-          <th class="table-active">氏名</th>
-          <th class="table-active">現在の状態</th>
-          <th class="table-active">要介護度</th>
-          <th class="table-active">契約状態</th>
+          <td class="align-middle">
+            <%= link_to facility_user_path(user) do %>
+              <%= image_tag user.get_image(50,50), class: "rounded" %>
+              <%= user.full_name %> 様
+            <% end %>
+          </td>
+          <td class="align-middle"><%= user.current_status_i18n %></td>
+          <td class="align-middle"><%= user.care_level_status_i18n %></td>
+          <td class="align-middle">
+            <% if current_facility.new_user?(user) %>
+              未契約
+              <%= button_to "契約済に変更", contract_change_facility_user_path(user), method: :patch, data: { confirm: "契約済に変更してよろしいですか？(対象のご利用者様：#{user.full_name})" }, class: 'btn btn-sm btn-success' %>
+            <% else %>
+              契約済
+              <%= button_to "未契約に変更", contract_change_facility_user_path(user), method: :patch, data: { confirm: "未契約に変更してよろしいですか？(対象のご利用者様：#{user.full_name})" }, class: 'btn btn-sm btn-danger' %>
+            <% end %>
+          </td>
         </tr>
-      </thead>
-      <tbody>
-        <% @users.each do |user| %>
-          <tr>
-            <td class="align-middle">
-              <%= link_to facility_user_path(user) do %>
-                <%= image_tag user.get_image(50,50), class: "rounded" %>
-                <%= user.full_name %> 様
-              <% end %>
-            </td>
-            <td class="align-middle"><%= user.current_status_i18n %></td>
-            <td class="align-middle"><%= user.care_level_status_i18n %></td>
-            <td class="align-middle">
-              <% if current_facility.new_user?(user) %>
-                未契約
-                <%= link_to "契約済に変更", contract_change_facility_user_path(user), method: :patch, data: { confirm: "契約済に変更してよろしいですか？(対象のご利用者様：#{user.full_name})" }, class: 'btn btn-success' %>
-              <% else %>
-                契約済
-                <%= link_to "未契約に変更", contract_change_facility_user_path(user), method: :patch, data: { confirm: "未契約に変更してよろしいですか？(対象のご利用者様：#{user.full_name})" }, class: 'btn btn-danger' %>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
+      <% end %>
+    </tbody>
+  </table>
 </div>
