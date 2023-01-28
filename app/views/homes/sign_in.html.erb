@@ -1,45 +1,49 @@
-<div class="container" style="height: 100vh; text-align: center;">
-  <div class="row my-5">
-    <div class="col">
-      <h1>ログイン</h1>
-    </div>
-  </div>
+<div class="container-fluid p-0" style="height: 100vh; text-align: center;">
+  <h1>ログイン</h1>
   <div class="row mt-5">
-    <div class="col border-right border-secondary">
-      <h2>施設様はこちら</h2>
-      <%= form_with model: @facility, url: facility_session_path do |f| %>
-        <div class="field my-3">
-          <%= f.label :email %><br />
-          <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-        </div>
-        <div class="field my-3">
-          <%= f.label :password %><br />
-          <%= f.password_field :password, autocomplete: "current-password" %>
-        </div>
-        <div class="actions my-3">
-          <%= f.submit "ログイン", class: "btn btn-primary" %>
-        </div>
-      <% end %>
-      未登録の方は<%= link_to "こちら", new_facility_registration_path %>
-      <%= link_to '施設様ゲストログイン', facility_guest_sign_in_path, class: "btn btn-secondary btn-sm btn-block my-3", method: :post %>
+    <div class="col col-12 col-md-6">
+      <div class="border border-secondary rounded p-2 m-2">
+        <h2>施設様はこちら</h2>
+        <%= form_with model: @facility, url: facility_session_path do |f| %>
+          <div class="field my-3">
+            <%= f.label :email %><br />
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+          </div>
+          <div class="field my-3">
+            <%= f.label :password %><br />
+            <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
+          </div>
+          <div class="actions my-3">
+            <%= f.submit "ログイン", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+        <span>
+          <p>未登録の方は<%= link_to "こちら", new_facility_registration_path %></p>
+          <p><%= link_to 'ゲストログイン', facility_guest_sign_in_path, method: :post, data: { confirm: "ゲストログインしてよろしいですか？" } %>もできます。</p>
+        </span>
+      </div>
     </div>
-    <div class="col">
-      <h2>ケアマネージャー様はこちら</h2>
-      <%= form_with model: @care_manager, url: care_manager_session_path do |f| %>
-        <div class="field my-3">
-          <%= f.label :email %><br />
-          <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-        </div>
-        <div class="field my-3">
-          <%= f.label :password %><br />
-          <%= f.password_field :password, autocomplete: "current-password" %>
-        </div>
-        <div class="actions my-3">
-          <%= f.submit "ログイン", class: "btn btn-primary" %>
-        </div>
-      <% end %>
-      未登録の方は<%= link_to "こちら", new_care_manager_registration_path %>
-      <%= link_to 'ケアマネージャー様ゲストログイン', care_manager_guest_sign_in_path, class: "btn btn-secondary btn-sm btn-block my-3", method: :post %>
+    <div class="col col-12 col-md-6">
+      <div class="border border-secondary rounded p-2 m-2">
+        <h2>ケアマネージャー様はこちら</h2>
+        <%= form_with model: @care_manager, url: care_manager_session_path do |f| %>
+          <div class="field my-3">
+            <%= f.label :email %><br />
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+          </div>
+          <div class="field my-3">
+            <%= f.label :password %><br />
+            <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
+          </div>
+          <div class="actions my-3">
+            <%= f.submit "ログイン", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+        <span>
+          <p>未登録の方は<%= link_to "こちら", new_care_manager_registration_path %></p>
+          <p><%= link_to 'ゲストログイン', care_manager_guest_sign_in_path, method: :post, data: { confirm: "ゲストログインしてよろしいですか？" } %>もできます。</p>
+        </span>
+      </div>
     </div>
   </div>
 </div>
