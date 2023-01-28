@@ -1,13 +1,15 @@
-<h1>利用者情報一覧 <i class="fas fa-users"></i></h1>
-<%= link_to new_care_manager_user_path, class: "btn btn-success" do %>
-  <i class="fas fa-plus-circle"></i> 利用者情報登録
-<% end %>
+<div class="mb-2">
+  <h1>利用者情報一覧 <i class="fas fa-users"></i></h1>
+  <%= button_to new_care_manager_user_path, method: :get, class: "btn btn-success" do %>
+    <i class="fas fa-plus-circle"></i> 利用者情報登録
+  <% end %>
+</div>
 <% if current_care_manager.users.count == 0 %>
   利用者が登録されていません。新規登録を行ってください。
 <% else %>
-  <div class="table-responsive border border-light rounded p-2 mt-3">
-    <table class="table table-bordered text-center">
-      <caption class="d-md-none">この表は横にスクロールできます。</caption>
+  <p class="text-secondary d-md-none mb-0">この表は横にスクロールできます。</p>
+  <div class="table-responsive border border-secondary rounded">
+    <table class="table table-sm table-bordered text-center text-nowrap m-0">
       <thead>
         <tr class="table-active">
           <th>氏名</th>
