@@ -64,9 +64,9 @@
     <% if @booking_contacts.blank? %>
       <p class="text-secondary">問い合わせ履歴はありません。</p>
     <% else %>
-      <div class="table-responsive">
-        <table class="table table-sm table-bordered text-center text-nowrap">
-          <caption>この表は横にスクロールできます。</caption>
+      <p class="text-secondary d-md-none mb-0">この表は横にスクロールできます。</p>
+      <div class="table-responsive border border-secondary rounded">
+        <table class="table table-sm table-bordered text-center text-nowrap m-0">
           <thead>
             <tr class="table-active">
               <th>状態</th>
@@ -120,9 +120,9 @@
           <% if @facilities.blank? %>
             <p>施設が見つかりません。</p>
           <% else %>
-            <div class="table-responsive border border-light rounded">
-              <table class="table table-sm table-bordered text-center text-nowrap">
-                <caption class="d-md-none">この表は横にスクロールできます。</caption>
+            <p class="text-secondary d-md-none mb-0">この表は横にスクロールできます。</p>
+            <div class="table-responsive border border-secondary rounded">
+              <table class="table table-sm table-bordered text-center text-nowrap m-0">
                 <thead>
                   <tr class="table-active">
                     <th>問い合わせ可否</th>
