@@ -37,7 +37,7 @@ class CareManager::BookingContactsController < ApplicationController
 
     # 施設スケジュールに反映
     unless booking_contact.save_schdule
-      flash[:alert] = "aaa予約確定に失敗しました。"
+      flash[:alert] = "予約確定に失敗しました。"
       redirect_to care_manager_use_plan_path(@use_plan)
       return
     end
