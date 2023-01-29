@@ -4,12 +4,15 @@
 <div class="container-fluid d-flex flex-column align-items-center justify-content-center">
   <div class="row-fluid align-items-center">
     <div class="col col-lg-12">
-      <h1 class="">複雑な介護施設の利用予約。<%= image_tag('logo_top.gif') %>で簡単に。</h1>
+      <h1 class="">複雑な介護施設の利用予約を<%= image_tag('logo_top.gif') %>で簡単に。</h1>
     </div>
     <div class="col col-lg-12">
-      <%= link_to '新規登録(CM)', new_care_manager_registration_path, method: :get, class: 'btn05 bordercircle1' %>
-      <%= link_to '新規登録', new_facility_registration_path, method: :get, class: 'btn05 bordercircle1' %>
-      <%= link_to 'ログイン', sign_in_path, method: :get, class: 'btn05 bordercircle1' %>
+      <%= link_to sign_in_path, method: :get, class: 'btn05 bordercircle1' do %>
+        <i class="fas fa-sign-in-alt"></i> ログイン
+      <% end %>
+      <%= link_to registration_path, method: :get, class: 'btn05 bordercircle1' do %>
+        <i class="fas fa-user-plus"></i> 新規登録
+      <% end %>
     </div>
   </div>
 </div>
@@ -19,7 +22,7 @@
 
 <div class="container-fluid d-flex flex-column align-items-center justify-content-center">
   <div class="row-fluid align-items-center">
-    <div class="col">
+    <div class="col text-center">
       <h1>About</h1><br>
       <h2>介護施設のスタッフ様、施設の予約受付業務は負担になっていませんか？</h2>
       <br>
@@ -35,7 +38,7 @@
 
 <div class="container-fluid d-flex flex-column align-items-center justify-content-center">
   <div class="row-fluid align-items-center">
-    <div class="col">
+    <div class="col text-center">
       <h1>まずは使ってみましょう。<br>
       <h2>ゲストログインで試すことができます。</h2>
       <br>

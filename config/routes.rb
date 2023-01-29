@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   root 'homes#top'
   get '/sign_in' => 'homes#sign_in', as: 'sign_in'
+  get '/registration' => 'homes#registration', as: 'registration'
 
   # ケアマネ認証用
   devise_for :care_manager, controllers: {
