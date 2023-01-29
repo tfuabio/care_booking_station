@@ -33,13 +33,13 @@ class Facility < ApplicationRecord
 
   # ゲストログイン
   def self.guest
-    find_or_create_by!(email: 'guest@example.com') do |facility|
+    find_or_create_by!(email: ENV['GUEST_EMAIL']) do |facility|
       facility.password = SecureRandom.urlsafe_base64
-      facility.name = "guest"
-      facility.kana_name = "ゲスト"
-      facility.address = "ゲスト県ゲスト市ゲスト1-1"
-      facility.post_code = "1234567"
-      facility.phone_number = "0123456789"
+      facility.name = "ケアセンターげすと"
+      facility.kana_name = "ケアセンターゲスト"
+      facility.address = "ゲスト県ゲスト市ゲスト2-2"
+      facility.post_code = "XXXXXXX"
+      facility.phone_number = "080XXXXXXXX"
       facility.capacity = "20"
     end
   end

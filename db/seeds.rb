@@ -6,79 +6,67 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-CareManager.create!(
+care_managers = CareManager.create!(
   [
     {
-      email: "hanako@mail.com",
-      password: "testtest",
+      email: ENV['GUEST_EMAIL'],
+      password: SecureRandom.urlsafe_base64,
+      last_name: "ゲスト",
+      first_name: "太郎",
+      last_name_kana: "ゲスト",
+      first_name_kana: "タロウ",
+      address: "ゲスト県ゲスト市ゲスト1-1",
+      post_code: "XXXXXXX",
+      phone_number: "080XXXXXXXX",
+      office_name: "居宅会後支援事業所ゲスト",
+      is_deleted: false
+    },
+    {
+      email: ENV['TEST_EMAIL'],
+      password: ENV['TEST_PASSWORD'],
       last_name: "山田",
       first_name: "花子",
       last_name_kana: "やまだ",
       first_name_kana: "はなこ",
       address: "埼玉県花子市123",
-      post_code: "1234567",
-      phone_number: "08012345678",
+      post_code: "XXXXXXX",
+      phone_number: "080XXXXXXXX",
       office_name: "居宅介護支援事業所れいわ",
-      is_deleted: false
-    },
-    {
-      email: "taro@mail.com",
-      password: "testtest",
-      last_name: "山田",
-      first_name: "太郎",
-      last_name_kana: "やまだ",
-      first_name_kana: "たろう",
-      address: "埼玉県太郎市123",
-      post_code: "1234567",
-      phone_number: "08023456789",
-      office_name: "居宅介護支援事業所へいせい",
       is_deleted: false
     }
   ]
 )
 
-Facility.create!(
+facilities = Facility.create!(
   [
     {
-      email: "reiwa@mail.com",
-      password: "testtest",
+      email: ENV['GUEST_EMAIL'],
+      password: SecureRandom.urlsafe_base64,
+      name: "ケアセンターげすと",
+      kana_name: "ケアセンターゲスト",
+      address: "ゲスト県ゲスト市ゲスト2-2",
+      post_code: "XXXXXXX",
+      phone_number: "080XXXXXXXX",
+      capacity: 20,
+      is_deleted: false
+    },
+    {
+      email: ENV['TEST_EMAIL'],
+      password: ENV['TEST_PASSWORD'],
       name: "ケアセンター令和",
       kana_name: "ケアセンターレイワ",
       address: "埼玉県テスト市令和1-1",
-      post_code: "7654321",
-      phone_number: "0123456789",
+      post_code: "XXXXXXX",
+      phone_number: "080XXXXXXXX",
       capacity: 20,
       is_deleted: false
-    },
-    {
-      email: "heisei@mail.com",
-      password: "testtest",
-      name: "ケアセンター平成",
-      kana_name: "ケアセンターヘイセイ",
-      address: "埼玉県テスト市平成1-1",
-      post_code: "8765432",
-      phone_number: "1234567890",
-      capacity: 20,
-      is_deleted: false
-    },
-    {
-      email: "meiji@mail.com",
-      password: "testtest",
-      name: "ケアセンター明治",
-      kana_name: "ケアセンターメイジ",
-      address: "埼玉県テスト市明治1-1",
-      post_code: "8765432",
-      phone_number: "1234567890",
-      capacity: 20,
-      is_deleted: false
-    },
+    }
   ]
 )
 
-User.create!(
+users = care_managers.first.users.create!(
   [
     {
-      care_manager_id: 1,
       last_name: "令和",
       first_name: "令子",
       last_name_kana: "レイワ",
@@ -94,7 +82,6 @@ User.create!(
       medical_history: "【既往歴】\r\nなし\r\n【現病歴】\r\n① 高血圧：平成 6 年（55 歳）頃診断。通院、内服治療を受けていた。② 糖尿病（II 型）：平成 6 年（55 歳）頃診断。通院、内服治療を受けていた。\r\n③ 両変形性膝関節症：平成 21 年（70 歳）診断。通院、内服治療を受けていた。\r\n④ アルツハイマー性認知症：平成 28 年（77 歳） △△病院にて確定診断され治療開始\r\n→①②③については、入所後は嘱託医が継続して診察する\r\n→④については、△△病院（脳神経内科 XXX 医師）に継続して通院する（連絡先：XXX-XXXX-XXXX）\r\n≪主治医≫\r\n嘱託医 ○○医師 （高血圧、糖尿病、変形性膝関節症の診察）"
     },
     {
-      care_manager_id: 1,
       last_name: "昭和",
       first_name: "昭子",
       last_name_kana: "ショウワ",
@@ -110,7 +97,6 @@ User.create!(
       medical_history: "【既往歴】\r\nなし\r\n【現病歴】\r\n① 高血圧：平成 6 年（55 歳）頃診断。通院、内服治療を受けていた。② 糖尿病（II 型）：平成 6 年（55 歳）頃診断。通院、内服治療を受けていた。\r\n③ 両変形性膝関節症：平成 21 年（70 歳）診断。通院、内服治療を受けていた。\r\n④ アルツハイマー性認知症：平成 28 年（77 歳） △△病院にて確定診断され治療開始\r\n→①②③については、入所後は嘱託医が継続して診察する\r\n→④については、△△病院（脳神経内科 XXX 医師）に継続して通院する（連絡先：XXX-XXXX-XXXX）\r\n≪主治医≫\r\n嘱託医 ○○医師 （高血圧、糖尿病、変形性膝関節症の診察）"
     },
     {
-      care_manager_id: 1,
       last_name: "大正",
       first_name: "正子",
       last_name_kana: "タイショウ",
@@ -126,7 +112,6 @@ User.create!(
       medical_history: "【既往歴】\r\nなし\r\n【現病歴】\r\n① 高血圧：平成 6 年（55 歳）頃診断。通院、内服治療を受けていた。② 糖尿病（II 型）：平成 6 年（55 歳）頃診断。通院、内服治療を受けていた。\r\n③ 両変形性膝関節症：平成 21 年（70 歳）診断。通院、内服治療を受けていた。\r\n④ アルツハイマー性認知症：平成 28 年（77 歳） △△病院にて確定診断され治療開始\r\n→①②③については、入所後は嘱託医が継続して診察する\r\n→④については、△△病院（脳神経内科 XXX 医師）に継続して通院する（連絡先：XXX-XXXX-XXXX）\r\n≪主治医≫\r\n嘱託医 ○○医師 （高血圧、糖尿病、変形性膝関節症の診察）"
     },
     {
-      care_manager_id: 1,
       last_name: "明治",
       first_name: "明男",
       last_name_kana: "メイジ",
@@ -143,3 +128,8 @@ User.create!(
     }
   ]
 )
+
+users.each do |user|
+  file_path = Rails.root.join("app/assets/images/sample/user_#{user.id}.jpg")
+  user.image.attach(io: File.open(file_path), filename: 'default-image.jpg', content_type: 'image/jpeg')
+end

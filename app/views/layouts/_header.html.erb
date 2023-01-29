@@ -15,7 +15,7 @@
 
         <!-- ケアマネ側ログイン時 -->
         <% if care_manager_signed_in? %>
-          <% if current_care_manager.email == "guest@example.com" %>
+          <% if current_care_manager.email == ENV['GUEST_EMAIL'] %>
             <p class="my-auto mr-2 text-nowrap">ゲストログイン中</p>
           <% else %>
             <!--ゲストログイン時は非表示-->
@@ -45,7 +45,7 @@
         <!-- 施設側ログイン時 -->
         <% elsif facility_signed_in? %>
           <p class="my-auto mr-2 text-nowrap">ようこそ、<%= current_facility.name %>様</p>
-          <% unless current_facility.email == "guest@example.com" %>
+          <% unless current_facility.email == ENV['GUEST_EMAIL'] %>
             <!--ゲストログイン時は非表示-->
             <li class="nav-item mr-1 text-nowrap">
               <%= link_to facilities_path, method: :get, class: 'btn05 bordercircle1' do %>
