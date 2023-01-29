@@ -3,7 +3,7 @@
     <div class="list-group text-center mt-2">
       <li class="list-group-item bg-dark text-white">
         <p class="m-0">利用者リスト <i class="fas fa-users mr-1"></i></p>
-        <small class="text-secondary m-0">このリストでは登録済みの利用者を表示しています。クリックすると利用計画を絞ることできます。</small>
+        <small class="text-secondary m-0">このリストでは登録済みの利用者リストを表示しています。選択することで右の利用計画を絞ることができます。</small>
       </li>
       <% if @users.blank? %>
         <li class="list-group-item text-secondary">
@@ -43,7 +43,7 @@
   <div class="col col-md-9">
     <span>
       <h1>利用計画一覧 <i class="fas fa-tasks"></i></h1>
-      <p class="text-secondary">利用計画一覧を表示しています。利用期間が決まったら新規利用計画ボタンからフォームを開き、利用計画を作成してください。</p>
+      <p class="text-secondary">施設へ利用予約の問い合わせを行うには、先に施設を利用する利用者様と日程を「利用計画」として登録します。新たに利用計画を作成する際は新規利用計画ボタンから開くことができるフォームで作成することができ、作成された利用計画はこのページにリストアップされます。</p>
     </span>
     <div class="mb-2">
       <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
@@ -52,7 +52,7 @@
       <div class="collapse" id="collapseExample">
         <div class="card card-body border-secondary col-lg-6">
           <h1>新規利用計画 <i class="fas fa-plus-circle"></i></h1>
-          <p class="text-secondary">フォームに入力し、「作成」ボタンをクリックすると問い合わせ先の施設選択画面へ進みます。</p>
+          <p class="text-secondary">利用者名・入所日・退所日を入力し、作成ボタンをクリックすると問い合わせ先となる施設の選択画面へ進みます。</p>
           <%= form_with model: @use_plan, url: care_manager_use_plans_path, class: "text-center" do |f| %>
             <%= render "care_manager/shared/error_messages", resource: @use_plan %>
             <p class="text-nowrap">利用者</p>
