@@ -32,6 +32,8 @@
           <%= image_tag @use_plan.user.get_image(80,80), class: "rounded-lg" %>
           <%= "#{@use_plan.user.full_name} 様" %>
         <% end %>
+        <br>
+        <%= "住所：#{@use_plan.user.address}" %>
       </li>
       <li class="list-group-item">
         <p class="bg-dark text-light rounded-lg">利用期間</p>
@@ -93,7 +95,10 @@
     <% end %>
 
     <% if @use_plan.status == "planning" || @use_plan.status == "contacting" %>
-      <h2 class="mt-5 border-top">問い合わせ先施設選択 <i class="fas fa-check-square"></i></h2>
+      <span>
+        <h2 class="mt-5 border-top">問い合わせ先施設選択 <i class="fas fa-check-square"></i></h2>
+        <p class="text-secondary"></p>
+      </span>
       <div class="container">
         <div class="row my-3">
           <%= form_with url: care_manager_use_plan_path(@use_plan), method: :get, class: "form-inline" do |f| %>
@@ -155,7 +160,7 @@
                         <% if facility.new_user?(@use_plan.user) %>
                           <span class="badge badge-danger">未契約</span>
                         <% else %>
-                          <span class="badge badge-success">契約済み</span>
+                          <span class="badge badge-primary">契約済み</span>
                         <% end %>
                       </td>
                       <td class="align-middle">

@@ -51,11 +51,33 @@ facilities = Facility.create!(
       is_deleted: false
     },
     {
-      email: ENV['TEST_EMAIL'],
+      email: 'reiwa@mail.com',
       password: ENV['TEST_PASSWORD'],
       name: "ケアセンター令和",
       kana_name: "ケアセンターレイワ",
       address: "埼玉県テスト市令和1-1",
+      post_code: "XXXXXXX",
+      phone_number: "080XXXXXXXX",
+      capacity: 20,
+      is_deleted: false
+    },
+    {
+      email: 'heisei@mail.com',
+      password: ENV['TEST_PASSWORD'],
+      name: "ケアセンター平成",
+      kana_name: "ケアセンターヘイセイ",
+      address: "埼玉県テスト市平成1-1",
+      post_code: "XXXXXXX",
+      phone_number: "080XXXXXXXX",
+      capacity: 20,
+      is_deleted: false
+    },
+    {
+      email: 'syouwa@mail.com',
+      password: ENV['TEST_PASSWORD'],
+      name: "ケアセンター昭和",
+      kana_name: "ケアセンターショウワ",
+      address: "埼玉県テスト市昭和1-1",
       post_code: "XXXXXXX",
       phone_number: "080XXXXXXXX",
       capacity: 20,
@@ -133,3 +155,5 @@ users.each do |user|
   file_path = Rails.root.join("app/assets/images/sample/user_#{user.id}.jpg")
   user.image.attach(io: File.open(file_path), filename: 'default-image.jpg', content_type: 'image/jpeg')
 end
+
+facilities.first.contracts.create!(user_id: users.first.id, is_contracted: true)
