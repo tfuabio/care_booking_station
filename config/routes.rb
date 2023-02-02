@@ -53,6 +53,7 @@ Rails.application.routes.draw do
       resources :booking_contacts, only: [:create] do
         patch 'determine'
       end
+      resources :use_plan_comments, only: [:create]
     end
   end
 
@@ -63,6 +64,7 @@ Rails.application.routes.draw do
     end
     resources :booking_contacts, only: [:index, :show] do
       patch 'reply' => 'booking_contacts#reply', on: :member
+      resources :use_plan_comments, only: [:create]
     end
     resources :schedules, only: [:index]
   end

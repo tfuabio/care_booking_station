@@ -1,10 +1,10 @@
 <div class="row">
-  <div class="col col-12 col-md-3 border-right mb-5">
+  <div class="col col-12 col-md-3 mb-5">
     <%= link_to facility_booking_contacts_path do %>
       <i class="fas fa-arrow-circle-left"></i>
       問い合わせ一覧へ
     <% end %>
-    <ul class="list-group text-center shadow mt-2">
+    <ul class="list-group text-center mt-2">
       <li class="list-group-item bg-primary text-white m-0">問い合わせ詳細</li>
       <li class="list-group-item">
         <p class="bg-dark text-light rounded-lg">問い合わせ元</p>
@@ -67,7 +67,7 @@
       </li>
     </ul>
   </div>
-  <div class="col col-12 col-md-9">
+  <div class="col col-12 col-md-6 mb-5">
     <h1>利用期間中の予約状況</h1>
     <p class="text-secondary"><%= @use_plan.start_date %>〜<%= @use_plan.end_date %>を表示中</p>
     <% if @hash.blank? %>
@@ -99,5 +99,39 @@
         </table>
       </div>
     <% end %>
+  </div>
+  <div class="col col-12 col-md-3">
+    <h2>コメント</h2>
+    <%= form_with model: @use_plan_comment, url: facility_booking_contact_use_plan_comments_path(@booking_contact), method: :post, local: true do |f| %>
+      <%= f.text_area :comment, required: true, placeholder: 'この問い合わせに対するコメントを入力', class: 'form-control' %>
+      <%= f.submit 'コメントを書き込む', class: 'btn btn-sm btn-success' %>
+    <% end %>
+    <ul class="list-group">
+      <% @use_plan_comments.each do |use_plan_comment| %>
+        <li class="list-group-item list-group-item-action flex-column align-items-start">
+          <div class="d-flex w-100 justify-content-between">
+            <small class="mb-1">
+              <% if use_plan_comment.speaker_id == 0 %>
+                <%= "#{@use_plan.care_manager.full_name} CMより" %>
+              <% else %>
+                <%= "#{Facility.find(use_plan_comment.speaker_id).name}より" %>
+              <% end %>
+            </small>
+            <small><%= use_plan_comment.created_at.strftime('%Y/%m/%d %H:%M') %></small>
+          </div>
+          <p class="mb-1">
+            <!--感情スコアによって表情アイコンを表示-->
+            <% if use_plan_comment.score > 0.5 %>
+              <i class="far fa-smile-beam text-primary"></i>
+            <% elsif use_plan_comment.score > -0.5 %>
+              <i class="far fa-smile text-warning"></i>
+            <% else %>
+              <i class="far fa-angry text-danger"></i>
+            <% end %>
+            <%= use_plan_comment.comment %>
+          </p>
+        </li>
+      <% end %>
+    </ul>
   </div>
 </div>

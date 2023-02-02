@@ -47,6 +47,8 @@ class CareManager::UsePlansController < ApplicationController
   def show
     @booking_contact = BookingContact.new
     @booking_contacts = @use_plan.booking_contacts
+    @use_plan_comment = UsePlanComment.new
+    @use_plan_comments = @use_plan.use_plan_comments
 
     # 契約済み施設を取得
     @facilities = @use_plan.user.contracts.where(is_contracted: true).map { |x| x.facility }
@@ -79,8 +81,6 @@ class CareManager::UsePlansController < ApplicationController
         @facilities = Facility.where("address LIKE?", w)
         @word += "住所"
       end
-    else
-
     end
   end
 
