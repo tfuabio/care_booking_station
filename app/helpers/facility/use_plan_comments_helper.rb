@@ -1,0 +1,2 @@
+module Facility::UsePlanCommentsHelper
+end

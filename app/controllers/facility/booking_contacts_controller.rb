@@ -37,6 +37,8 @@ class Facility::BookingContactsController < ApplicationController
 
     @use_plan = @booking_contact.use_plan
     @user = @use_plan.user
+    @use_plan_comment = UsePlanComment.new
+    @use_plan_comments = @use_plan.use_plan_comments
   end
 
   def reply

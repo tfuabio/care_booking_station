@@ -1,0 +1,2 @@
+module CareManager::UsePlanCommentsHelper
+end

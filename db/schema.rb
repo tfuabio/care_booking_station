@@ -128,8 +128,9 @@ ActiveRecord::Schema.define(version: 2023_01_08_161500) do
 
   create_table "use_plan_comments", force: :cascade do |t|
     t.integer "use_plan_id", null: false
-    t.boolean "is_facility", null: false
+    t.integer "speaker_id", default: 0, null: false
     t.text "comment", null: false
+    t.decimal "score", precision: 5, scale: 3
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

@@ -1,96 +1,147 @@
-<header class="shadow sticky-top bg-light">
+<header class="sticky-top bg-light">
   <nav class="navbar navbar-expand-md navbar-light py-0">
-    <!--<a class="navbar-brand font-weight-normal" href="/"><img src="/assets/logo.png" alt="Care Booking Station"></a>-->
     <a class="navbar-brand" href="/"><%= image_tag('logo.gif') %></a>
+    <!-- ケアマネ側ログイン時 -->
     <% if care_manager_signed_in? %>
-      <span class="badge badge-danger badge-pill">for ケアマネージャー</span>
-    <% elsif facility_signed_in? %>
-      <span class="badge badge-info badge-pill">for 介護施設</span>
-    <% end %>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav ml-auto">
-
-        <!-- ケアマネ側ログイン時 -->
-        <% if care_manager_signed_in? %>
+      <span class="badge badge-danger badge-pill">for CM</span>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse mt-auto" id="navbarNavDropdown">
+        <ul class="nav nav-tabs mx-auto">
+          <li class="nav-item">
+            <% if current_page?(care_manager_use_plans_path) %>
+              <%= link_to care_manager_use_plans_path, method: :get, class: 'nav-link active' do %>
+                <i class="fas fa-tasks"></i> 利用計画
+              <% end %>
+            <% else %>
+              <%= link_to care_manager_use_plans_path, method: :get, class: 'nav-link' do %>
+                <i class="fas fa-tasks"></i> 利用計画
+              <% end %>
+            <% end %>
+          </li>
+          <li class="nav-item">
+            <% if current_page?(care_manager_users_path) %>
+              <%= link_to care_manager_users_path, method: :get, class: 'nav-link active' do %>
+                <i class="fas fa-users"></i> 利用者
+              <% end %>
+            <% else %>
+              <%= link_to care_manager_users_path, method: :get, class: 'nav-link' do %>
+                <i class="fas fa-users"></i> 利用者
+              <% end %>
+            <% end %>
+          </li>
+        </ul>
+      </div>
+      <div class="btn-group ml-auto" role="group">
+        <button id="btnGroupDrop1" type="button" class="rounded-circle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-user-tie"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop1">
           <% if current_care_manager.email == ENV['GUEST_EMAIL'] %>
-            <p class="my-auto mr-2 text-nowrap">ゲストログイン中</p>
+            <p>ゲストログイン中</p>
           <% else %>
             <!--ゲストログイン時は非表示-->
-            <p class="my-auto mr-2 text-nowrap">ようこそ、<%= current_care_manager.last_name %>様</p>
-            <li class="nav-item mr-1 text-nowrap">
-              <%= link_to care_managers_path, method: :get, class: 'btn05 bordercircle1' do %>
+            <p>ようこそ、<%= current_care_manager.last_name %>様</p>
+            <li class="nav-item">
+              <%= link_to care_managers_path, method: :get, class: 'nav-link' do %>
                 <i class="fas fa-user-tie"></i> マイページ
               <% end %>
             </li>
           <% end %>
-          <li class="nav-item mr-1 text-nowrap">
-            <%= link_to care_manager_use_plans_path, method: :get, class: 'btn05 bordercircle1' do %>
-              <i class="fas fa-tasks"></i> 利用計画
-            <% end %>
-          </li>
-          <li class="nav-item mr-1 text-nowrap">
-            <%= link_to care_manager_users_path, method: :get, class: 'btn05 bordercircle1' do %>
-              <i class="fas fa-users"></i> 利用者
-            <% end %>
-          </li>
-          <li class="nav-item mr-1 text-nowrap">
-            <%= link_to destroy_care_manager_session_path, method: :delete, class: 'btn05 bordercircle1' do %>
+          <div class="dropdown-divider"></div>
+          <li class="nav-item">
+            <%= link_to destroy_care_manager_session_path, method: :delete, class: 'nav-link' do %>
               <i class="fas fa-sign-out-alt"></i> ログアウト
             <% end %>
           </li>
+        </div>
+      </div>
 
-        <!-- 施設側ログイン時 -->
-        <% elsif facility_signed_in? %>
-          <p class="my-auto mr-2 text-nowrap">ようこそ、<%= current_facility.name %>様</p>
-          <% unless current_facility.email == ENV['GUEST_EMAIL'] %>
+    <!-- 施設側ログイン時 -->
+    <% elsif facility_signed_in? %>
+      <span class="badge badge-info badge-pill">for 介護施設</span>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse mt-auto" id="navbarNavDropdown">
+        <ul class="nav nav-tabs mx-auto">
+          <li class="nav-item mr-1 text-nowrap">
+            <% if current_page?(facility_booking_contacts_path) %>
+              <%= link_to facility_booking_contacts_path, method: :get, class: 'nav-link active' do %>
+                <i class="fas fa-mail-bulk"></i> 問い合わせ
+              <% end %>
+            <% else %>
+              <%= link_to facility_booking_contacts_path, method: :get, class: 'nav-link' do %>
+                <i class="fas fa-mail-bulk"></i> 問い合わせ
+              <% end %>
+            <% end %>
+          </li>
+          <li class="nav-item mr-1 text-nowrap">
+            <% if current_page?(facility_users_path) %>
+              <%= link_to facility_users_path, method: :get, class: 'nav-link active' do %>
+                <i class="fas fa-users"></i> 利用者
+              <% end %>
+            <% else %>
+              <%= link_to facility_users_path, method: :get, class: 'nav-link' do %>
+                <i class="fas fa-users"></i> 利用者
+              <% end %>
+            <% end %>
+          </li>
+          <li class="nav-item mr-1 text-nowrap">
+            <% if current_page?(facility_schedules_path) %>
+              <%= link_to facility_schedules_path, method: :get, class: 'nav-link active' do %>
+                <i class="fas fa-table"></i> 予約表
+              <% end %>
+            <% else %>
+              <%= link_to facility_schedules_path, method: :get, class: 'nav-link' do %>
+                <i class="fas fa-table"></i> 予約表
+              <% end %>
+            <% end %>
+          </li>
+        </ul>
+      </div>
+      <div class="btn-group ml-auto" role="group">
+        <button id="btnGroupDrop1" type="button" class="rounded-circle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-user-tie"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop1">
+          <% if current_facility.email == ENV['GUEST_EMAIL'] %>
+            <p>ゲストログイン中</p>
+          <% else %>
             <!--ゲストログイン時は非表示-->
-            <li class="nav-item mr-1 text-nowrap">
-              <%= link_to facilities_path, method: :get, class: 'btn05 bordercircle1' do %>
+            <p>ようこそ、<%= current_facility.name %>様</p>
+            <li class="nav-item">
+              <%= link_to facilities_path, method: :get, class: 'nav-link' do %>
                 <i class="fas fa-user-tie"></i> マイページ
               <% end %>
             </li>
           <% end %>
-          <li class="nav-item mr-1 text-nowrap">
-            <%= link_to facility_booking_contacts_path, method: :get, class: 'btn05 bordercircle1' do %>
-              <i class="fas fa-mail-bulk"></i> 問い合わせ
-            <% end %>
-          </li>
-          <li class="nav-item mr-1 text-nowrap">
-            <%= link_to facility_users_path, method: :get, class: 'btn05 bordercircle1' do %>
-              <i class="fas fa-users"></i> 利用者
-            <% end %>
-          </li>
-          <li class="nav-item mr-1 text-nowrap">
-            <%= link_to facility_schedules_path, method: :get, class: 'btn05 bordercircle1' do %>
-              <i class="fas fa-table"></i> 予約表
-            <% end %>
-          </li>
-          <li class="nav-item mr-1 text-nowrap">
-            <%= link_to destroy_facility_session_path, method: :delete, class: 'btn05 bordercircle1' do %>
+          <div class="dropdown-divider"></div>
+          <li class="nav-item">
+            <%= link_to destroy_facility_session_path, method: :delete, class: 'nav-link' do %>
               <i class="fas fa-sign-out-alt"></i> ログアウト
             <% end %>
           </li>
+        </div>
+      </div>
 
-        <!-- 未ログイン時 -->
-        <% else %>
-          <li class="nav-item mr-1 text-nowrap">
-            <%= link_to 'トップページ', root_path, method: :get, class: 'btn05 bordercircle1' %>
-          </li>
-          <li class="nav-item mr-1 text-nowrap">
-            <%= link_to sign_in_path, method: :get, class: 'btn05 bordercircle1' do %>
-              <i class="fas fa-sign-in-alt"></i> ログイン
-            <% end %>
-          </li>
-          <li class="nav-item mr-1 text-nowrap">
-            <%= link_to registration_path, method: :get, class: 'btn05 bordercircle1' do %>
-              <i class="fas fa-user-plus"></i> 新規登録
-            <% end %>
-          </li>
+    <!-- 未ログイン時 -->
+    <% else %>
+      <li class="nav-item mr-1 text-nowrap">
+        <%= link_to 'トップページ', root_path, method: :get, class: 'btn05 bordercircle1' %>
+      </li>
+      <li class="nav-item mr-1 text-nowrap">
+        <%= link_to sign_in_path, method: :get, class: 'btn05 bordercircle1' do %>
+          <i class="fas fa-sign-in-alt"></i> ログイン
         <% end %>
-      </ul>
+      </li>
+      <li class="nav-item mr-1 text-nowrap">
+        <%= link_to registration_path, method: :get, class: 'btn05 bordercircle1' do %>
+          <i class="fas fa-user-plus"></i> 新規登録
+        <% end %>
+      </li>
+    <% end %>
     </div>
   </nav>
 </header>
